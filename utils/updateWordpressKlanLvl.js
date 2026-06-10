@@ -1,68 +1,63 @@
-// Aktualizacja fragmentu strony WordPress z poziomem klanu.
-const axios = require("axios");
-const { config } = require("../src/config");
+// Aktualizacja aktualnego poziomu klanu w WordPressie.
+const axios = require('axios');
+const { config } = require('../src/config');
+const { readJson, writeJson } = require('../src/jsonStore');
+const { pubgHeaders } = require('../src/pubgApi');
+const { sendClanPromotionToWP } = require('../klan/wpClanPromotion');
+
+async function fetchClanStats() {
+  const response = await axios.get(
+    `https://api.pubg.com/shards/${config.pubg.platform}/clans/${config.pubg.clanId}`,
+    {
+      headers: pubgHeaders(),
+      timeout: 10000
+    }
+  );
+
+  const attributes = response.data?.data?.attributes;
+  if (!attributes || typeof attributes.clanLevel !== 'number') {
+    throw new Error('PUBG API nie zwrocilo poziomu klanu');
+  }
+
+  return attributes;
+}
+
+function readPreviousLevel(fallbackLevel) {
+  const previousStats = readJson(config.files.clanStats, null);
+  const previousLevel = Number(previousStats?.clanLevel);
+
+  return Number.isFinite(previousLevel) && previousLevel > 0
+    ? previousLevel
+    : fallbackLevel;
+}
 
 async function updateWordpressKlanLvl(level) {
-	console.log("🧪 updateWordpressKlanLvl() START");
-  const WP_URL = config.wordpress.pageUrl;
+  console.log('[levelklanu] updateWordpressKlanLvl START');
 
-  // 🔴 DANE WP NA SZTYWNO
-  const WP_USER = config.wordpress.user;
-  const WP_APP_PASS = config.wordpress.appPassword;
+  const currentStats = await fetchClanStats();
+  const newLevel = Number(level ?? currentStats.clanLevel);
 
-  if (!WP_USER || !WP_APP_PASS) {
-    console.error("Brakuje WP_USER albo WP_APP_PASSWORD w konfiguracji.");
-    return false;
+  if (!Number.isFinite(newLevel) || newLevel <= 0) {
+    throw new Error(`Nieprawidlowy poziom klanu: ${level}`);
   }
 
-  const auth = Buffer.from(`${WP_USER}:${WP_APP_PASS}`).toString("base64");
+  const oldLevel = readPreviousLevel(newLevel);
 
-  const now = new Date().toLocaleString("pl-PL", {
-    timeZone: "Europe/Warsaw"
+  await sendClanPromotionToWP(oldLevel, newLevel, { throwOnError: true });
+
+  writeJson(config.files.clanStats, {
+    ...currentStats,
+    clanLevel: newLevel,
+    savedAt: new Date().toISOString()
   });
 
-  const html = `
-    <div class="devs-clan-level">
-      <h3>🔥 Status Klanu DEVS</h3>
-      <p><strong>Aktualny poziom:</strong> ${level}</p>
-      <p><strong>Ostatnia aktualizacja:</strong> ${now}</p>
-    </div>
-  `;
+  console.log(`[levelklanu] updateWordpressKlanLvl OK: ${oldLevel} -> ${newLevel}`);
 
-  const startTag = "<!-- START_DEVS_LEVEL -->";
-  const endTag = "<!-- END_DEVS_LEVEL -->";
-
-  try {
-    // 1️⃣ Pobierz stronę
-    const res = await axios.get(WP_URL, {
-      headers: { Authorization: `Basic ${auth}` }
-    });
-
-    let content = res.data.content.rendered;
-
-    // 2️⃣ Podmień placeholder
-    const regex = new RegExp(`${startTag}[\\s\\S]*?${endTag}`);
-    content = content.replace(regex, `${startTag}\n${html}\n${endTag}`);
-
-    // 3️⃣ Zapisz stronę
-    await axios.post(
-      WP_URL,
-      { content },
-      {
-        headers: {
-          Authorization: `Basic ${auth}`,
-          "Content-Type": "application/json"
-        }
-      }
-    );
-
-    console.log("✅ WordPress: poziom klanu zaktualizowany");
-    return true;
-  } catch (err) {
-    console.error("❌ Błąd aktualizacji WordPressa:", err.message);
-	console.log("🧪 updateWordpressKlanLvl() KONIEC – OK");
-    return false;
-  }
+  return {
+    clanName: currentStats.clanName,
+    oldLevel,
+    newLevel
+  };
 }
 
 module.exports = updateWordpressKlanLvl;

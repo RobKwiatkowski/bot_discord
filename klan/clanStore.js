@@ -1,4 +1,4 @@
-// Lokalny magazyn listy czlonkow klanu DEVS.
+// Lokalny magazyn listy czlonkow klanu LEGION.
 const fs = require('fs');
 const { config } = require('../src/config');
 

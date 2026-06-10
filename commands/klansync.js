@@ -1,4 +1,4 @@
-// Synchronizuje lokalna liste klanu z czlonkami posiadajacymi role DEVS.
+// Synchronizuje lokalna liste klanu z czlonkami posiadajacymi role LEGION.
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 const { loadData, saveData } = require('../klan/clanStore');
 const { config } = require('../src/config');

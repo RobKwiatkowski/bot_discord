@@ -121,10 +121,10 @@ const config = {
     spreadsheetId: env('GOOGLE_SPREADSHEET_ID', '1jVPsfu08neQOcmK_A47Hp_BhbZubHs2XvsZc0BLaluY')
   },
   wordpress: {
-    clanEndpoint: env('WP_CLAN_ENDPOINT', 'http://192.168.0.121/wp-json/devs/v1/klan'),
-    clanPromotionEndpoint: env('WP_CLAN_PROMOTION_ENDPOINT', 'http://192.168.0.121/wp-json/devs/v1/klan-promotion'),
-    tipEndpoint: env('WP_TIP_ENDPOINT', 'http://192.168.0.121/wp-json/nationaldevils/v1/tip'),
-    pageUrl: env('WP_PAGE_URL', 'https://nationaldevils.eu/wp-json/wp/v2/pages/123'),
+    clanEndpoint: env('WP_CLAN_ENDPOINT', 'http://192.168.0.223/wp-json/legion/v1/klan'),
+    clanPromotionEndpoint: env('WP_CLAN_PROMOTION_ENDPOINT', 'http://192.168.0.223/wp-json/legion/v1/klan-promotion'),
+    tipEndpoint: env('WP_TIP_ENDPOINT', 'http://192.168.0.223/wp-json/nationaldevils/v1/tip'),
+    pageUrl: env('WP_PAGE_URL', 'https://192.168.0.223/wp-json/wp/v2/pages/43'),
     user: env('WP_USER'),
     appPassword: env('WP_APP_PASSWORD'),
     eventsUrl: env('WP_EVENTS_URL'),

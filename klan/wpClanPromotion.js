@@ -1,12 +1,34 @@
-// Wysyla informacje o awansie klanu do WordPressa.
-const fetch = global.fetch;
+// Wysyla informacje o poziomie klanu do WordPressa.
+const fetch = (...args) => import('node-fetch').then(({ default: fetchImpl }) => fetchImpl(...args));
 const { config } = require('../src/config');
 
 const WP_PROMO_URL = config.wordpress.clanPromotionEndpoint;
 
-async function sendClanPromotionToWP(oldLevel, newLevel) {
+async function readResponseBody(res) {
+  const text = await res.text();
+  if (!text) return null;
+
   try {
-    await fetch(WP_PROMO_URL, {
+    return JSON.parse(text);
+  } catch {
+    return text;
+  }
+}
+
+function createWpError(status, body) {
+  const details = typeof body === 'string' ? body : JSON.stringify(body);
+  return new Error(`WordPress ${status}: ${details}`);
+}
+
+async function sendClanPromotionToWP(oldLevel, newLevel, options = {}) {
+  const throwOnError = options.throwOnError === true;
+
+  try {
+    if (!WP_PROMO_URL) {
+      throw new Error('Brakuje WP_CLAN_PROMOTION_ENDPOINT w konfiguracji');
+    }
+
+    const res = await fetch(WP_PROMO_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -16,9 +38,18 @@ async function sendClanPromotionToWP(oldLevel, newLevel) {
       })
     });
 
-    console.log('🌍 WP: awans klanu wysłany');
+    const body = await readResponseBody(res);
+
+    if (!res.ok) {
+      throw createWpError(res.status, body);
+    }
+
+    console.log(`[WP] Poziom klanu wyslany: ${oldLevel} -> ${newLevel}`);
+    return body || { status: 'ok' };
   } catch (err) {
-    console.error('❌ WP awans – błąd:', err.message);
+    console.error('[WP] Blad wysylki poziomu klanu:', err.message);
+    if (throwOnError) throw err;
+    return false;
   }
 }
 
