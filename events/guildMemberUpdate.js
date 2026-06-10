@@ -43,10 +43,19 @@ module.exports = {
       if (hasRole) {
         const data = loadData();
         const member = data.members.find(m => m.id === newMember.id);
+        const avatarUrl = newMember.displayAvatarURL({ extension: 'png', size: 64 });
 
-        if (member && member.username !== newMember.displayName) {
+        if (
+          member &&
+          (
+            member.username !== newMember.displayName ||
+            member.tag !== newMember.user.username ||
+            member.avatarUrl !== avatarUrl
+          )
+        ) {
           member.username = newMember.displayName;
           member.tag = newMember.user.username;
+          member.avatarUrl = avatarUrl;
           saveData(data);
           shouldSync = true;
         }

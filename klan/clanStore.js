@@ -27,6 +27,7 @@ function addMember(member) {
     username: member.displayName,
     // ✅ globalny username jako backup
     tag: member.user.username,
+    avatarUrl: member.displayAvatarURL({ extension: 'png', size: 64 }),
     // ✅ DOMYŚLNA ROLA W KLANIE
     roleClan: 'Członek',
     addedAt: new Date().toISOString()

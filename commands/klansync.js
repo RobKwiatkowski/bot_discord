@@ -32,14 +32,25 @@ module.exports = {
     }
 
     const data = loadData();
-    const existingIds = new Set(data.members.map(m => m.id));
+    const existingById = new Map(data.members.map(m => [m.id, m]));
 
     role.members.forEach(member => {
-      if (!existingIds.has(member.id)) {
+      const existing = existingById.get(member.id);
+      const avatarUrl = member.displayAvatarURL({ extension: 'png', size: 64 });
+
+      if (existing) {
+        existing.username = member.displayName;
+        existing.tag = member.user.username;
+        existing.avatarUrl = avatarUrl;
+        if (!existing.roleClan) existing.roleClan = 'Członek';
+        if (!existing.addedAt) existing.addedAt = new Date().toISOString();
+      } else {
         data.members.push({
           id: member.id,
-          username: member.user.username,
-          tag: member.user.tag,
+          username: member.displayName,
+          tag: member.user.username,
+          avatarUrl,
+          roleClan: 'Członek',
           addedAt: new Date().toISOString()
         });
       }
