@@ -1,38 +1,16 @@
 // Synchronizuje utworzenie wydarzenia Discord z WordPressem.
-const axios = require('axios');
-const { config } = require('../src/config');
+const { syncScheduledEventToWP } = require('../utils/wpScheduledEvents');
 
 module.exports = {
-    name: 'guildScheduledEventCreate',
-    async execute(event) {
-console.log("🔥 CREATE TRIGGERED:", event.name)
-        try {
-            if (!config.wordpress.eventsUrl || !config.wordpress.eventsToken) return;
+  name: 'guildScheduledEventCreate',
+  async execute(event) {
+    console.log('[events] CREATE:', event.name);
 
-            const payload = {
-                title: event.name,
-                date: event.scheduledStartAt,
-                count: event.userCount || 0,
-                image: event.image
-                    ? `https://cdn.discordapp.com/guild-events/${event.id}/${event.image}.png`
-                    : null,
-                link: event.url
-            };
-
-            await axios.post(
-                `${config.wordpress.eventsUrl}/event`,
-                payload,
-                {
-                    headers: {
-                        Authorization: `Bearer ${config.wordpress.eventsToken}`
-                    }
-                }
-            );
-
-            console.log(`✅ Event "${event.name}" wysłany do WP`);
-
-        } catch (error) {
-            console.error("❌ Błąd WP:", error.response?.data || error.message);
-        }
+    try {
+      await syncScheduledEventToWP(event);
+      console.log(`[events] Event "${event.name}" wyslany do WP`);
+    } catch (error) {
+      console.error('[events] Blad WP:', error.response?.data || error.message);
     }
+  }
 };

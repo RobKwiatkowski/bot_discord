@@ -1,38 +1,16 @@
 // Synchronizuje aktualizacje wydarzenia Discord z WordPressem.
-const axios = require('axios');
-const { config } = require('../src/config');
+const { syncScheduledEventToWP } = require('../utils/wpScheduledEvents');
 
 module.exports = {
-    name: 'guildScheduledEventUpdate',
-    async execute(oldEvent, newEvent) {
-console.log("🔥 UPDATE TRIGGERED:", newEvent.name);
-        try {
-            if (!config.wordpress.eventsUrl || !config.wordpress.eventsToken) return;
+  name: 'guildScheduledEventUpdate',
+  async execute(oldEvent, newEvent) {
+    console.log('[events] UPDATE:', newEvent.name);
 
-            const payload = {
-                title: newEvent.name,
-                date: newEvent.scheduledStartAt,
-                count: newEvent.userCount || 0,
-                image: newEvent.image
-                    ? `https://cdn.discordapp.com/guild-events/${newEvent.id}/${newEvent.image}.png`
-                    : null,
-                link: newEvent.url
-            };
-
-            await axios.post(
-                `${config.wordpress.eventsUrl}/event`,
-                payload,
-                {
-                    headers: {
-                        Authorization: `Bearer ${config.wordpress.eventsToken}`
-                    }
-                }
-            );
-
-            console.log(`🔄 Event "${newEvent.name}" zaktualizowany w WP`);
-
-        } catch (error) {
-            console.error("❌ Błąd aktualizacji WP:", error.response?.data || error.message);
-        }
+    try {
+      await syncScheduledEventToWP(newEvent);
+      console.log(`[events] Event "${newEvent.name}" zaktualizowany w WP`);
+    } catch (error) {
+      console.error('[events] Blad aktualizacji WP:', error.response?.data || error.message);
     }
+  }
 };
