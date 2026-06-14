@@ -1,0 +1,73 @@
+{
+  "roles": [
+    {
+      "key": "administrator",
+      "label": "Administrator"
+    },
+    {
+      "key": "moderator",
+      "label": "Moderator"
+    },
+    {
+      "key": "bot",
+      "label": "Bot"
+    }
+  ],
+  "members": [
+    {
+      "id": "699350173406462003",
+      "username": "Kwiaci",
+      "tag": "robertkwiatkowski.",
+      "avatarUrl": "https://cdn.discordapp.com/avatars/699350173406462003/06f02543ef3ad2b19bb1152bfaaea9bc.png?size=64",
+      "roles": [
+        "administrator",
+        "moderator"
+      ],
+      "roleLabels": [
+        "Administrator",
+        "Moderator"
+      ],
+      "primaryRole": "administrator",
+      "primaryRoleLabel": "Administrator",
+      "isBot": false,
+      "addedAt": "2026-06-14T12:41:04.071Z",
+      "updatedAt": "2026-06-14T12:41:04.071Z"
+    },
+    {
+      "id": "900418449321394237",
+      "username": "OkiemTestera",
+      "tag": "okiemtestera",
+      "avatarUrl": "https://cdn.discordapp.com/avatars/900418449321394237/6d286a7e7512be62d4eb4430f8326280.png?size=64",
+      "roles": [
+        "administrator",
+        "moderator"
+      ],
+      "roleLabels": [
+        "Administrator",
+        "Moderator"
+      ],
+      "primaryRole": "administrator",
+      "primaryRoleLabel": "Administrator",
+      "isBot": false,
+      "addedAt": "2026-06-14T12:41:04.072Z",
+      "updatedAt": "2026-06-14T12:41:04.072Z"
+    },
+    {
+      "id": "1506532864378929162",
+      "username": "Sentinel",
+      "tag": "Sentinel",
+      "avatarUrl": "https://cdn.discordapp.com/avatars/1506532864378929162/df6d43bf5b09a6da175e239a9856e9de.png?size=64",
+      "roles": [
+        "bot"
+      ],
+      "roleLabels": [
+        "Bot"
+      ],
+      "primaryRole": "bot",
+      "primaryRoleLabel": "Bot",
+      "isBot": true,
+      "addedAt": "2026-06-14T12:41:04.070Z",
+      "updatedAt": "2026-06-14T12:41:04.070Z"
+    }
+  ]
+}

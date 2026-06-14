@@ -70,6 +70,7 @@ const config = {
     anniversaries: path.join(dataDir, 'rocznice.json'),
     clanStats: path.join(dataDir, 'clan_stats.json'),
     tempRoles: path.join(dataDir, 'tempRoles.json'),
+    administration: path.join(dataDir, 'administracja.json'),
     top25Background: rootPath('top25.png'),
     googleServiceAccount: env('GOOGLE_SERVICE_ACCOUNT_FILE', rootPath('google-service-account.json'))
   },
@@ -122,6 +123,7 @@ const config = {
   },
   wordpress: {
     clanEndpoint: env('WP_CLAN_ENDPOINT', 'http://192.168.0.223/wp-json/legion/v1/klan'),
+    administrationEndpoint: env('WP_ADMINISTRATION_ENDPOINT', 'http://192.168.0.223/wp-json/legion/v1/administracja'),
     clanPromotionEndpoint: env('WP_CLAN_PROMOTION_ENDPOINT', 'http://192.168.0.223/wp-json/legion/v1/klan-promotion'),
     tipEndpoint: env('WP_TIP_ENDPOINT', 'http://192.168.0.223/wp-json/nationaldevils/v1/tip'),
     pageUrl: env('WP_PAGE_URL', 'https://192.168.0.223/wp-json/wp/v2/pages/43'),
@@ -138,6 +140,34 @@ const config = {
   clan: {
     roleId: env('CLAN_ROLE_ID', '1506382288655745165'),
     statsChannelName: env('CLAN_STATS_CHANNEL_NAME', '👩🏻‍💻︱główny')
+  },
+  administration: {
+    roles: [
+      {
+        key: 'administrator',
+        label: env('ADMINISTRATION_ADMIN_LABEL', 'Administrator'),
+        roleIds: envList('ADMINISTRATION_ADMIN_ROLE_IDS', envList('ADMIN_ROLE_IDS', [
+          '1506304554315157544'
+        ])),
+        roleNames: envList('ADMINISTRATION_ADMIN_ROLE_NAMES', ['Administrator'])
+      },
+      {
+        key: 'moderator',
+        label: env('ADMINISTRATION_MODERATOR_LABEL', 'Moderator'),
+        roleIds: envList('ADMINISTRATION_MODERATOR_ROLE_IDS', [
+          env('MODERATOR_ROLE_ID', '1506307087259533393')
+        ].filter(Boolean)),
+        roleNames: envList('ADMINISTRATION_MODERATOR_ROLE_NAMES', ['Moderator'])
+      },
+      {
+        key: 'bot',
+        label: env('ADMINISTRATION_BOT_LABEL', 'Bot'),
+        roleIds: envList('ADMINISTRATION_BOT_ROLE_IDS', [
+          env('BOT_ROLE_ID')
+        ].filter(Boolean)),
+        roleNames: envList('ADMINISTRATION_BOT_ROLE_NAMES', ['Bot'])
+      }
+    ]
   },
   search: {
     allowedChannelId: env('SEARCH_ALLOWED_CHANNEL_ID', '1506365990298980392'),
