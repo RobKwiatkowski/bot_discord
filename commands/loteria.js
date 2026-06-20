@@ -54,7 +54,7 @@ module.exports = {
     if (sub === 'dodaj') {
       const participants = readJson(config.files.lottery, []);
       if (participants.find(user => user.id === interaction.user.id)) {
-        await interaction.reply({ content: 'Juz bierzesz udzial w loterii.', ephemeral: true });
+        await interaction.reply({ content: 'Juz bierzesz udzial w loterii.' });
         return;
       }
 
@@ -63,7 +63,7 @@ module.exports = {
         nick: interaction.options.getString('nick') || interaction.member.displayName
       });
       writeJson(config.files.lottery, participants);
-      await interaction.reply({ content: 'Dodano Cie do loterii.', ephemeral: true });
+      await interaction.reply({ content: 'Dodano Cie do loterii.' });
       return;
     }
 

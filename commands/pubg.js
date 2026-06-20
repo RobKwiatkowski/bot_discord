@@ -48,7 +48,7 @@ module.exports = {
     }
 
     if (sub === 'ranga') {
-      await interaction.deferReply({ ephemeral: true });
+      await interaction.deferReply();
       const bindings = readJson(config.files.bindings, {});
       const nickname = bindings[interaction.user.id];
       if (!nickname) {
