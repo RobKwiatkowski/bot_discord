@@ -1,0 +1,33 @@
+{
+  "settings": {
+    "channelId": "1516354590419714108",
+    "minDiscount": 75
+  },
+  "seenOffers": {
+    "epic:the-ouroboros-king": {
+      "title": "The Ouroboros King",
+      "source": "Epic Games Store",
+      "discountPercent": 100,
+      "seenAt": "2026-06-16T08:14:11.770Z"
+    },
+    "epic:warhammer-40k-speed-freeks": {
+      "title": "Warhammer 40K Speed Freeks",
+      "source": "Epic Games Store",
+      "discountPercent": 100,
+      "seenAt": "2026-06-16T08:14:11.770Z"
+    },
+    "epic:citizen-sleeper": {
+      "title": "Citizen Sleeper",
+      "source": "Epic Games Store",
+      "discountPercent": 100,
+      "seenAt": "2026-06-19T06:16:13.584Z"
+    },
+    "epic:robobeat": {
+      "title": "ROBOBEAT",
+      "source": "Epic Games Store",
+      "discountPercent": 100,
+      "seenAt": "2026-06-19T06:16:13.584Z"
+    }
+  },
+  "lastCheckedAt": "2026-06-19T18:33:19.585Z"
+}

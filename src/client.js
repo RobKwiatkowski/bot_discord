@@ -16,7 +16,7 @@ function createDiscordClient() {
     intents.push(GatewayIntentBits.GuildMembers);
   } else {
     console.warn(
-      '[discord] DISCORD_ENABLE_GUILD_MEMBERS_INTENT=false: pomijam funkcje zalezne od listy czlonkow.'
+      '[discord] DISCORD_DISABLE_GUILD_MEMBERS_INTENT=true: pomijam funkcje zalezne od listy czlonkow.'
     );
   }
 

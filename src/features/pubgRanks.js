@@ -6,14 +6,103 @@ const { logToFile } = require('../logger');
 const { getCurrentSeason, getPlayerByName, pubgRequest } = require('../pubgApi');
 
 const RANK_ROLES = ['Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond', 'Master', 'Crystal', 'Survivor'];
+const RANK_ROLE_NAMES = new Set(RANK_ROLES.map(role => role.toUpperCase()));
+const GUILD_MEMBERS_PAGE_SIZE = 1000;
+
+function normalizeRankName(baseRank) {
+  const rank = RANK_ROLES.find(item => item.toUpperCase() === String(baseRank).toUpperCase());
+  return rank || baseRank;
+}
 
 async function ensureRole(guild, baseRank) {
   let role = guild.roles.cache.find(item => item.name.toUpperCase() === baseRank.toUpperCase());
   if (!role) {
-    role = await guild.roles.create({ name: baseRank, reason: 'PUBG Rank Sync' });
-    logToFile(`Utworzono role PUBG: ${baseRank}`);
+    const roleName = normalizeRankName(baseRank);
+    role = await guild.roles.create({ name: roleName, reason: 'PUBG Rank Sync' });
+    logToFile(`Utworzono role PUBG: ${roleName}`);
   }
   return role;
+}
+
+function canResetRankRoles() {
+  if (!config.discord.enableGuildMembersIntent) {
+    logToFile(
+      'Nie zresetowano rang PUBG: DISCORD_DISABLE_GUILD_MEMBERS_INTENT=true, ' +
+      'wiec bot nie ma pelnej listy czlonkow do sprawdzenia.'
+    );
+    return false;
+  }
+
+  return true;
+}
+
+async function fetchGuildMembersPage(guild, after) {
+  const query = new URLSearchParams({ limit: String(GUILD_MEMBERS_PAGE_SIZE) });
+  if (after) query.set('after', after);
+
+  return guild.client.rest.get(`/guilds/${guild.id}/members`, { query });
+}
+
+async function removeRankRolesFromGuildMembers(guild, rankRoles) {
+  const rankRoleIds = new Set(rankRoles.map(role => role.id));
+  const rankRoleNames = new Map(rankRoles.map(role => [role.id, role.name]));
+  let after = null;
+  let checkedMembers = 0;
+  let removedRoles = 0;
+  let failedRemovals = 0;
+
+  while (true) {
+    let members;
+    try {
+      members = await fetchGuildMembersPage(guild, after);
+    } catch (error) {
+      logToFile(`Nie zresetowano rang PUBG: nie udalo sie pobrac strony czlonkow (${error.message})`);
+      return {
+        checkedMembers,
+        removedRoles,
+        failedRemovals: failedRemovals + 1,
+        fetchFailed: true
+      };
+    }
+
+    if (!Array.isArray(members) || members.length === 0) break;
+
+    for (const member of members) {
+      const userId = member.user?.id;
+      if (!userId) continue;
+
+      checkedMembers += 1;
+      const rolesToRemove = member.roles.filter(roleId => rankRoleIds.has(roleId));
+
+      for (const roleId of rolesToRemove) {
+        try {
+          await guild.client.rest.delete(
+            `/guilds/${guild.id}/members/${userId}/roles/${roleId}`,
+            { reason: 'PUBG season rank reset' }
+          );
+          removedRoles += 1;
+        } catch (error) {
+          failedRemovals += 1;
+          const roleName = rankRoleNames.get(roleId) || roleId;
+          const tag = member.user?.username || userId;
+          const message = `[pubgRanks] Nie moge usunac roli ${roleName} u ${tag}: ${error.message}`;
+          console.error(message);
+          logToFile(message);
+        }
+      }
+    }
+
+    const lastUserId = members[members.length - 1]?.user?.id;
+    if (!lastUserId || members.length < GUILD_MEMBERS_PAGE_SIZE || lastUserId === after) break;
+    after = lastUserId;
+  }
+
+  return {
+    checkedMembers,
+    removedRoles,
+    failedRemovals,
+    fetchFailed: false
+  };
 }
 
 async function fetchPubgRank(nickname) {
@@ -64,31 +153,86 @@ async function resetRankRolesIfSeasonChanged(client) {
     return null;
   });
 
-  if (!currentSeason || currentSeason === state.currentSeason) return;
-
-  writeJson(config.files.season, { currentSeason });
-  if (fs.existsSync(config.files.statsCache)) {
-    fs.unlinkSync(config.files.statsCache);
-  }
+  if (!currentSeason) return;
 
   const guild = await client.guilds.fetch(config.discord.guildId).catch(() => null);
   if (!guild) return;
 
+  await guild.roles.fetch().catch(() => null);
+
+  const isNewSeason = currentSeason !== state.currentSeason;
+  const rankResetDone = state.rankResetSeason === currentSeason;
+  if (!isNewSeason && rankResetDone) return;
+
   const channel = guild.channels.cache.find(item =>
     item.name === config.discord.generalChannelName && item.isTextBased()
   );
-  await channel?.send(`Wykryto nowy sezon PUBG: **${currentSeason}**. Resetuje role rang.`);
 
-  const rankRoles = guild.roles.cache.filter(role => RANK_ROLES.includes(role.name));
-  for (const role of rankRoles.values()) {
-    for (const member of role.members.values()) {
-      await member.roles.remove(role).catch(error => {
-        console.error(`[pubgRanks] Nie moge usunac roli ${role.name}:`, error.message);
-      });
+  const canReset = canResetRankRoles();
+  if (!canReset) {
+    if (isNewSeason) {
+      await channel?.send(
+        `Wykryto nowy sezon PUBG: **${currentSeason}**, ale nie moge zresetowac rol rang ` +
+        'bez wlaczonego Guild Members Intent.'
+      );
+      writeJson(config.files.season, { ...state, currentSeason });
     }
+    return;
   }
 
-  logToFile(`Reset rang PUBG po wykryciu sezonu ${currentSeason}`);
+  if (fs.existsSync(config.files.statsCache)) {
+    fs.unlinkSync(config.files.statsCache);
+  }
+
+  if (isNewSeason) {
+    await channel?.send(`Wykryto nowy sezon PUBG: **${currentSeason}**. Resetuje role rang.`);
+  } else {
+    await channel?.send(`Ponawiam reset rol rang PUBG dla sezonu **${currentSeason}**.`);
+  }
+
+  const rankRoles = guild.roles.cache.filter(role => RANK_ROLE_NAMES.has(role.name.toUpperCase()));
+  if (rankRoles.size === 0) {
+    writeJson(config.files.season, { ...state, currentSeason });
+    logToFile(`Nie zresetowano rang PUBG dla sezonu ${currentSeason}: nie znaleziono rol rang na serwerze.`);
+    await channel?.send(
+      `Nie udalo sie dokonczyc resetu rol rang PUBG dla sezonu **${currentSeason}**: ` +
+      'nie znalazlem rol rang na serwerze.'
+    );
+    return;
+  }
+
+  const resetResult = await removeRankRolesFromGuildMembers(guild, [...rankRoles.values()]);
+
+  if (resetResult.failedRemovals === 0) {
+    writeJson(config.files.season, {
+      ...state,
+      currentSeason,
+      rankResetSeason: currentSeason,
+      rankResetAt: new Date().toISOString(),
+      rankRolesRemoved: resetResult.removedRoles,
+      rankResetMembersChecked: resetResult.checkedMembers
+    });
+    logToFile(
+      `Reset rang PUBG po wykryciu sezonu ${currentSeason}; ` +
+      `sprawdzono czlonkow: ${resetResult.checkedMembers}; usunieto rol: ${resetResult.removedRoles}`
+    );
+    if (!isNewSeason) {
+      await channel?.send(
+        `Reset rol rang PUBG dla sezonu **${currentSeason}** zakonczony. ` +
+        `Usunieto rol: **${resetResult.removedRoles}**.`
+      );
+    }
+  } else {
+    writeJson(config.files.season, { ...state, currentSeason });
+    logToFile(
+      `Reset rang PUBG dla sezonu ${currentSeason} nie zostal oznaczony jako zakonczony; ` +
+      `bledy zdejmowania rol: ${resetResult.failedRemovals}`
+    );
+    await channel?.send(
+      `Nie udalo sie dokonczyc resetu rol rang PUBG dla sezonu **${currentSeason}**. ` +
+      'Szczegoly sa w logach bota.'
+    );
+  }
 }
 
 function setupPubgRanks(client) {

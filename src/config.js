@@ -53,7 +53,7 @@ const config = {
       '1506304554315157544'
     ]),
     botActivity: env('BOT_ACTIVITY', 'NPC z uprawnieniami admina'),
-    enableGuildMembersIntent: envBool('DISCORD_ENABLE_GUILD_MEMBERS_INTENT', false),
+    enableGuildMembersIntent: !envBool('DISCORD_DISABLE_GUILD_MEMBERS_INTENT', false),
     enableMessageContentIntent: envBool('DISCORD_ENABLE_MESSAGE_CONTENT_INTENT', false)
   },
   files: {
@@ -67,6 +67,7 @@ const config = {
     temporaryVoiceConfig: path.join(dataDir, 'temporary_voice_config.json'),
     tickets: path.join(dataDir, 'tickets.json'),
     youtube: path.join(dataDir, 'youtube.json'),
+    gameDeals: path.join(dataDir, 'game_deals.json'),
     anniversaries: path.join(dataDir, 'rocznice.json'),
     clanStats: path.join(dataDir, 'clan_stats.json'),
     tempRoles: path.join(dataDir, 'tempRoles.json'),
@@ -105,6 +106,8 @@ const config = {
   },
   notifications: {
     leaveLogChannelId: env('LEAVE_LOG_CHANNEL_ID', '1506378538113040414'),
+    newAccountAlertChannelId: env('NEW_ACCOUNT_ALERT_CHANNEL_ID', '1506378538113040414'),
+    newAccountAlertMaxAgeDays: envNumber('NEW_ACCOUNT_ALERT_MAX_AGE_DAYS', 30),
     boostSystemChannelId: env('BOOST_SYSTEM_CHANNEL_ID', '1506378538113040414'),
     thankChannelId: env('THANK_CHANNEL_ID', '1506376497416372465'),
     youtubeChannelId: env('YOUTUBE_NOTIFY_CHANNEL_ID', '1506365761570996365'),
@@ -112,6 +115,19 @@ const config = {
     twitchChannelName: env('TWITCH_NOTIFY_CHANNEL_NAME', '🔴︱streamy'),
     streamerRoleName: env('STREAMER_ROLE_NAME', 'Streamer'),
     twitchCheckMs: envNumber('TWITCH_CHECK_MS', 60 * 1000)
+  },
+  gameDeals: {
+    enabled: envBool('GAME_DEALS_ENABLED', true),
+    channelId: env('GAME_DEALS_CHANNEL_ID'),
+    cron: env('GAME_DEALS_CRON', '0 10 * * *'),
+    timezone: env('GAME_DEALS_TIMEZONE', 'Europe/Warsaw'),
+    runOnStart: envBool('GAME_DEALS_RUN_ON_START', true),
+    minDiscount: envNumber('GAME_DEALS_MIN_DISCOUNT', 80),
+    maxPrice: envNumber('GAME_DEALS_MAX_PRICE', 60),
+    maxPostsPerRun: envNumber('GAME_DEALS_MAX_POSTS_PER_RUN', 10),
+    maxSeenOffers: envNumber('GAME_DEALS_MAX_SEEN_OFFERS', 2000),
+    locale: env('GAME_DEALS_LOCALE', 'pl-PL'),
+    country: env('GAME_DEALS_COUNTRY', 'PL')
   },
   twitch: {
     clientId: env('TWITCH_CLIENT_ID'),

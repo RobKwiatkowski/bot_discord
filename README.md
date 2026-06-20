@@ -13,6 +13,41 @@ Jesli przekazujesz ten projekt dalej, najprosciej myslec o nim tak:
 4. `src/features/` trzyma automatyczne funkcje bota.
 5. Pliki `.json` i katalog `logs/` przechowuja stan bota i historie dzialania.
 
+## Alerty mlodych kont
+
+Gdy nowy czlonek dolaczy do serwera, bot sprawdza date utworzenia jego konta
+Discord. Jesli konto jest mlodsze niz skonfigurowany prog, wysyla embed na kanal
+aktywnosci serwerowej.
+
+Najwazniejsze zmienne srodowiskowe:
+
+- `NEW_ACCOUNT_ALERT_CHANNEL_ID` - kanal na alerty, domyslnie `1506378538113040414`.
+- `NEW_ACCOUNT_ALERT_MAX_AGE_DAYS` - maksymalny wiek konta, domyslnie `30`.
+
+## Promocje gier
+
+Bot potrafi raz dziennie sprawdzac darmowe i mocno przecenione gry ze Steam
+oraz Epic Games Store. Do konfiguracji uzyj komendy:
+
+```bash
+/promocje ustaw kanal:#promocje min_procent:80 limit:10
+```
+
+Reczne sprawdzenie:
+
+```bash
+/promocje sprawdz
+```
+
+Najwazniejsze zmienne srodowiskowe:
+
+- `GAME_DEALS_CHANNEL_ID` - kanal na embedy z ofertami.
+- `GAME_DEALS_MIN_DISCOUNT` - minimalna przecena dla platnych gier, domyslnie `80`.
+- `GAME_DEALS_MAX_PRICE` - maksymalna cena po przecenie w CheapShark, domyslnie `60` USD.
+- `GAME_DEALS_CRON` - harmonogram cron, domyslnie `0 10 * * *`.
+- `GAME_DEALS_TIMEZONE` - strefa czasu harmonogramu, domyslnie `Europe/Warsaw`.
+- `GAME_DEALS_MAX_POSTS_PER_RUN` - limit embedow na jedno sprawdzenie, domyslnie `10`.
+
 ## Start lokalny
 
 ```bash

@@ -5,6 +5,7 @@ const { setupPubgTop } = require('./pubgTop');
 const { setupMessageLogger } = require('./messageLogger');
 const { setupStreams } = require('./streams');
 const { setupAutoRole } = require('./autoRole');
+const { setupNewAccountAlerts } = require('./newAccountAlerts');
 const { setupStandardVoiceRooms } = require('./standardVoiceRooms');
 const { setupGameVoiceRooms } = require('./gameVoiceRooms');
 const { setupTickets } = require('./tickets');
@@ -17,6 +18,7 @@ const { setupClanLevelMonitor } = require('./clanLevelMonitor');
 const { setupBoostThanks } = require('./boostThanks');
 const { setupPresence } = require('./presence');
 const { setupTipply } = require('./tipply');
+const { setupGameDeals } = require('./gameDeals');
 const { config } = require('../config');
 
 const features = [
@@ -32,11 +34,13 @@ const features = [
   setupClanLevelMonitor,
   setupBoostThanks,
   setupPresence,
-  setupTipply
+  setupTipply,
+  setupGameDeals
 ];
 
 const guildMembersFeatures = [
   ['autoRole', setupAutoRole],
+  ['newAccountAlerts', setupNewAccountAlerts],
   ['memberLeaveLogs', setupMemberLeaveLogs],
   ['anniversaries', setupAnniversaries]
 ];
