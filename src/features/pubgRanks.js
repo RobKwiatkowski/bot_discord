@@ -4,15 +4,10 @@ const { config } = require('../config');
 const { readJson, writeJson } = require('../jsonStore');
 const { logToFile } = require('../logger');
 const { getCurrentSeason, getPlayerByName, pubgRequest } = require('../pubgApi');
+const { RANK_ROLES, compareRankedModes, normalizeRankName, resolveRank } = require('../pubgRankUtils');
 
-const RANK_ROLES = ['Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond', 'Master', 'Crystal', 'Survivor'];
 const RANK_ROLE_NAMES = new Set(RANK_ROLES.map(role => role.toUpperCase()));
 const GUILD_MEMBERS_PAGE_SIZE = 1000;
-
-function normalizeRankName(baseRank) {
-  const rank = RANK_ROLES.find(item => item.toUpperCase() === String(baseRank).toUpperCase());
-  return rank || baseRank;
-}
 
 async function ensureRole(guild, baseRank) {
   let role = guild.roles.cache.find(item => item.name.toUpperCase() === baseRank.toUpperCase());
@@ -127,20 +122,27 @@ async function fetchPubgRank(nickname) {
 
   for (const mode in statsObj) {
     const stats = statsObj[mode];
-    if (!stats.currentTier?.tier || stats.roundsPlayed === 0) continue;
-    if (stats.roundsPlayed > maxMatches) {
-      maxMatches = stats.roundsPlayed;
+    const rank = resolveRank(stats);
+    if (stats.roundsPlayed === 0 || rank.tier === 'Unranked') continue;
+    if (!bestMode || compareRankedModes(stats, bestMode) > 0) {
       bestMode = stats;
       bestModeName = mode;
+      maxMatches = stats.roundsPlayed || 0;
     }
   }
 
-  if (!bestMode?.currentTier?.tier) {
+  const rank = resolveRank(bestMode);
+  if (!bestMode || rank.tier === 'Unranked') {
     throw new Error('Nie znaleziono rangi ranked.');
   }
 
   return {
-    tier: bestMode.currentTier.tier.toUpperCase(),
+    tier: rank.tier.toUpperCase(),
+    rankTier: rank.tier,
+    rankSubTier: rank.subTier,
+    rankLabel: rank.label,
+    rankPoints: rank.rankPoint,
+    apiRankLabel: rank.apiLabel,
     mode: bestModeName,
     matches: maxMatches
   };

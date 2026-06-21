@@ -4,6 +4,7 @@ const cron = require('node-cron');
 const { config } = require('../config');
 const { readJson, writeJson } = require('../jsonStore');
 const { getCurrentSeason, getPlayerByName, pubgRequest } = require('../pubgApi');
+const { compareRankedModes, resolveRank } = require('../pubgRankUtils');
 
 const tierEmojis = {
   Bronze: '<:Bronze:1425601468039434250>',
@@ -56,15 +57,13 @@ async function generateTopka() {
 
       let totalMatches = 0;
       let bestMode = null;
-      let bestRP = 0;
 
       for (const mode of ['solo', 'duo', 'squad']) {
         for (const view of ['fpp', 'tpp']) {
           const modeData = ranked[`${mode}-${view}`];
           if (!modeData) continue;
           totalMatches += modeData.roundsPlayed || 0;
-          if ((modeData.currentRankPoint || 0) > bestRP) {
-            bestRP = modeData.currentRankPoint || 0;
+          if (!bestMode || compareRankedModes(modeData, bestMode) > 0) {
             bestMode = modeData;
           }
         }
@@ -72,11 +71,11 @@ async function generateTopka() {
 
       if (!bestMode) throw new Error('Brak danych ranked TPP/FPP');
 
-      const tierName = bestMode.currentTier.tier;
-      const tierEmoji = tierEmojis[tierName] || '';
+      const rank = resolveRank(bestMode);
+      const tierEmoji = tierEmojis[rank.tier] || '';
       const playerData = {
-        RP: bestMode.currentRankPoint || 0,
-        tier: `${tierEmoji} ${tierName} ${bestMode.currentTier.subTier}`.trim(),
+        RP: rank.rankPoint || 0,
+        tier: `${tierEmoji} ${rank.label}`.trim(),
         matches: totalMatches,
         wins: bestMode.wins || 0,
         kills: bestMode.kills || 0,

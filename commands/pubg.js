@@ -1,11 +1,98 @@
 // Slash command dla powiazania nicku PUBG i nadawania roli rangi.
-const { SlashCommandBuilder } = require('discord.js');
+const fs = require('fs');
+const path = require('path');
+const { AttachmentBuilder, EmbedBuilder, SlashCommandBuilder } = require('discord.js');
 const { config } = require('../src/config');
 const { readJson, writeJson } = require('../src/jsonStore');
 const { getPlayerByName } = require('../src/pubgApi');
 const { ensureRole, fetchPubgRank } = require('../src/features/pubgRanks');
+const { rankImageFileName } = require('../src/pubgRankUtils');
 
 const rankRoles = ['BRONZE', 'SILVER', 'GOLD', 'PLATINUM', 'DIAMOND', 'MASTER', 'CRYSTAL', 'SURVIVOR'];
+const rankColors = {
+  BRONZE: 0xcd7f32,
+  SILVER: 0xc0c0c0,
+  GOLD: 0xf1c40f,
+  PLATINUM: 0x78d5ef,
+  DIAMOND: 0x58a6ff,
+  MASTER: 0xb46cff,
+  CRYSTAL: 0x62f0e8,
+  SURVIVOR: 0xff6b35
+};
+
+function formatGameMode(mode) {
+  const labels = {
+    'solo-fpp': 'Solo FPP',
+    'duo-fpp': 'Duo FPP',
+    'squad-fpp': 'Squad FPP',
+    solo: 'Solo TPP',
+    duo: 'Duo TPP',
+    squad: 'Squad TPP'
+  };
+
+  return labels[mode] || mode || 'Nieznany';
+}
+
+function findRankImage(tier, subTier) {
+  const rankDir = path.join(config.rootDir, 'assets', 'Rangi');
+  const candidates = [
+    rankImageFileName(tier, subTier),
+    rankImageFileName(tier, '1')
+  ].filter(Boolean);
+
+  for (const fileName of [...new Set(candidates)]) {
+    const filePath = path.join(rankDir, fileName);
+    if (fs.existsSync(filePath)) {
+      return {
+        fileName,
+        filePath
+      };
+    }
+  }
+
+  return null;
+}
+
+function buildRankEmbed({ interaction, nickname, rankTier, rankLabel, rankPoints, apiRankLabel, mode, matches, rankImage }) {
+  const displayLabel = rankLabel || rankTier || 'Unranked';
+  const normalizedTier = String(rankTier || '').toUpperCase();
+  const apiDiffers = apiRankLabel && apiRankLabel.toUpperCase() !== String(displayLabel).toUpperCase();
+  const embed = new EmbedBuilder()
+    .setColor(rankColors[normalizedTier] || 0x2b2d31)
+    .setAuthor({
+      name: nickname,
+      iconURL: interaction.user.displayAvatarURL({ extension: 'png', size: 128 })
+    })
+    .setTitle('PUBG Ranked')
+    .setDescription(`Twoja aktualna ranga to **${displayLabel}**.`)
+    .addFields(
+      { name: 'RP', value: rankPoints > 0 ? `**${rankPoints}**` : 'Brak danych', inline: true },
+      { name: 'Tryb', value: `**${formatGameMode(mode)}**`, inline: true },
+      { name: 'Mecze', value: `**${matches || 0}**`, inline: true }
+    )
+    .setFooter({ text: 'Sentinel | oficjalne PUBG API' })
+    .setTimestamp();
+
+  if (apiDiffers) {
+    embed.addFields({
+      name: 'Korekta po RP',
+      value: `PUBG API zwrocilo **${apiRankLabel}**, ale **${rankPoints} RP** odpowiada randze **${displayLabel}**.`,
+      inline: false
+    });
+  }
+
+  if (rankImage) {
+    embed.setThumbnail(`attachment://${rankImage.fileName}`);
+  } else {
+    embed.addFields({
+      name: 'Obraz rangi',
+      value: 'Nie znalazlem pliku grafiki rangi w `assets/Rangi`.',
+      inline: false
+    });
+  }
+
+  return embed;
+}
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -57,7 +144,7 @@ module.exports = {
       }
 
       try {
-        const { tier, mode, matches } = await fetchPubgRank(nickname);
+        const { tier, rankTier, rankSubTier, rankLabel, rankPoints, apiRankLabel, mode, matches } = await fetchPubgRank(nickname);
         const role = await ensureRole(interaction.guild, tier);
 
         for (const rankName of rankRoles) {
@@ -66,7 +153,26 @@ module.exports = {
         }
 
         await interaction.member.roles.add(role);
-        await interaction.editReply(`Twoja ranga to **${tier}**. Tryb: **${mode}** (${matches} meczow).`);
+
+        const rankImage = findRankImage(rankTier, rankSubTier);
+        const embed = buildRankEmbed({
+          interaction,
+          nickname,
+          rankTier,
+          rankLabel,
+          rankPoints,
+          apiRankLabel,
+          mode,
+          matches,
+          rankImage
+        });
+        const files = [];
+
+        if (rankImage) {
+          files.push(new AttachmentBuilder(rankImage.filePath, { name: rankImage.fileName }));
+        }
+
+        await interaction.editReply({ embeds: [embed], files });
       } catch (error) {
         await interaction.editReply(`Blad: ${error.message}`);
       }
