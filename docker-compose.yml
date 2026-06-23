@@ -4,6 +4,7 @@ services:
   sentinel:
     build: .
     container_name: sentinel
+    network_mode: host
     restart: unless-stopped
     env_file:
       - ${ENV_FILE:-.env.production}

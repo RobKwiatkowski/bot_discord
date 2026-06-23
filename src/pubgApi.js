@@ -25,7 +25,12 @@ async function pubgRequest(url, options = {}) {
   });
 
   if (res.status === 404) return null;
-  if (!res.ok) throw new Error(`PUBG API ${res.status}: ${res.statusText}`);
+  if (!res.ok) {
+    const error = new Error(`PUBG API ${res.status}: ${res.statusText}`);
+    error.status = res.status;
+    error.retryAfter = res.headers.get('retry-after');
+    throw error;
+  }
   return res.json();
 }
 
@@ -44,9 +49,21 @@ async function getPlayerByName(nickname) {
   return data?.data?.[0] || null;
 }
 
+async function getPlayersByNames(nicknames) {
+  const uniqueNicknames = [...new Set(nicknames.map(name => String(name || '').trim()).filter(Boolean))];
+  if (!uniqueNicknames.length) return [];
+
+  const data = await pubgRequest(
+    `https://api.pubg.com/shards/${config.pubg.region}/players?filter[playerNames]=${encodeURIComponent(uniqueNicknames.join(','))}`
+  );
+
+  return data?.data || [];
+}
+
 module.exports = {
   pubgHeaders,
   pubgRequest,
   getCurrentSeason,
-  getPlayerByName
+  getPlayerByName,
+  getPlayersByNames
 };

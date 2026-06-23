@@ -67,9 +67,11 @@ const config = {
     temporaryVoiceConfig: path.join(dataDir, 'temporary_voice_config.json'),
     tickets: path.join(dataDir, 'tickets.json'),
     youtube: path.join(dataDir, 'youtube.json'),
+    music: path.join(dataDir, 'music.json'),
     gameDeals: path.join(dataDir, 'game_deals.json'),
     anniversaries: path.join(dataDir, 'rocznice.json'),
     clanStats: path.join(dataDir, 'clan_stats.json'),
+    chickenDinners: path.join(dataDir, 'chicken_dinners.json'),
     tempRoles: path.join(dataDir, 'tempRoles.json'),
     administration: path.join(dataDir, 'administracja.json'),
     top25Background: rootPath('top25.png'),
@@ -82,7 +84,14 @@ const config = {
     clanId: env('PUBG_CLAN_ID', 'clan.5c19a5d4e192425598641f055785cfb5'),
     rankedRequestDelayMs: envNumber('PUBG_REQUEST_DELAY_MS', 15000),
     statsCacheTtlMs: envNumber('PUBG_STATS_CACHE_TTL_MS', 60 * 60 * 1000),
-    clanLevelCheckMs: envNumber('PUBG_CLAN_LEVEL_CHECK_MS', 60 * 1000)
+    clanLevelCheckMs: envNumber('PUBG_CLAN_LEVEL_CHECK_MS', 60 * 1000),
+    chickenChannelId: env('PUBG_CHICKEN_CHANNEL_ID', '1518343160382754816'),
+    chickenChannelName: env('PUBG_CHICKEN_CHANNEL_NAME'),
+    chickenCheckMs: envNumber('PUBG_CHICKEN_CHECK_MS', 2 * 60 * 1000),
+    chickenRequestDelayMs: envNumber('PUBG_CHICKEN_REQUEST_DELAY_MS', 7000),
+    chickenMaxRequestsPerRun: envNumber('PUBG_CHICKEN_MAX_REQUESTS_PER_RUN', 8),
+    chickenMatchLookback: envNumber('PUBG_CHICKEN_MATCH_LOOKBACK', 5),
+    chickenAnnounceOnFirstRun: envBool('PUBG_CHICKEN_ANNOUNCE_ON_FIRST_RUN', false)
   },
   voice: {
     standardCategoryId: env('VOICE_STANDARD_CATEGORY_ID', '1506389483812032704'),
@@ -128,6 +137,14 @@ const config = {
     maxSeenOffers: envNumber('GAME_DEALS_MAX_SEEN_OFFERS', 2000),
     locale: env('GAME_DEALS_LOCALE', 'pl-PL'),
     country: env('GAME_DEALS_COUNTRY', 'PL')
+  },
+  music: {
+    textChannelId: env('MUSIC_TEXT_CHANNEL_ID'),
+    voiceChannelId: env('MUSIC_VOICE_CHANNEL_ID'),
+    maxQueueSize: envNumber('MUSIC_MAX_QUEUE_SIZE', 50),
+    searchLimit: envNumber('MUSIC_SEARCH_LIMIT', 5),
+    idleDisconnectMs: envNumber('MUSIC_IDLE_DISCONNECT_MS', 5 * 60 * 1000),
+    voiceDebug: envBool('MUSIC_VOICE_DEBUG', false)
   },
   twitch: {
     clientId: env('TWITCH_CLIENT_ID'),

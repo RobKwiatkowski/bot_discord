@@ -48,6 +48,22 @@ Najwazniejsze zmienne srodowiskowe:
 - `GAME_DEALS_TIMEZONE` - strefa czasu harmonogramu, domyslnie `Europe/Warsaw`.
 - `GAME_DEALS_MAX_POSTS_PER_RUN` - limit embedow na jedno sprawdzenie, domyslnie `10`.
 
+## Kurczaki PUBG LEGION
+
+Bot sprawdza ostatnie mecze graczy z `listaklanu.json`, powiazan z
+`bindings.json` oraz nickow z `klan.json`. Jesli ktorys klanowicz wygra mecz,
+bot wysyla embed z grafika na kanal kurczakow. Pierwsze uruchomienie domyslnie
+tylko zapisuje aktualne ostatnie mecze, zeby nie wyslac starych zwyciestw naraz.
+
+Najwazniejsze zmienne srodowiskowe:
+
+- `PUBG_CHICKEN_CHANNEL_ID` - kanal na powiadomienia, domyslnie `1518343160382754816`.
+- `PUBG_CHICKEN_CHECK_MS` - co ile sprawdzac mecze, domyslnie `120000`.
+- `PUBG_CHICKEN_REQUEST_DELAY_MS` - przerwa miedzy zapytaniami PUBG API, domyslnie `7000`.
+- `PUBG_CHICKEN_MAX_REQUESTS_PER_RUN` - maksymalna liczba zapytan w jednym cyklu, domyslnie `8`.
+- `PUBG_CHICKEN_MATCH_LOOKBACK` - ile ostatnich meczow gracza sprawdzac, domyslnie `5`.
+- `PUBG_CHICKEN_ANNOUNCE_ON_FIRST_RUN` - ustaw `true`, jesli pierwszy start ma wyslac juz znalezione wygrane.
+
 ## Start lokalny
 
 ```bash

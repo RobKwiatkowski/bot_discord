@@ -15,10 +15,12 @@ const { setupMemberLeaveLogs } = require('./memberLeaveLogs');
 const { setupEmptyVoiceCleanup } = require('./emptyVoiceCleanup');
 const { setupAnniversaries } = require('./anniversaries');
 const { setupClanLevelMonitor } = require('./clanLevelMonitor');
+const { setupPubgChickenDinners } = require('./pubgChickenDinners');
 const { setupBoostThanks } = require('./boostThanks');
 const { setupPresence } = require('./presence');
 const { setupTipply } = require('./tipply');
 const { setupGameDeals } = require('./gameDeals');
+const { setupMusic } = require('./music');
 const { config } = require('../config');
 
 const features = [
@@ -32,10 +34,12 @@ const features = [
   setupVoiceLogs,
   setupEmptyVoiceCleanup,
   setupClanLevelMonitor,
+  setupPubgChickenDinners,
   setupBoostThanks,
   setupPresence,
   setupTipply,
-  setupGameDeals
+  setupGameDeals,
+  setupMusic
 ];
 
 const guildMembersFeatures = [

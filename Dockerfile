@@ -1,6 +1,6 @@
 # Obraz pod Raspberry Pi / Linux. Chromium jest instalowany systemowo,
 # zeby Puppeteer nie sciagal wlasnej przegladarki podczas npm ci.
-FROM node:20-bookworm-slim
+FROM node:22-bookworm-slim
 
 WORKDIR /app
 
@@ -12,6 +12,7 @@ RUN apt-get update \
   && apt-get install -y --no-install-recommends \
     chromium \
     ca-certificates \
+    ffmpeg \
     fonts-liberation \
     libasound2 \
     libatk-bridge2.0-0 \
@@ -48,7 +49,7 @@ RUN apt-get update \
 
 COPY package*.json ./
 RUN npm ci --omit=dev --no-audit --no-fund \
-  && node -e "for (const p of ['axios','canvas','discord.js','dotenv','googleapis','node-cron','node-fetch','puppeteer','xml2js']) require.resolve(p); console.log('dependencies ok')"
+  && node -e "for (const p of ['@discordjs/voice','@noble/ciphers','axios','canvas','discord.js','dotenv','googleapis','node-cron','node-fetch','opusscript','puppeteer','spotify-url-info','xml2js','youtube-dl-exec']) require.resolve(p); console.log('dependencies ok')"
 
 COPY . .
 RUN npm run check
