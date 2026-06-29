@@ -1,5 +1,5 @@
 // Automatic PUBG chicken dinner announcements for tracked LEGION members.
-const { AttachmentBuilder, EmbedBuilder } = require('discord.js');
+const { AttachmentBuilder } = require('discord.js');
 const { config } = require('../config');
 const { readJson, writeJson } = require('../jsonStore');
 const { getPlayersByNames, pubgRequest } = require('../pubgApi');
@@ -38,6 +38,11 @@ function normalizeName(value) {
 
 function pickFirst(values) {
   return values.find(value => String(value || '').trim()) || '';
+}
+
+function normalizeClanTag(value) {
+  const tag = String(value || '').trim().replace(/^\[|\]$/g, '');
+  return tag ? tag.slice(0, 12).toUpperCase() : '';
 }
 
 function uniqueIds(ids) {
@@ -92,6 +97,7 @@ function addTrackedPlayer(players, nickname, data = {}) {
     displayName: existing.displayName || data.displayName || pubgNick,
     discordId: existing.discordId || data.discordId || null,
     avatarUrl: existing.avatarUrl || data.avatarUrl || null,
+    clanTag: existing.clanTag || normalizeClanTag(data.clanTag),
     source: existing.source || data.source || 'clan'
   });
 }
@@ -117,6 +123,12 @@ function loadTrackedPlayers() {
       displayName: member.username || member.tag || pubgNick,
       discordId: member.id,
       avatarUrl: member.avatarUrl,
+      clanTag: pickFirst([
+        member.clanTag,
+        member.pubgClanTag,
+        member.pubgClan,
+        member.clanShort
+      ]) || 'LEGION',
       source: 'listaklanu'
     });
   }
@@ -124,6 +136,7 @@ function loadTrackedPlayers() {
   for (const nick of clanTopList) {
     addTrackedPlayer(players, nick, {
       displayName: nick,
+      clanTag: 'LEGION',
       source: 'klan'
     });
   }
@@ -195,6 +208,10 @@ async function fetchMatch(matchId) {
   return pubgRequest(`https://api.pubg.com/shards/${config.pubg.platform}/matches/${matchId}`);
 }
 
+async function fetchClan(clanId) {
+  return pubgRequest(`https://api.pubg.com/shards/${config.pubg.platform}/clans/${clanId}`);
+}
+
 function buildTrackedIndexes(players) {
   const byId = new Map();
   const byName = new Map();
@@ -232,7 +249,12 @@ function resolveMatchType(attrs, modeInfo) {
     return 'Custom';
   }
 
-  if (gameMode.includes('ranked') || matchType.includes('ranked')) {
+  if (
+    gameMode.includes('ranked') ||
+    gameMode.includes('competitive') ||
+    matchType.includes('ranked') ||
+    matchType.includes('competitive')
+  ) {
     return 'Ranked';
   }
 
@@ -270,6 +292,10 @@ function extractChickenDinner(matchData, matchId, trackedIndexes) {
       damage: Math.round(Number(stats.damageDealt || 0)),
       avatarUrl: tracked?.avatarUrl || null,
       displayName: tracked?.displayName || stats.name || 'Unknown',
+      clanTag: normalizeClanTag(
+        stats.clanTag ||
+        stats.clanName
+      ),
       isClanMember: Boolean(tracked)
     };
   });
@@ -297,6 +323,61 @@ function extractChickenDinner(matchData, matchId, trackedIndexes) {
     matchTypeLabel,
     winners,
     clanWinners
+  };
+}
+
+function estimateClanTagRequests(dinner) {
+  const uniqueNames = new Set(dinner.winners.map(player => normalizeName(player.name)).filter(Boolean));
+  return uniqueNames.size ? 1 + uniqueNames.size : 0;
+}
+
+async function enrichWinnerClanTags(dinner, requestDelay) {
+  const names = [...new Set(dinner.winners.map(player => player.name).filter(Boolean))];
+  if (!names.length) return { dinner, requestsUsed: 0 };
+
+  let requestsUsed = 0;
+  if (requestDelay > 0) await delay(requestDelay);
+  requestsUsed += 1;
+  const playerData = await getPlayersByNames(names);
+  const clanIdByName = new Map();
+  const uniqueClanIds = new Set();
+
+  for (const player of playerData) {
+    const name = player.attributes?.name;
+    const clanId = player.attributes?.clanId;
+    if (!name || !clanId) continue;
+    clanIdByName.set(normalizeName(name), clanId);
+    uniqueClanIds.add(clanId);
+  }
+
+  const clanTagById = new Map();
+  for (const clanId of uniqueClanIds) {
+    if (requestDelay > 0) await delay(requestDelay);
+    requestsUsed += 1;
+    const clan = await fetchClan(clanId);
+    const attrs = clan?.data?.attributes || {};
+    const clanTag = normalizeClanTag(attrs.clanTag || attrs.clanName);
+    if (clanTag) clanTagById.set(clanId, clanTag);
+  }
+
+  const winners = dinner.winners.map(player => {
+    const clanId = clanIdByName.get(normalizeName(player.name)) || null;
+    const clanTag = clanId ? clanTagById.get(clanId) : '';
+
+    return {
+      ...player,
+      clanId: clanId || player.clanId || null,
+      clanTag: normalizeClanTag(clanTag || player.clanTag)
+    };
+  });
+
+  return {
+    dinner: {
+      ...dinner,
+      winners,
+      clanWinners: winners.filter(player => player.isClanMember)
+    },
+    requestsUsed
   };
 }
 
@@ -368,6 +449,27 @@ function drawFallbackAvatar(ctx, x, y, size, name) {
   ctx.fillText(String(name || '?').slice(0, 2).toUpperCase(), x + size / 2, y + size / 2 + 1);
 }
 
+function drawTaggedPlayerName(ctx, player, x, baselineY, maxWidth) {
+  const clanTag = normalizeClanTag(player.clanTag);
+
+  if (!clanTag) {
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 22px sans-serif';
+    ctx.fillText(shortenText(ctx, player.name, maxWidth), x, baselineY);
+    return;
+  }
+
+  ctx.font = 'bold 22px sans-serif';
+  const prefix = `[ ${clanTag} ]  `;
+  const prefixWidth = ctx.measureText(prefix).width;
+
+  ctx.fillStyle = player.isClanMember ? '#f6b538' : '#cfcfcf';
+  ctx.fillText(prefix, x, baselineY);
+
+  ctx.fillStyle = '#ffffff';
+  ctx.fillText(shortenText(ctx, player.name, maxWidth - prefixWidth), x + prefixWidth, baselineY);
+}
+
 async function drawAvatar(ctx, loadImageImpl, player, x, y, size) {
   if (!player.avatarUrl) {
     drawFallbackAvatar(ctx, x, y, size, player.name);
@@ -390,7 +492,7 @@ async function drawAvatar(ctx, loadImageImpl, player, x, y, size) {
 async function renderChickenImage(dinner) {
   const { createCanvas, loadImage } = require('canvas');
   const width = DEFAULT_IMAGE_WIDTH;
-  const height = 520;
+  const height = 580;
   const canvas = createCanvas(width, height);
   const ctx = canvas.getContext('2d');
 
@@ -419,42 +521,64 @@ async function renderChickenImage(dinner) {
   ctx.fillText(dinner.matchTypeLabel, width - 70, 108);
 
   const players = dinner.winners.slice(0, 4);
-  const columnWidth = (width - 120) / Math.max(players.length, 1);
-  const avatarSize = 82;
-  const startY = 168;
+  const avatarSize = 58;
+  const startY = 150;
+  const rowHeight = 78;
+  const rowGap = 9;
+  const rowX = 70;
+  const rowWidth = width - 140;
+  const nameX = rowX + 86;
+  const statsStartX = width - 560;
+  const statColumns = [
+    { label: 'Zabojstwa', key: 'kills', x: statsStartX },
+    { label: 'Obrazenia', key: 'damage', x: statsStartX + 185 },
+    { label: 'Asysty', key: 'assists', x: statsStartX + 370 }
+  ];
+
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#8f8f8f';
+  ctx.font = 'bold 13px sans-serif';
+  for (const column of statColumns) {
+    ctx.fillText(column.label.toUpperCase(), column.x, startY - 12);
+  }
 
   for (let index = 0; index < players.length; index += 1) {
     const player = players[index];
-    const centerX = 60 + columnWidth * index + columnWidth / 2;
-    const avatarX = centerX - avatarSize / 2;
+    const rowY = startY + index * (rowHeight + rowGap);
+    const avatarX = rowX + 18;
+    const avatarY = rowY + 10;
 
-    await drawAvatar(ctx, loadImage, player, avatarX, startY, avatarSize);
+    ctx.fillStyle = player.isClanMember ? 'rgba(246, 181, 56, 0.13)' : 'rgba(255, 255, 255, 0.055)';
+    roundRect(ctx, rowX, rowY, rowWidth, rowHeight, 12);
+    ctx.fill();
 
     if (player.isClanMember) {
-      ctx.strokeStyle = '#f6b538';
-      ctx.lineWidth = 4;
-      ctx.beginPath();
-      ctx.arc(centerX, startY + avatarSize / 2, avatarSize / 2 + 4, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(246, 181, 56, 0.7)';
+      ctx.lineWidth = 2;
+      roundRect(ctx, rowX, rowY, rowWidth, rowHeight, 12);
       ctx.stroke();
     }
 
-    ctx.textAlign = 'center';
-    ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 20px sans-serif';
-    ctx.fillText(shortenText(ctx, player.name, columnWidth - 24), centerX, startY + 115);
+    await drawAvatar(ctx, loadImage, player, avatarX, avatarY, avatarSize);
 
-    ctx.fillStyle = player.isClanMember ? '#f6b538' : '#a8a8a8';
-    ctx.font = '14px sans-serif';
-    ctx.fillText(player.isClanMember ? 'LEGION' : 'TEAMMATE', centerX, startY + 138);
+    if (player.isClanMember) {
+      ctx.strokeStyle = '#f6b538';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.arc(avatarX + avatarSize / 2, avatarY + avatarSize / 2, avatarSize / 2 + 3, 0, Math.PI * 2);
+      ctx.stroke();
+    }
 
-    const statsY = startY + 188;
     ctx.textAlign = 'left';
+    drawTaggedPlayerName(ctx, player, nameX, rowY + 47, 350);
+
     ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 19px sans-serif';
-    const textX = centerX - 74;
-    ctx.fillText(`Zabojstwa: ${player.kills}`, textX, statsY);
-    ctx.fillText(`Obrazenia: ${player.damage}`, textX, statsY + 32);
-    ctx.fillText(`Asysty: ${player.assists}`, textX, statsY + 64);
+    ctx.font = 'bold 24px sans-serif';
+    ctx.textBaseline = 'middle';
+    for (const column of statColumns) {
+      ctx.fillText(String(player[column.key] ?? 0), column.x, rowY + rowHeight / 2 + 3);
+    }
+    ctx.textBaseline = 'alphabetic';
   }
 
   ctx.textAlign = 'center';
@@ -463,39 +587,6 @@ async function renderChickenImage(dinner) {
   ctx.fillText('Sentinel PUBG Monitor', width / 2, height - 52);
 
   return canvas.toBuffer('image/png');
-}
-
-function buildChickenEmbed(dinner, fileName) {
-  const clanNames = dinner.clanWinners.map(player => player.name).join(', ');
-  const embed = new EmbedBuilder()
-    .setColor(0xf6b538)
-    .setTitle('Winner Winner Chicken Dinner!')
-    .setDescription(`Klanowicz LEGION wygral mecz PUBG. Bez pingow, sama chwala: **${clanNames}**.`)
-    .addFields(
-      { name: 'Mapa', value: `**${dinner.mapName}**`, inline: true },
-      { name: 'Tryb', value: `**${dinner.modeInfo.teamMode}**`, inline: true },
-      { name: 'Perspektywa', value: `**${dinner.modeInfo.perspective}**`, inline: true },
-      { name: 'Typ meczu', value: `**${dinner.matchTypeLabel}**`, inline: true }
-    )
-    .setImage(`attachment://${fileName}`)
-    .setFooter({ text: 'LEGION | PUBG Chicken Monitor' });
-
-  const displayTime = dinner.endedAt || dinner.createdAt;
-  if (displayTime) {
-    const timestamp = Math.floor(new Date(displayTime).getTime() / 1000);
-    if (Number.isFinite(timestamp)) {
-      embed.addFields({
-        name: dinner.endedAt ? 'Koniec meczu' : 'Start meczu',
-        value: `<t:${timestamp}:f>`,
-        inline: true
-      });
-      embed.setTimestamp(new Date(displayTime));
-    }
-  } else {
-    embed.setTimestamp();
-  }
-
-  return embed;
 }
 
 async function resolveGuildChickenChannel(guild) {
@@ -537,13 +628,11 @@ async function resolveChickenChannels(client) {
 async function sendChickenDinner(channels, dinner) {
   const fileName = `legion-chicken-${dinner.matchId.replace(/[^a-zA-Z0-9_-]/g, '')}.png`;
   const imageBuffer = await renderChickenImage(dinner);
-  const embed = buildChickenEmbed(dinner, fileName);
   let sent = false;
 
   for (const channel of channels) {
     try {
       await channel.send({
-        embeds: [embed],
         files: [new AttachmentBuilder(imageBuffer, { name: fileName })],
         allowedMentions: { parse: [] }
       });
@@ -650,6 +739,15 @@ async function checkChickenDinners(client) {
 
   for (let index = 0; index < matchIdsToProcess.length; index += 1) {
     const matchId = matchIdsToProcess[index];
+    if (requestsUsedTotal >= maxRequests) {
+      remainingPendingMatchIds = uniqueIds([
+        matchId,
+        ...matchIdsToProcess.slice(index + 1),
+        ...remainingPendingMatchIds
+      ]);
+      break;
+    }
+
     if (requestsUsedTotal > 0 && requestDelay > 0) await delay(requestDelay);
 
     try {
@@ -662,7 +760,42 @@ async function checkChickenDinners(client) {
 
       const dinner = extractChickenDinner(matchData, matchId, trackedIndexes);
       if (dinner) {
-        dinners.push(dinner);
+        const requiredClanTagRequests = estimateClanTagRequests(dinner);
+        if (maxRequests - requestsUsedTotal < requiredClanTagRequests) {
+          remainingPendingMatchIds = uniqueIds([
+            matchId,
+            ...matchIdsToProcess.slice(index + 1),
+            ...remainingPendingMatchIds
+          ]);
+          console.log(
+            `[pubgChickenDinners] Brakuje budzetu requestow na aktualne tagi klanow. ` +
+            `Zostawiam ${remainingPendingMatchIds.length} meczow w kolejce.`
+          );
+          break;
+        }
+
+        try {
+          const enriched = await enrichWinnerClanTags(dinner, requestDelay);
+          requestsUsedTotal += enriched.requestsUsed;
+          dinners.push(enriched.dinner);
+        } catch (error) {
+          if (isRateLimitError(error)) {
+            remainingPendingMatchIds = uniqueIds([
+              matchId,
+              ...matchIdsToProcess.slice(index + 1),
+              ...remainingPendingMatchIds
+            ]);
+            console.warn(
+              `[pubgChickenDinners] Limit PUBG API przy pobieraniu tagow klanow. ` +
+              `Zostawiam ${remainingPendingMatchIds.length} meczow w kolejce. ` +
+              `Retry-After: ${error.retryAfter || 'brak'}`
+            );
+            break;
+          }
+
+          console.error(`[pubgChickenDinners] Blad pobierania tagow klanow ${matchId}: ${error.message}`);
+          dinners.push(dinner);
+        }
       } else {
         nonDinnerMatchIds.push(matchId);
       }

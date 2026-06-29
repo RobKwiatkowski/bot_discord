@@ -6,6 +6,7 @@ const { setupMessageLogger } = require('./messageLogger');
 const { setupStreams } = require('./streams');
 const { setupAutoRole } = require('./autoRole');
 const { setupNewAccountAlerts } = require('./newAccountAlerts');
+const { setupAntiSpam } = require('./antiSpam');
 const { setupStandardVoiceRooms } = require('./standardVoiceRooms');
 const { setupGameVoiceRooms } = require('./gameVoiceRooms');
 const { setupTickets } = require('./tickets');
@@ -50,6 +51,7 @@ const guildMembersFeatures = [
 ];
 
 const messageContentFeatures = [
+  ['antiSpam', setupAntiSpam],
   ['messageLogger', setupMessageLogger]
 ];
 

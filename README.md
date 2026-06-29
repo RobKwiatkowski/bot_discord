@@ -54,6 +54,8 @@ Bot sprawdza ostatnie mecze graczy z `listaklanu.json`, powiazan z
 `bindings.json` oraz nickow z `klan.json`. Jesli ktorys klanowicz wygra mecz,
 bot wysyla embed z grafika na kanal kurczakow. Pierwsze uruchomienie domyslnie
 tylko zapisuje aktualne ostatnie mecze, zeby nie wyslac starych zwyciestw naraz.
+Tagi klanow przy nickach sa pobierane z PUBG API na podstawie aktualnego
+`clanId` gracza.
 
 Najwazniejsze zmienne srodowiskowe:
 

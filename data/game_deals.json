@@ -27,7 +27,19 @@
       "source": "Epic Games Store",
       "discountPercent": 100,
       "seenAt": "2026-06-19T06:16:13.584Z"
+    },
+    "epic:rollercoaster-tycoon-3-complete-edition": {
+      "title": "RollerCoaster Tycoon 3 Complete Edition",
+      "source": "Epic Games Store",
+      "discountPercent": 100,
+      "seenAt": "2026-06-26T08:00:19.461Z"
+    },
+    "epic:voidwrought": {
+      "title": "Voidwrought",
+      "source": "Epic Games Store",
+      "discountPercent": 100,
+      "seenAt": "2026-06-26T08:00:19.461Z"
     }
   },
-  "lastCheckedAt": "2026-06-23T17:05:50.045Z"
+  "lastCheckedAt": "2026-06-29T08:00:10.036Z"
 }

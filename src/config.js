@@ -69,6 +69,7 @@ const config = {
     youtube: path.join(dataDir, 'youtube.json'),
     music: path.join(dataDir, 'music.json'),
     gameDeals: path.join(dataDir, 'game_deals.json'),
+    antiSpam: path.join(dataDir, 'anti_spam.json'),
     anniversaries: path.join(dataDir, 'rocznice.json'),
     clanStats: path.join(dataDir, 'clan_stats.json'),
     chickenDinners: path.join(dataDir, 'chicken_dinners.json'),
@@ -124,6 +125,33 @@ const config = {
     twitchChannelName: env('TWITCH_NOTIFY_CHANNEL_NAME', '🔴︱streamy'),
     streamerRoleName: env('STREAMER_ROLE_NAME', 'Streamer'),
     twitchCheckMs: envNumber('TWITCH_CHECK_MS', 60 * 1000)
+  },
+  antiSpam: {
+    enabled: envBool('ANTI_SPAM_ENABLED', true),
+    dryRun: envBool('ANTI_SPAM_DRY_RUN', true),
+    action: env('ANTI_SPAM_ACTION', 'timeout'),
+    alertChannelId: env('ANTI_SPAM_ALERT_CHANNEL_ID', env('NEW_ACCOUNT_ALERT_CHANNEL_ID', '1506378538113040414')),
+    alertRoleIds: envList('ANTI_SPAM_ALERT_ROLE_IDS', envList('ADMIN_ROLE_IDS', [
+      '1506304554315157544'
+    ])),
+    trustedRoleIds: envList('ANTI_SPAM_TRUSTED_ROLE_IDS', [
+      env('MODERATOR_ROLE_ID', '1506307087259533393'),
+      ...envList('ADMIN_ROLE_IDS', [
+        '1506304554315157544'
+      ])
+    ].filter(Boolean)),
+    ignoredChannelIds: envList('ANTI_SPAM_IGNORED_CHANNEL_IDS'),
+    ignoredCategoryIds: envList('ANTI_SPAM_IGNORED_CATEGORY_IDS'),
+    timeoutMinutes: envNumber('ANTI_SPAM_TIMEOUT_MINUTES', 30),
+    duplicateWindowSeconds: envNumber('ANTI_SPAM_DUPLICATE_WINDOW_SECONDS', 20),
+    duplicateChannelLimit: envNumber('ANTI_SPAM_DUPLICATE_CHANNEL_LIMIT', 2),
+    duplicateMinLength: envNumber('ANTI_SPAM_DUPLICATE_MIN_LENGTH', 8),
+    duplicateSimilarity: envNumber('ANTI_SPAM_DUPLICATE_SIMILARITY', 0.92),
+    rateLimitCount: envNumber('ANTI_SPAM_RATE_LIMIT_COUNT', 6),
+    rateLimitSeconds: envNumber('ANTI_SPAM_RATE_LIMIT_SECONDS', 10),
+    actionCooldownSeconds: envNumber('ANTI_SPAM_ACTION_COOLDOWN_SECONDS', 60),
+    blockDiscordInvites: envBool('ANTI_SPAM_BLOCK_DISCORD_INVITES', true),
+    blockSuspiciousLinks: envBool('ANTI_SPAM_BLOCK_SUSPICIOUS_LINKS', true)
   },
   gameDeals: {
     enabled: envBool('GAME_DEALS_ENABLED', true),

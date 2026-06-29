@@ -2,12 +2,13 @@
   "settings": {
     "voiceChannelId": "1518990906122833930",
     "textChannelId": "1518990906122833930",
-    "maxQueueSize": 5
+    "maxQueueSize": 10,
+    "searchLimit": 10
   },
   "panels": {
     "1506270819620491344": {
       "channelId": "1518990906122833930",
-      "messageId": "1519040744881524900"
+      "messageId": "1519613127480840263"
     }
   }
 }
