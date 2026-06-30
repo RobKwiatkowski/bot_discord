@@ -24,7 +24,7 @@ function formatSettings(settings) {
     `czas przerwy: ${settings.timeoutMinutes} min`,
     `kanal alertow: ${settings.alertChannelId ? `<#${settings.alertChannelId}>` : 'brak'}`,
     `pingowane role: ${alertRoles}`,
-    `duplikaty: ${settings.duplicateChannelLimit} kanaly / ${settings.duplicateWindowSeconds}s`,
+    `duplikaty: min. ${settings.duplicateMinLength} zn., ${settings.duplicateChannelLimit} kanaly / ${settings.duplicateWindowSeconds}s`,
     `szybki spam: ${settings.rateLimitCount} wiadomosci / ${settings.rateLimitSeconds}s`
   ].join('\n');
 }
@@ -81,6 +81,46 @@ module.exports = {
             .setDescription('W trybie testowym bot tylko powiadamia, bez kasowania i kar')
             .setRequired(false)
         )
+        .addIntegerOption(option =>
+          option
+            .setName('min_duplikatu')
+            .setDescription('Minimalna dlugosc wiadomosci sprawdzanej jako duplikat')
+            .setMinValue(1)
+            .setMaxValue(200)
+            .setRequired(false)
+        )
+        .addIntegerOption(option =>
+          option
+            .setName('kanaly_duplikatu')
+            .setDescription('Na ilu kanalach ta sama tresc oznacza spam')
+            .setMinValue(2)
+            .setMaxValue(10)
+            .setRequired(false)
+        )
+        .addIntegerOption(option =>
+          option
+            .setName('okno_duplikatu')
+            .setDescription('Ile sekund bot pamieta duplikaty miedzy kanalami')
+            .setMinValue(5)
+            .setMaxValue(300)
+            .setRequired(false)
+        )
+        .addIntegerOption(option =>
+          option
+            .setName('limit_wiadomosci')
+            .setDescription('Ile wiadomosci w oknie czasu oznacza szybki spam')
+            .setMinValue(2)
+            .setMaxValue(50)
+            .setRequired(false)
+        )
+        .addIntegerOption(option =>
+          option
+            .setName('okno_wiadomosci')
+            .setDescription('Ile sekund obejmuje limit szybkich wiadomosci')
+            .setMinValue(2)
+            .setMaxValue(300)
+            .setRequired(false)
+        )
     )
     .addSubcommand(sub =>
       sub
@@ -112,12 +152,22 @@ module.exports = {
       const alertChannel = interaction.options.getChannel('kanal_alertow');
       const enabled = interaction.options.getBoolean('wlaczone');
       const dryRun = interaction.options.getBoolean('tryb_testowy');
+      const duplicateMinLength = interaction.options.getInteger('min_duplikatu');
+      const duplicateChannelLimit = interaction.options.getInteger('kanaly_duplikatu');
+      const duplicateWindowSeconds = interaction.options.getInteger('okno_duplikatu');
+      const rateLimitCount = interaction.options.getInteger('limit_wiadomosci');
+      const rateLimitSeconds = interaction.options.getInteger('okno_wiadomosci');
 
       if (action) updates.action = action;
       if (timeoutMinutes !== null) updates.timeoutMinutes = timeoutMinutes;
       if (alertChannel) updates.alertChannelId = alertChannel.id;
       if (enabled !== null) updates.enabled = enabled;
       if (dryRun !== null) updates.dryRun = dryRun;
+      if (duplicateMinLength !== null) updates.duplicateMinLength = duplicateMinLength;
+      if (duplicateChannelLimit !== null) updates.duplicateChannelLimit = duplicateChannelLimit;
+      if (duplicateWindowSeconds !== null) updates.duplicateWindowSeconds = duplicateWindowSeconds;
+      if (rateLimitCount !== null) updates.rateLimitCount = rateLimitCount;
+      if (rateLimitSeconds !== null) updates.rateLimitSeconds = rateLimitSeconds;
 
       if (Object.keys(updates).length === 0) {
         await interaction.editReply('Podaj przynajmniej jedno ustawienie do zmiany.');

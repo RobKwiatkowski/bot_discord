@@ -69,6 +69,7 @@ const config = {
     youtube: path.join(dataDir, 'youtube.json'),
     music: path.join(dataDir, 'music.json'),
     gameDeals: path.join(dataDir, 'game_deals.json'),
+    discordStats: path.join(dataDir, 'discord_stats.json'),
     antiSpam: path.join(dataDir, 'anti_spam.json'),
     anniversaries: path.join(dataDir, 'rocznice.json'),
     clanStats: path.join(dataDir, 'clan_stats.json'),
@@ -145,7 +146,7 @@ const config = {
     timeoutMinutes: envNumber('ANTI_SPAM_TIMEOUT_MINUTES', 30),
     duplicateWindowSeconds: envNumber('ANTI_SPAM_DUPLICATE_WINDOW_SECONDS', 20),
     duplicateChannelLimit: envNumber('ANTI_SPAM_DUPLICATE_CHANNEL_LIMIT', 2),
-    duplicateMinLength: envNumber('ANTI_SPAM_DUPLICATE_MIN_LENGTH', 8),
+    duplicateMinLength: envNumber('ANTI_SPAM_DUPLICATE_MIN_LENGTH', 3),
     duplicateSimilarity: envNumber('ANTI_SPAM_DUPLICATE_SIMILARITY', 0.92),
     rateLimitCount: envNumber('ANTI_SPAM_RATE_LIMIT_COUNT', 6),
     rateLimitSeconds: envNumber('ANTI_SPAM_RATE_LIMIT_SECONDS', 10),
@@ -165,6 +166,18 @@ const config = {
     maxSeenOffers: envNumber('GAME_DEALS_MAX_SEEN_OFFERS', 2000),
     locale: env('GAME_DEALS_LOCALE', 'pl-PL'),
     country: env('GAME_DEALS_COUNTRY', 'PL')
+  },
+  discordStats: {
+    enabled: envBool('DISCORD_STATS_ENABLED', true),
+    timezone: env('DISCORD_STATS_TIMEZONE', 'Europe/Warsaw'),
+    retentionDays: envNumber('DISCORD_STATS_RETENTION_DAYS', 365),
+    flushIntervalMs: envNumber('DISCORD_STATS_FLUSH_MS', 60 * 1000),
+    syncIntervalMs: envNumber('DISCORD_STATS_SYNC_MS', 10 * 60 * 1000),
+    topLimit: envNumber('DISCORD_STATS_TOP_LIMIT', 25),
+    includeBots: envBool('DISCORD_STATS_INCLUDE_BOTS', false),
+    ignoredChannelIds: envList('DISCORD_STATS_IGNORED_CHANNEL_IDS'),
+    ignoredCategoryIds: envList('DISCORD_STATS_IGNORED_CATEGORY_IDS'),
+    ignoredUserIds: envList('DISCORD_STATS_IGNORED_USER_IDS')
   },
   music: {
     textChannelId: env('MUSIC_TEXT_CHANNEL_ID'),
@@ -191,7 +204,9 @@ const config = {
     user: env('WP_USER'),
     appPassword: env('WP_APP_PASSWORD'),
     eventsUrl: env('WP_EVENTS_URL'),
-    eventsToken: env('WP_EVENTS_TOKEN')
+    eventsToken: env('WP_EVENTS_TOKEN'),
+    discordStatsEndpoint: env('WP_DISCORD_STATS_ENDPOINT'),
+    discordStatsToken: env('WP_DISCORD_STATS_TOKEN')
   },
   tipply: {
     channelId: env('TIPPLY_CHANNEL_ID', '1506376497416372465'),

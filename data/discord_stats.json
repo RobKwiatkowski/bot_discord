@@ -1,0 +1,242 @@
+{
+  "version": 2,
+  "days": {
+    "2026-06-30": {
+      "totalMessages": 14,
+      "totalVoiceSeconds": 110,
+      "messages": {
+        "byUser": {
+          "1175960579928752228": {
+            "id": "1175960579928752228",
+            "username": "blu302",
+            "displayName": "blue",
+            "avatarUrl": "https://cdn.discordapp.com/avatars/1175960579928752228/5445ffd7ffb201a98393cbdf684ea4b1.png?size=64",
+            "count": 1
+          },
+          "427295786271768606": {
+            "id": "427295786271768606",
+            "username": "samrat06216",
+            "displayName": "Samrat",
+            "avatarUrl": "https://cdn.discordapp.com/embed/avatars/3.png",
+            "count": 1
+          },
+          "1174903410751967354": {
+            "id": "1174903410751967354",
+            "username": "mfhaikal14_63996",
+            "displayName": "Muhammad Fikri Haikal",
+            "avatarUrl": "https://cdn.discordapp.com/embed/avatars/1.png",
+            "count": 9
+          },
+          "472660290656272388": {
+            "id": "472660290656272388",
+            "username": "amank06704813",
+            "displayName": "amank0670",
+            "avatarUrl": "https://cdn.discordapp.com/embed/avatars/4.png",
+            "count": 1
+          },
+          "900418449321394237": {
+            "id": "900418449321394237",
+            "username": "okiemtestera",
+            "displayName": "OkiemTestera",
+            "avatarUrl": "https://cdn.discordapp.com/avatars/900418449321394237/6d286a7e7512be62d4eb4430f8326280.png?size=64",
+            "count": 2
+          }
+        },
+        "byChannel": {
+          "1506378538113040414": {
+            "id": "1506378538113040414",
+            "name": "🗃️︱aktywność-serwerowa",
+            "count": 3
+          },
+          "1506381310774743090": {
+            "id": "1506381310774743090",
+            "name": "🎫︱zgłoś-problem",
+            "count": 1
+          },
+          "1506364039209553960": {
+            "id": "1506364039209553960",
+            "name": "✍️︱nabór-do-klanu",
+            "count": 1
+          },
+          "1506376497416372465": {
+            "id": "1506376497416372465",
+            "name": "👩🏻‍💻︱główny",
+            "count": 1
+          },
+          "1507645702854152342": {
+            "id": "1507645702854152342",
+            "name": "🏅︱ranga",
+            "count": 1
+          },
+          "1506364819299762266": {
+            "id": "1506364819299762266",
+            "name": "🤡︱bekownia",
+            "count": 1
+          },
+          "1506365761570996365": {
+            "id": "1506365761570996365",
+            "name": "🎞️︱klipy-i-screeny",
+            "count": 1
+          },
+          "1506365880966185101": {
+            "id": "1506365880966185101",
+            "name": "🔴︱streamy",
+            "count": 1
+          },
+          "1506365990298980392": {
+            "id": "1506365990298980392",
+            "name": "🔎︱szukam-do-gry",
+            "count": 1
+          },
+          "1508909239328833607": {
+            "id": "1508909239328833607",
+            "name": "🍕︱gastrofaza",
+            "count": 1
+          },
+          "1506326964133298206": {
+            "id": "1506326964133298206",
+            "name": "🛠️︱testowy",
+            "count": 1
+          },
+          "1506379862733230241": {
+            "id": "1506379862733230241",
+            "name": "💡︱rozwój-serwera",
+            "count": 1
+          }
+        },
+        "byHour": {
+          "17": 12,
+          "19": 2
+        }
+      },
+      "voice": {
+        "byUser": {
+          "1289285671181222012": {
+            "id": "1289285671181222012",
+            "username": "kozik9012.",
+            "displayName": "Kozik9012",
+            "avatarUrl": "https://cdn.discordapp.com/embed/avatars/5.png",
+            "seconds": 8,
+            "sessions": 2
+          },
+          "900418449321394237": {
+            "id": "900418449321394237",
+            "username": "okiemtestera",
+            "displayName": "OkiemTestera",
+            "avatarUrl": "https://cdn.discordapp.com/avatars/900418449321394237/6d286a7e7512be62d4eb4430f8326280.png?size=64",
+            "seconds": 102,
+            "sessions": 2,
+            "channels": {
+              "1518990906122833930": {
+                "id": "1518990906122833930",
+                "name": "🎵︱muzyka",
+                "count": 0,
+                "seconds": 16,
+                "sessions": 1
+              }
+            },
+            "lastVoiceAt": "2026-06-30T18:24:03.471Z",
+            "lastActiveAt": "2026-06-30T18:24:03.471Z"
+          }
+        },
+        "byChannel": {
+          "1506328360585003188": {
+            "id": "1506328360585003188",
+            "name": "🗣️︱Luźne gadki",
+            "seconds": 7,
+            "sessions": 1
+          },
+          "1507287836515368962": {
+            "id": "1507287836515368962",
+            "name": "➕ Ranked SQUAD",
+            "seconds": 1,
+            "sessions": 1
+          },
+          "1518990906122833930": {
+            "id": "1518990906122833930",
+            "name": "🎵︱muzyka",
+            "seconds": 102,
+            "sessions": 2
+          }
+        },
+        "byHour": {
+          "18": 8,
+          "19": 86,
+          "20": 16
+        }
+      }
+    }
+  },
+  "activeVoiceSessions": {
+    "1506270819620491344:500756257351663631": {
+      "guildId": "1506270819620491344",
+      "userId": "500756257351663631",
+      "username": "ezio867",
+      "displayName": "Ezio867",
+      "avatarUrl": "https://cdn.discordapp.com/embed/avatars/2.png",
+      "channelId": "1521555706489208882",
+      "channelName": "[1] Ranked SQUAD",
+      "startedAt": "2026-06-30T18:23:32.790Z"
+    },
+    "1506270819620491344:1289285671181222012": {
+      "guildId": "1506270819620491344",
+      "userId": "1289285671181222012",
+      "username": "kozik9012.",
+      "displayName": "Kozik9012",
+      "avatarUrl": "https://cdn.discordapp.com/embed/avatars/5.png",
+      "channelId": "1521555706489208882",
+      "channelName": "[1] Ranked SQUAD",
+      "startedAt": "2026-06-30T18:23:32.790Z"
+    },
+    "1506270819620491344:1416814483900469429": {
+      "guildId": "1506270819620491344",
+      "userId": "1416814483900469429",
+      "username": "kapitan123e",
+      "displayName": "kapitan123e",
+      "avatarUrl": "https://cdn.discordapp.com/avatars/1416814483900469429/65a4b098b006d19307f95eea3183c8c6.png?size=64",
+      "channelId": "1521555706489208882",
+      "channelName": "[1] Ranked SQUAD",
+      "startedAt": "2026-06-30T18:23:32.790Z"
+    }
+  },
+  "updatedAt": "2026-06-30T18:24:33.139Z",
+  "lastSyncAt": "2026-06-30T18:24:33.139Z",
+  "users": {
+    "500756257351663631": {
+      "id": "500756257351663631",
+      "username": "ezio867",
+      "displayName": "Ezio867",
+      "avatarUrl": "https://cdn.discordapp.com/embed/avatars/2.png",
+      "lastMessageAt": "",
+      "lastVoiceAt": "2026-06-30T18:23:32.790Z",
+      "lastActiveAt": "2026-06-30T18:23:32.790Z"
+    },
+    "1289285671181222012": {
+      "id": "1289285671181222012",
+      "username": "kozik9012.",
+      "displayName": "Kozik9012",
+      "avatarUrl": "https://cdn.discordapp.com/embed/avatars/5.png",
+      "lastMessageAt": "",
+      "lastVoiceAt": "2026-06-30T18:23:32.790Z",
+      "lastActiveAt": "2026-06-30T18:23:32.790Z"
+    },
+    "1416814483900469429": {
+      "id": "1416814483900469429",
+      "username": "kapitan123e",
+      "displayName": "kapitan123e",
+      "avatarUrl": "https://cdn.discordapp.com/avatars/1416814483900469429/65a4b098b006d19307f95eea3183c8c6.png?size=64",
+      "lastMessageAt": "",
+      "lastVoiceAt": "2026-06-30T18:23:32.790Z",
+      "lastActiveAt": "2026-06-30T18:23:32.790Z"
+    },
+    "900418449321394237": {
+      "id": "900418449321394237",
+      "username": "okiemtestera",
+      "displayName": "OkiemTestera",
+      "avatarUrl": "https://cdn.discordapp.com/avatars/900418449321394237/6d286a7e7512be62d4eb4430f8326280.png?size=64",
+      "lastMessageAt": "",
+      "lastVoiceAt": "2026-06-30T18:24:03.471Z",
+      "lastActiveAt": "2026-06-30T18:24:03.471Z"
+    }
+  }
+}

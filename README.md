@@ -48,6 +48,38 @@ Najwazniejsze zmienne srodowiskowe:
 - `GAME_DEALS_TIMEZONE` - strefa czasu harmonogramu, domyslnie `Europe/Warsaw`.
 - `GAME_DEALS_MAX_POSTS_PER_RUN` - limit embedow na jedno sprawdzenie, domyslnie `10`.
 
+## Statystyki Discorda
+
+Bot zlicza aktywnosc tekstowa i kanaly glosowe bez zapisywania tresci wiadomosci. Dane sa
+agregowane lokalnie w `discord_stats.json`, a nastepnie wysylane okresowo do
+WordPressa przez endpoint pluginu `PPL Discord Stats`.
+
+Na Discordzie dostepna jest komenda:
+
+```bash
+/aktywnosc serwer okres:7d
+/aktywnosc top typ:Wiadomosci okres:30d
+/aktywnosc user uzytkownik:@nick okres:7d
+```
+
+Nazwy wyswietlane w komendach i na stronie sa nickami serwerowymi Discorda
+(`displayName`), a nie globalnymi nazwami kont.
+
+Wtyczka WP obsluguje m.in.:
+
+- `[PPL_discord_stats period="7d"]` - pelny widok z rankingami, wykresami i aktualna aktywnoscia na kanalach glosowych.
+- `[PPL_discord_wykresy period="30d"]` - same wykresy aktywnosci.
+- `[PPL_discord_moje_stats period="30d"]` - profil zalogowanego uzytkownika po polaczeniu Discord -> WP.
+- `[PPL_discord_voice_live]` - lista osob aktualnie na kanalach glosowych.
+
+Najwazniejsze zmienne srodowiskowe:
+
+- `WP_DISCORD_STATS_ENDPOINT` - endpoint z pluginu WP, np. `/wp-json/legion/v1/discord-stats`.
+- `WP_DISCORD_STATS_TOKEN` - token pokazany w `Settings -> Discord Stats`.
+- `DISCORD_STATS_SYNC_MS` - co ile wysylac podsumowanie do WP, domyslnie `60000`.
+- `DISCORD_STATS_RETENTION_DAYS` - ile dni agregatow trzymac lokalnie, domyslnie `365`.
+- `DISCORD_STATS_IGNORED_CHANNEL_IDS` - kanaly pominiete w statystykach.
+
 ## Kurczaki PUBG LEGION
 
 Bot sprawdza ostatnie mecze graczy z `listaklanu.json`, powiazan z
