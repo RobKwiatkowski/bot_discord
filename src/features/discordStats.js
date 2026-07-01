@@ -204,12 +204,20 @@ function getDay(data, dateKey) {
 function shouldIgnoreUser(user) {
   if (!user) return true;
   if (!config.discordStats.includeBots && user.bot) return true;
-  return config.discordStats.ignoredUserIds.includes(user.id);
+  return isIgnoredUserId(user.id);
+}
+
+function isIgnoredUserId(userId) {
+  return Boolean(userId && config.discordStats.ignoredUserIds.includes(userId));
+}
+
+function isIgnoredChannelId(channelId) {
+  return Boolean(channelId && config.discordStats.ignoredChannelIds.includes(channelId));
 }
 
 function shouldIgnoreChannel(channel) {
   if (!channel) return true;
-  if (config.discordStats.ignoredChannelIds.includes(channel.id)) return true;
+  if (isIgnoredChannelId(channel.id)) return true;
   return channel.parentId && config.discordStats.ignoredCategoryIds.includes(channel.parentId);
 }
 
@@ -457,8 +465,8 @@ async function hydrateCurrentVoiceSessions(client) {
 
 function mergeMap(target, source, valueField) {
   for (const item of Object.values(source || {})) {
-    if (!item || !item.id) continue;
-    const current = target[item.id] || { ...item, [valueField]: 0 };
+    if (!item || !item.id || isIgnoredUserId(item.id)) continue;
+    const current = target[item.id] || { ...item, [valueField]: 0, sessions: 0 };
     current.username = item.username || current.username;
     current.displayName = item.displayName || current.displayName;
     current.avatarUrl = item.avatarUrl || current.avatarUrl;
@@ -471,9 +479,77 @@ function mergeMap(target, source, valueField) {
   }
 }
 
+function filterChannelMap(source) {
+  const result = {};
+  for (const item of Object.values(source || {})) {
+    if (!item || !item.id || isIgnoredChannelId(item.id)) continue;
+    result[item.id] = item;
+  }
+  return result;
+}
+
+function subtractIgnoredUserChannels(channelMap, userMap, valueField) {
+  const result = {};
+  for (const item of Object.values(channelMap || {})) {
+    if (!item || !item.id) continue;
+    result[item.id] = { ...item };
+  }
+
+  for (const user of Object.values(userMap || {})) {
+    if (!user || !isIgnoredUserId(user.id) || !user.channels || typeof user.channels !== 'object') continue;
+
+    for (const channel of Object.values(user.channels)) {
+      if (!channel?.id || !result[channel.id]) continue;
+      result[channel.id][valueField] = Math.max(0, numberValue(result[channel.id][valueField]) - numberValue(channel[valueField]));
+      if (Object.prototype.hasOwnProperty.call(result[channel.id], 'sessions')) {
+        result[channel.id].sessions = Math.max(0, numberValue(result[channel.id].sessions) - numberValue(channel.sessions));
+      }
+      if (numberValue(result[channel.id][valueField]) <= 0) {
+        delete result[channel.id];
+      }
+    }
+  }
+
+  return result;
+}
+
+function sumMap(map, valueField) {
+  return Object.values(map || {}).reduce((sum, item) => sum + numberValue(item?.[valueField]), 0);
+}
+
+function filterUserMapByChannels(source, valueField) {
+  const result = {};
+
+  for (const item of Object.values(source || {})) {
+    if (!item || !item.id || isIgnoredUserId(item.id)) continue;
+
+    const channels = item.channels && typeof item.channels === 'object' ? item.channels : null;
+    if (!channels || Object.keys(channels).length === 0) {
+      result[item.id] = item;
+      continue;
+    }
+
+    const filteredChannels = filterChannelMap(channels);
+    const filteredValue = sumMap(filteredChannels, valueField);
+    if (filteredValue <= 0) continue;
+
+    const current = {
+      ...item,
+      channels: filteredChannels,
+      [valueField]: filteredValue
+    };
+    if (Object.prototype.hasOwnProperty.call(item, 'sessions')) {
+      current.sessions = sumMap(filteredChannels, 'sessions');
+    }
+    result[item.id] = current;
+  }
+
+  return result;
+}
+
 function mergeChannelBreakdown(target, source, valueField) {
   for (const item of Object.values(source || {})) {
-    if (!item || !item.id) continue;
+    if (!item || !item.id || isIgnoredChannelId(item.id)) continue;
 
     const current = target[item.id] || {
       id: item.id,
@@ -600,6 +676,7 @@ function bestHourSummary(hourlyMessages, hourlyVoice) {
 
 function activeVoiceList(data, nowMs = Date.now()) {
   return Object.values(data.activeVoiceSessions || {})
+    .filter(session => !isIgnoredUserId(session.userId) && !isIgnoredChannelId(session.channelId))
     .map(session => {
       const startedMs = Date.parse(session.startedAt);
       return {
@@ -620,6 +697,8 @@ function dataWithActiveDurations(data, nowMs = Date.now()) {
   const snapshot = clone(data);
 
   for (const session of Object.values(data.activeVoiceSessions || {})) {
+    if (isIgnoredUserId(session.userId)) continue;
+    if (isIgnoredChannelId(session.channelId)) continue;
     const startedMs = Date.parse(session.startedAt);
     addVoiceDuration(snapshot, session, startedMs, nowMs, false);
   }
@@ -651,25 +730,41 @@ function summarizeRange(data, period = DEFAULT_PERIOD, topLimit = config.discord
 
   for (const key of keys) {
     const day = getDay(data, key);
+    const dayMessageUsers = filterUserMapByChannels(day.messages.byUser, 'count');
+    const dayVoiceUsers = filterUserMapByChannels(day.voice.byUser, 'seconds');
+    const rawDayTextChannels = subtractIgnoredUserChannels(filterChannelMap(day.messages.byChannel), day.messages.byUser, 'count');
+    const rawDayVoiceChannels = subtractIgnoredUserChannels(filterChannelMap(day.voice.byChannel), day.voice.byUser, 'seconds');
+    const dayMessagesTotal = Object.keys(dayMessageUsers).length > 0
+      ? sumMap(dayMessageUsers, 'count')
+      : Object.keys(day.messages.byChannel || {}).length > 0
+        ? sumMap(rawDayTextChannels, 'count')
+        : numberValue(day.totalMessages);
+    const dayVoiceTotal = Object.keys(dayVoiceUsers).length > 0
+      ? sumMap(dayVoiceUsers, 'seconds')
+      : Object.keys(day.voice.byChannel || {}).length > 0
+        ? sumMap(rawDayVoiceChannels, 'seconds')
+        : numberValue(day.totalVoiceSeconds);
+    const dayTextChannels = sumMap(rawDayTextChannels, 'count') > dayMessagesTotal ? {} : rawDayTextChannels;
+    const dayVoiceChannels = sumMap(rawDayVoiceChannels, 'seconds') > dayVoiceTotal ? {} : rawDayVoiceChannels;
     const activeIdsForDay = new Set([
-      ...Object.keys(day.messages.byUser || {}),
-      ...Object.keys(day.voice.byUser || {})
+      ...Object.keys(dayMessageUsers),
+      ...Object.keys(dayVoiceUsers)
     ]);
-    totalMessages += numberValue(day.totalMessages);
-    totalVoiceSeconds += numberValue(day.totalVoiceSeconds);
-    mergeMap(messageUsers, day.messages.byUser, 'count');
-    mergeMap(textChannels, day.messages.byChannel, 'count');
-    mergeMap(voiceUsers, day.voice.byUser, 'seconds');
-    mergeMap(voiceChannels, day.voice.byChannel, 'seconds');
+    totalMessages += dayMessagesTotal;
+    totalVoiceSeconds += dayVoiceTotal;
+    mergeMap(messageUsers, dayMessageUsers, 'count');
+    mergeMap(textChannels, dayTextChannels, 'count');
+    mergeMap(voiceUsers, dayVoiceUsers, 'seconds');
+    mergeMap(voiceChannels, dayVoiceChannels, 'seconds');
 
     daily.push({
       date: key,
-      messages: numberValue(day.totalMessages),
-      voice_seconds: numberValue(day.totalVoiceSeconds),
+      messages: dayMessagesTotal,
+      voice_seconds: dayVoiceTotal,
       active_users: activeIdsForDay.size
     });
 
-    for (const [userId, item] of Object.entries(day.messages.byUser || {})) {
+    for (const [userId, item] of Object.entries(dayMessageUsers)) {
       const profile = ensureUserProfile(userProfiles, data, userId, item);
       if (!profile) continue;
       profile.messages += numberValue(item.count);
@@ -678,7 +773,7 @@ function summarizeRange(data, period = DEFAULT_PERIOD, topLimit = config.discord
       mergeChannelBreakdown(profile.textChannels, item.channels, 'count');
     }
 
-    for (const [userId, item] of Object.entries(day.voice.byUser || {})) {
+    for (const [userId, item] of Object.entries(dayVoiceUsers)) {
       const profile = ensureUserProfile(userProfiles, data, userId, item);
       if (!profile) continue;
       profile.voiceSeconds += numberValue(item.seconds);

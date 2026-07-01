@@ -11,6 +11,7 @@ const CARD_WIDTH = 1100;
 const CARD_PADDING = 26;
 const ROW_HEIGHT = 52;
 const ROW_GAP = 8;
+const CARD_FOOTER_HEIGHT = 74;
 const COLORS = {
   page: '#0f1014',
   card: '#2f3238',
@@ -74,6 +75,37 @@ function applyGuildDisplayNames(stats, guild) {
 
 function displayChannel(item) {
   return item.name ? `#${item.name}` : item.id || 'Nieznany kanal';
+}
+
+function asciiFoldPolish(text) {
+  return String(text || '')
+    .replace(/ł/g, 'l')
+    .replace(/Ł/g, 'L')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
+}
+
+function cleanChannelNameForCard(name) {
+  let clean = String(name || '').normalize('NFKC');
+  const parts = clean.split(/[|｜︱│┃]/u).map(part => part.trim()).filter(Boolean);
+  if (parts.length > 1) {
+    clean = parts[parts.length - 1];
+  }
+
+  clean = clean
+    .replace(/[\u200B-\u200D\uFE0E\uFE0F]/g, '')
+    .replace(/\p{Extended_Pictographic}/gu, '')
+    .replace(/[^\p{L}\p{N}\s._#[\]\-()]/gu, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  return asciiFoldPolish(clean);
+}
+
+function displayChannelForCard(item) {
+  const clean = cleanChannelNameForCard(item.name || item.channel_name || '');
+  if (clean) return `# ${clean}`;
+  return item.id ? `# ${item.id}` : '# kanal';
 }
 
 function displayTopItem(item, isChannel) {
@@ -283,7 +315,8 @@ function drawRankingRows(ctx, items, options) {
 
     ctx.fillStyle = COLORS.text;
     const nameMaxWidth = columnWidth - valueWidth - 82;
-    ctx.fillText(truncateText(ctx, displayTopItem(item, isChannel), nameMaxWidth), rowX + 64, rowY + 33);
+    const rowName = isChannel ? displayChannelForCard(item) : displayUser(item);
+    ctx.fillText(truncateText(ctx, rowName, nameMaxWidth), rowX + 64, rowY + 33);
   }
 
   return startY + rowsPerColumn * (ROW_HEIGHT + ROW_GAP) + 12;
@@ -299,11 +332,50 @@ function drawMetric(ctx, x, y, width, label, value) {
   ctx.fillText(String(value), x + 18, y + 65);
 }
 
+function drawMiniMetric(ctx, x, y, width, label, value) {
+  fillRoundRect(ctx, x, y, width, 74, 8, COLORS.row);
+  ctx.fillStyle = COLORS.muted;
+  ctx.font = '700 15px Arial';
+  ctx.fillText(label, x + 16, y + 26);
+  ctx.fillStyle = COLORS.text;
+  ctx.font = '700 25px Arial';
+  ctx.fillText(truncateText(ctx, String(value), width - 30), x + 16, y + 58);
+}
+
+async function drawUserAvatar(ctx, loadImage, user, x, y, size) {
+  const avatarUrl = typeof user?.displayAvatarURL === 'function'
+    ? user.displayAvatarURL({ extension: 'png', size: 128 })
+    : '';
+
+  fillRoundRect(ctx, x, y, size, size, 14, '#20232a');
+  if (!avatarUrl) {
+    ctx.fillStyle = COLORS.yellow;
+    ctx.font = '700 25px Arial';
+    ctx.fillText('U', x + size / 2 - 9, y + size / 2 + 9);
+    return;
+  }
+
+  try {
+    const image = await loadImage(avatarUrl);
+    ctx.save();
+    roundRect(ctx, x, y, size, size, 14);
+    ctx.clip();
+    ctx.drawImage(image, x, y, size, size);
+    ctx.restore();
+  } catch {
+    ctx.fillStyle = COLORS.yellow;
+    ctx.font = '700 25px Arial';
+    ctx.fillText('U', x + size / 2 - 9, y + size / 2 + 9);
+  }
+}
+
 async function renderTopStatsCard({ guild, stats, selected }) {
   const { createCanvas, loadImage } = require('canvas');
   const rows = Array.isArray(selected.items) ? selected.items.slice(0, 10) : [];
   const rowCount = Math.max(1, Math.ceil(rows.length / (rows.length > 5 ? 2 : 1)));
-  const height = Math.max(410, 170 + rowCount * (ROW_HEIGHT + ROW_GAP) + 58);
+  const tableStartY = 168;
+  const tableHeight = rowCount * (ROW_HEIGHT + ROW_GAP);
+  const height = Math.max(430, tableStartY + tableHeight + CARD_FOOTER_HEIGHT);
   const canvas = createCanvas(CARD_WIDTH, height);
   const ctx = canvas.getContext('2d');
 
@@ -328,7 +400,12 @@ async function renderTopStatsCard({ guild, stats, selected }) {
 
 async function renderServerStatsCard({ guild, stats }) {
   const { createCanvas, loadImage } = require('canvas');
-  const height = 690;
+  const listStartY = 264;
+  const listRows = Math.max(
+    Math.min(5, Math.max(1, (stats.top_message_users || []).length)),
+    Math.min(5, Math.max(1, (stats.top_voice_users || []).length))
+  );
+  const height = Math.max(690, listStartY + 20 + listRows * (ROW_HEIGHT + ROW_GAP) + CARD_FOOTER_HEIGHT);
   const canvas = createCanvas(CARD_WIDTH, height);
   const ctx = canvas.getContext('2d');
 
@@ -367,6 +444,71 @@ async function renderServerStatsCard({ guild, stats }) {
     forceColumns: 1
   });
   drawFooter(ctx, stats);
+
+  return canvas.toBuffer('image/png');
+}
+
+async function renderUserStatsCard({ guild, periodStats, userStats, user, displayName }) {
+  const { createCanvas, loadImage } = require('canvas');
+  const textChannels = Array.isArray(userStats.top_text_channels) ? userStats.top_text_channels.slice(0, 5) : [];
+  const voiceChannels = Array.isArray(userStats.top_voice_channels) ? userStats.top_voice_channels.slice(0, 5) : [];
+  const rowCount = Math.max(textChannels.length, voiceChannels.length, 1);
+  const listStartY = 394;
+  const height = Math.max(680, listStartY + 20 + rowCount * (ROW_HEIGHT + ROW_GAP) + CARD_FOOTER_HEIGHT);
+  const canvas = createCanvas(CARD_WIDTH, height);
+  const ctx = canvas.getContext('2d');
+
+  fillRoundRect(ctx, 0, 0, CARD_WIDTH, height, 0, COLORS.page);
+  fillRoundRect(ctx, 0, 0, CARD_WIDTH, height, 28, COLORS.card);
+  strokeRoundRect(ctx, 1, 1, CARD_WIDTH - 2, height - 2, 28, COLORS.cardBorder);
+
+  await drawGuildHeader(ctx, loadImage, guild, periodStats, 'Member Statistics');
+
+  const avatarSize = 104;
+  const profileY = 142;
+  await drawUserAvatar(ctx, loadImage, user, CARD_PADDING, profileY, avatarSize);
+
+  ctx.fillStyle = COLORS.text;
+  ctx.font = '700 35px Arial';
+  ctx.fillText(truncateText(ctx, displayName, CARD_WIDTH - CARD_PADDING * 2 - avatarSize - 24), CARD_PADDING + avatarSize + 22, profileY + 35);
+
+  ctx.fillStyle = COLORS.muted;
+  ctx.font = '700 18px Arial';
+  ctx.fillText(userStats.label || periodStats.label || 'Statystyki', CARD_PADDING + avatarSize + 22, profileY + 65);
+  ctx.fillText(`Ostatnia aktywnosc: ${formatDateTime(userStats.last_active_at)}`, CARD_PADDING + avatarSize + 22, profileY + 92);
+
+  const metricY = profileY + avatarSize + 28;
+  const metricGap = 14;
+  const metricWidth = (CARD_WIDTH - CARD_PADDING * 2 - metricGap * 3) / 4;
+  drawMiniMetric(ctx, CARD_PADDING, metricY, metricWidth, 'Wiadomosci', userStats.messages);
+  drawMiniMetric(ctx, CARD_PADDING + (metricWidth + metricGap), metricY, metricWidth, 'Czas glosowy', formatDuration(userStats.voice_seconds));
+  drawMiniMetric(ctx, CARD_PADDING + (metricWidth + metricGap) * 2, metricY, metricWidth, 'Sesje glosowe', userStats.sessions);
+  drawMiniMetric(ctx, CARD_PADDING + (metricWidth + metricGap) * 3, metricY, metricWidth, 'Ostatnio', formatDateTime(userStats.last_active_at));
+
+  const listY = metricY + 120;
+  const listGap = 24;
+  const listWidth = (CARD_WIDTH - CARD_PADDING * 2 - listGap) / 2;
+  drawRankingRows(ctx, textChannels, {
+    x: CARD_PADDING,
+    y: listY,
+    width: listWidth,
+    title: 'Favorite Text Channels',
+    valueFormatter: item => `${item.messages || item.value || 0}`,
+    isChannel: true,
+    maxItems: 5,
+    forceColumns: 1
+  });
+  drawRankingRows(ctx, voiceChannels, {
+    x: CARD_PADDING + listWidth + listGap,
+    y: listY,
+    width: listWidth,
+    title: 'Favorite Voice Channels',
+    valueFormatter: item => compactDuration(item.voice_seconds || item.value || 0),
+    isChannel: true,
+    maxItems: 5,
+    forceColumns: 1
+  });
+  drawFooter(ctx, periodStats);
 
   return canvas.toBuffer('image/png');
 }
@@ -481,41 +623,57 @@ module.exports = {
       return;
     }
 
+    await interaction.deferReply();
     const selectedUser = interaction.options.getUser('uzytkownik') || interaction.user;
     const selectedMember = interaction.options.getMember('uzytkownik') || interaction.member;
     const displayName = selectedMember?.displayName || selectedUser.username;
     const userStats = getUserStats(period, selectedUser.id);
-    const embed = new EmbedBuilder()
-      .setColor(0x38BDF8)
-      .setTitle(`Aktywnosc - ${displayName}`)
-      .setThumbnail(selectedUser.displayAvatarURL({ extension: 'png', size: 128 }))
-      .setDescription(userStats.label)
-      .addFields(
-        { name: 'Wiadomosci', value: String(userStats.messages), inline: true },
-        { name: 'Czas glosowy', value: formatDuration(userStats.voice_seconds), inline: true },
-        { name: 'Sesje glosowe', value: String(userStats.sessions), inline: true },
-        { name: 'Ostatnia aktywnosc', value: formatDateTime(userStats.last_active_at), inline: false },
-        {
-          name: 'Najczestsze kanaly tekstowe',
-          value: topLines(
-            userStats.top_text_channels,
-            item => `${displayChannel(item)} - ${item.messages}`,
-            'Brak danych'
-          ),
-          inline: true
-        },
-        {
-          name: 'Najczestsze kanaly glosowe',
-          value: topLines(
-            userStats.top_voice_channels,
-            item => `${displayChannel(item)} - ${formatDuration(item.voice_seconds)}`,
-            'Brak danych'
-          ),
-          inline: true
-        }
-      )
-      .setTimestamp();
+    const periodStats = getRangeStats(period, 5);
 
-    await interaction.reply({ embeds: [embed] });
+    try {
+      const buffer = await renderUserStatsCard({
+        guild: interaction.guild,
+        periodStats,
+        userStats,
+        user: selectedUser,
+        displayName
+      });
+      const attachment = new AttachmentBuilder(buffer, { name: 'aktywnosc-user.png' });
+      await interaction.editReply({ files: [attachment] });
+    } catch (error) {
+      console.error('[aktywnosc] Blad renderowania karty uzytkownika:', error);
+      const embed = new EmbedBuilder()
+        .setColor(0x38BDF8)
+        .setTitle(`Aktywnosc - ${displayName}`)
+        .setThumbnail(selectedUser.displayAvatarURL({ extension: 'png', size: 128 }))
+        .setDescription(userStats.label)
+        .addFields(
+          { name: 'Wiadomosci', value: String(userStats.messages), inline: true },
+          { name: 'Czas glosowy', value: formatDuration(userStats.voice_seconds), inline: true },
+          { name: 'Sesje glosowe', value: String(userStats.sessions), inline: true },
+          { name: 'Ostatnia aktywnosc', value: formatDateTime(userStats.last_active_at), inline: false },
+          {
+            name: 'Najczestsze kanaly tekstowe',
+            value: topLines(
+              userStats.top_text_channels,
+              item => `${displayChannel(item)} - ${item.messages}`,
+              'Brak danych'
+            ),
+            inline: true
+          },
+          {
+            name: 'Najczestsze kanaly glosowe',
+            value: topLines(
+              userStats.top_voice_channels,
+              item => `${displayChannel(item)} - ${formatDuration(item.voice_seconds)}`,
+              'Brak danych'
+            ),
+            inline: true
+          }
+        )
+        .setTimestamp();
+
+      await interaction.editReply({ embeds: [embed] });
+    }
   }
 };

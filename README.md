@@ -62,7 +62,7 @@ Na Discordzie dostepna jest komenda:
 /aktywnosc user uzytkownik:@nick okres:7d
 ```
 
-Widoki `/aktywnosc serwer` i `/aktywnosc top` sa renderowane jako karta PNG,
+Widoki `/aktywnosc serwer`, `/aktywnosc top` i `/aktywnosc user` sa renderowane jako karta PNG,
 zeby przypominaly zwarte tabelki Statbota.
 
 Nazwy wyswietlane w komendach i na stronie sa nickami serwerowymi Discorda
@@ -81,7 +81,7 @@ Najwazniejsze zmienne srodowiskowe:
 - `WP_DISCORD_STATS_TOKEN` - token pokazany w `Settings -> Discord Stats`.
 - `DISCORD_STATS_SYNC_MS` - co ile wysylac podsumowanie do WP, domyslnie `60000`.
 - `DISCORD_STATS_RETENTION_DAYS` - ile dni agregatow trzymac lokalnie, domyslnie `365`.
-- `DISCORD_STATS_IGNORED_CHANNEL_IDS` - kanaly pominiete w statystykach.
+- `DISCORD_STATS_IGNORED_CHANNEL_IDS` - kanaly pominiete w statystykach, np. kanaly dobierania gry i AFK.
 
 ## Kurczaki PUBG LEGION
 
