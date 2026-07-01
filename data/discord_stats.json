@@ -2,8 +2,8 @@
   "version": 2,
   "days": {
     "2026-06-30": {
-      "totalMessages": 14,
-      "totalVoiceSeconds": 110,
+      "totalMessages": 28,
+      "totalVoiceSeconds": 29155,
       "messages": {
         "byUser": {
           "1175960579928752228": {
@@ -11,14 +11,36 @@
             "username": "blu302",
             "displayName": "blue",
             "avatarUrl": "https://cdn.discordapp.com/avatars/1175960579928752228/5445ffd7ffb201a98393cbdf684ea4b1.png?size=64",
-            "count": 1
+            "count": 2,
+            "channels": {
+              "1506381310774743090": {
+                "id": "1506381310774743090",
+                "name": "🎫︱zgłoś-problem",
+                "count": 1,
+                "seconds": 0,
+                "sessions": 0
+              }
+            },
+            "lastMessageAt": "2026-06-30T21:10:57.086Z",
+            "lastActiveAt": "2026-06-30T21:10:57.086Z"
           },
           "427295786271768606": {
             "id": "427295786271768606",
             "username": "samrat06216",
             "displayName": "Samrat",
             "avatarUrl": "https://cdn.discordapp.com/embed/avatars/3.png",
-            "count": 1
+            "count": 2,
+            "channels": {
+              "1506381310774743090": {
+                "id": "1506381310774743090",
+                "name": "🎫︱zgłoś-problem",
+                "count": 1,
+                "seconds": 0,
+                "sessions": 0
+              }
+            },
+            "lastMessageAt": "2026-06-30T21:08:33.251Z",
+            "lastActiveAt": "2026-06-30T21:08:33.251Z"
           },
           "1174903410751967354": {
             "id": "1174903410751967354",
@@ -32,14 +54,104 @@
             "username": "amank06704813",
             "displayName": "amank0670",
             "avatarUrl": "https://cdn.discordapp.com/embed/avatars/4.png",
-            "count": 1
+            "count": 2,
+            "channels": {
+              "1506381310774743090": {
+                "id": "1506381310774743090",
+                "name": "🎫︱zgłoś-problem",
+                "count": 1,
+                "seconds": 0,
+                "sessions": 0
+              }
+            },
+            "lastMessageAt": "2026-06-30T21:08:46.311Z",
+            "lastActiveAt": "2026-06-30T21:08:46.311Z"
           },
           "900418449321394237": {
             "id": "900418449321394237",
             "username": "okiemtestera",
             "displayName": "OkiemTestera",
             "avatarUrl": "https://cdn.discordapp.com/avatars/900418449321394237/6d286a7e7512be62d4eb4430f8326280.png?size=64",
-            "count": 2
+            "count": 9,
+            "channels": {
+              "1506379862733230241": {
+                "id": "1506379862733230241",
+                "name": "💡︱rozwój-serwera",
+                "count": 4,
+                "seconds": 0,
+                "sessions": 0
+              },
+              "1506380823660597440": {
+                "id": "1506380823660597440",
+                "name": "🆕︱dziennik-zmian",
+                "count": 2,
+                "seconds": 0,
+                "sessions": 0
+              },
+              "1508909239328833607": {
+                "id": "1508909239328833607",
+                "name": "🍕︱gastrofaza",
+                "count": 1,
+                "seconds": 0,
+                "sessions": 0
+              }
+            },
+            "lastMessageAt": "2026-06-30T20:27:45.003Z",
+            "lastActiveAt": "2026-06-30T20:27:45.003Z"
+          },
+          "699350173406462003": {
+            "id": "699350173406462003",
+            "username": "robertkwiatkowski.",
+            "displayName": "Kwiaci",
+            "avatarUrl": "https://cdn.discordapp.com/avatars/699350173406462003/06f02543ef3ad2b19bb1152bfaaea9bc.png?size=64",
+            "count": 2,
+            "channels": {
+              "1506379862733230241": {
+                "id": "1506379862733230241",
+                "name": "💡︱rozwój-serwera",
+                "count": 2,
+                "seconds": 0,
+                "sessions": 0
+              }
+            },
+            "lastMessageAt": "2026-06-30T20:27:30.456Z",
+            "lastActiveAt": "2026-06-30T20:27:30.456Z"
+          },
+          "448135497705848832": {
+            "id": "448135497705848832",
+            "username": "bigezz4460",
+            "displayName": "BIGEZZ",
+            "avatarUrl": "https://cdn.discordapp.com/embed/avatars/0.png",
+            "count": 1,
+            "channels": {
+              "1506381310774743090": {
+                "id": "1506381310774743090",
+                "name": "🎫︱zgłoś-problem",
+                "count": 1,
+                "seconds": 0,
+                "sessions": 0
+              }
+            },
+            "lastMessageAt": "2026-06-30T21:08:38.679Z",
+            "lastActiveAt": "2026-06-30T21:08:38.679Z"
+          },
+          "736109669721833472": {
+            "id": "736109669721833472",
+            "username": "satpal8973",
+            "displayName": "satpal",
+            "avatarUrl": "https://cdn.discordapp.com/embed/avatars/0.png",
+            "count": 1,
+            "channels": {
+              "1506381310774743090": {
+                "id": "1506381310774743090",
+                "name": "🎫︱zgłoś-problem",
+                "count": 1,
+                "seconds": 0,
+                "sessions": 0
+              }
+            },
+            "lastMessageAt": "2026-06-30T21:11:48.669Z",
+            "lastActiveAt": "2026-06-30T21:11:48.669Z"
           }
         },
         "byChannel": {
@@ -51,7 +163,7 @@
           "1506381310774743090": {
             "id": "1506381310774743090",
             "name": "🎫︱zgłoś-problem",
-            "count": 1
+            "count": 6
           },
           "1506364039209553960": {
             "id": "1506364039209553960",
@@ -91,7 +203,7 @@
           "1508909239328833607": {
             "id": "1508909239328833607",
             "name": "🍕︱gastrofaza",
-            "count": 1
+            "count": 2
           },
           "1506326964133298206": {
             "id": "1506326964133298206",
@@ -101,12 +213,21 @@
           "1506379862733230241": {
             "id": "1506379862733230241",
             "name": "💡︱rozwój-serwera",
-            "count": 1
+            "count": 7
+          },
+          "1506380823660597440": {
+            "id": "1506380823660597440",
+            "name": "🆕︱dziennik-zmian",
+            "count": 2
           }
         },
         "byHour": {
           "17": 12,
-          "19": 2
+          "19": 2,
+          "20": 3,
+          "21": 1,
+          "22": 5,
+          "23": 5
         }
       },
       "voice": {
@@ -116,16 +237,27 @@
             "username": "kozik9012.",
             "displayName": "Kozik9012",
             "avatarUrl": "https://cdn.discordapp.com/embed/avatars/5.png",
-            "seconds": 8,
-            "sessions": 2
+            "seconds": 7857,
+            "sessions": 3,
+            "channels": {
+              "1521555706489208882": {
+                "id": "1521555706489208882",
+                "name": "[1] Ranked SQUAD",
+                "count": 0,
+                "seconds": 7849,
+                "sessions": 1
+              }
+            },
+            "lastVoiceAt": "2026-06-30T20:34:21.806Z",
+            "lastActiveAt": "2026-06-30T20:34:21.806Z"
           },
           "900418449321394237": {
             "id": "900418449321394237",
             "username": "okiemtestera",
             "displayName": "OkiemTestera",
             "avatarUrl": "https://cdn.discordapp.com/avatars/900418449321394237/6d286a7e7512be62d4eb4430f8326280.png?size=64",
-            "seconds": 102,
-            "sessions": 2,
+            "seconds": 1490,
+            "sessions": 5,
             "channels": {
               "1518990906122833930": {
                 "id": "1518990906122833930",
@@ -133,10 +265,114 @@
                 "count": 0,
                 "seconds": 16,
                 "sessions": 1
+              },
+              "1521555706489208882": {
+                "id": "1521555706489208882",
+                "name": "[1] Ranked SQUAD",
+                "count": 0,
+                "seconds": 179,
+                "sessions": 1
+              },
+              "1507287703312535633": {
+                "id": "1507287703312535633",
+                "name": "➕ Normal SQUAD",
+                "count": 0,
+                "seconds": 1,
+                "sessions": 1
+              },
+              "1521586712487268485": {
+                "id": "1521586712487268485",
+                "name": "[1] Normal SQUAD",
+                "count": 0,
+                "seconds": 1208,
+                "sessions": 1
               }
             },
-            "lastVoiceAt": "2026-06-30T18:24:03.471Z",
-            "lastActiveAt": "2026-06-30T18:24:03.471Z"
+            "lastVoiceAt": "2026-06-30T19:02:30.266Z",
+            "lastActiveAt": "2026-06-30T19:02:30.266Z"
+          },
+          "1416814483900469429": {
+            "id": "1416814483900469429",
+            "username": "kapitan123e",
+            "displayName": "kapitan123e",
+            "avatarUrl": "https://cdn.discordapp.com/avatars/1416814483900469429/65a4b098b006d19307f95eea3183c8c6.png?size=64",
+            "seconds": 7730,
+            "sessions": 3,
+            "channels": {
+              "1521555706489208882": {
+                "id": "1521555706489208882",
+                "name": "[1] Ranked SQUAD",
+                "count": 0,
+                "seconds": 7720,
+                "sessions": 2
+              },
+              "1521586712487268485": {
+                "id": "1521586712487268485",
+                "name": "[1] Normal SQUAD",
+                "count": 0,
+                "seconds": 10,
+                "sessions": 1
+              }
+            },
+            "lastVoiceAt": "2026-06-30T20:32:22.666Z",
+            "lastActiveAt": "2026-06-30T20:32:22.666Z"
+          },
+          "437339648503709707": {
+            "id": "437339648503709707",
+            "username": "moroslaw",
+            "displayName": "MorosLaw_",
+            "avatarUrl": "https://cdn.discordapp.com/avatars/437339648503709707/32f50c78f1d96f2c75e1deedc6692f8d.png?size=64",
+            "seconds": 1440,
+            "sessions": 1,
+            "channels": {
+              "1521555706489208882": {
+                "id": "1521555706489208882",
+                "name": "[1] Ranked SQUAD",
+                "count": 0,
+                "seconds": 1440,
+                "sessions": 1
+              }
+            },
+            "lastVoiceAt": "2026-06-30T19:32:53.285Z",
+            "lastActiveAt": "2026-06-30T19:32:53.285Z"
+          },
+          "763851691099291648": {
+            "id": "763851691099291648",
+            "username": "gh05tu",
+            "displayName": "GH05TU",
+            "avatarUrl": "https://cdn.discordapp.com/avatars/763851691099291648/257adeb5f7463276009c9b694a4417e8.png?size=64",
+            "seconds": 2922,
+            "sessions": 1,
+            "channels": {
+              "1521555706489208882": {
+                "id": "1521555706489208882",
+                "name": "[1] Ranked SQUAD",
+                "count": 0,
+                "seconds": 2922,
+                "sessions": 1
+              }
+            },
+            "lastVoiceAt": "2026-06-30T20:32:06.329Z",
+            "lastActiveAt": "2026-06-30T20:32:06.329Z"
+          },
+          "500756257351663631": {
+            "id": "500756257351663631",
+            "username": "ezio867",
+            "displayName": "Ezio867",
+            "avatarUrl": "https://cdn.discordapp.com/embed/avatars/2.png",
+            "seconds": 7716,
+            "sessions": 1,
+            "channels": {
+              "1521555706489208882": {
+                "id": "1521555706489208882",
+                "name": "[1] Ranked SQUAD",
+                "count": 0,
+                "seconds": 7716,
+                "sessions": 1
+              }
+            },
+            "lastVoiceAt": "2026-06-30T20:32:08.797Z",
+            "lastActiveAt": "2026-06-30T20:32:08.797Z"
           }
         },
         "byChannel": {
@@ -157,50 +393,111 @@
             "name": "🎵︱muzyka",
             "seconds": 102,
             "sessions": 2
+          },
+          "1521555706489208882": {
+            "id": "1521555706489208882",
+            "name": "[1] Ranked SQUAD",
+            "seconds": 27826,
+            "sessions": 7
+          },
+          "1507287703312535633": {
+            "id": "1507287703312535633",
+            "name": "➕ Normal SQUAD",
+            "seconds": 1,
+            "sessions": 1
+          },
+          "1521586712487268485": {
+            "id": "1521586712487268485",
+            "name": "[1] Normal SQUAD",
+            "seconds": 1218,
+            "sessions": 2
           }
         },
         "byHour": {
           "18": 8,
           "19": 86,
-          "20": 16
+          "20": 8400,
+          "21": 13448,
+          "22": 7213
         }
+      }
+    },
+    "2026-07-01": {
+      "totalMessages": 3,
+      "totalVoiceSeconds": 0,
+      "messages": {
+        "byUser": {
+          "699350173406462003": {
+            "id": "699350173406462003",
+            "username": "robertkwiatkowski.",
+            "displayName": "Kwiaci",
+            "avatarUrl": "https://cdn.discordapp.com/avatars/699350173406462003/06f02543ef3ad2b19bb1152bfaaea9bc.png?size=64",
+            "count": 1,
+            "channels": {
+              "1506379862733230241": {
+                "id": "1506379862733230241",
+                "name": "💡︱rozwój-serwera",
+                "count": 1,
+                "seconds": 0,
+                "sessions": 0
+              }
+            },
+            "lastMessageAt": "2026-07-01T05:29:33.656Z",
+            "lastActiveAt": "2026-07-01T05:29:33.656Z"
+          },
+          "900418449321394237": {
+            "id": "900418449321394237",
+            "username": "okiemtestera",
+            "displayName": "OkiemTestera",
+            "avatarUrl": "https://cdn.discordapp.com/avatars/900418449321394237/6d286a7e7512be62d4eb4430f8326280.png?size=64",
+            "count": 2,
+            "channels": {
+              "1506379862733230241": {
+                "id": "1506379862733230241",
+                "name": "💡︱rozwój-serwera",
+                "count": 1,
+                "seconds": 0,
+                "sessions": 0
+              },
+              "1506381956525457549": {
+                "id": "1506381956525457549",
+                "name": "🪖︱baraki",
+                "count": 1,
+                "seconds": 0,
+                "sessions": 0
+              }
+            },
+            "lastMessageAt": "2026-07-01T08:32:05.156Z",
+            "lastActiveAt": "2026-07-01T08:32:05.156Z"
+          }
+        },
+        "byChannel": {
+          "1506379862733230241": {
+            "id": "1506379862733230241",
+            "name": "💡︱rozwój-serwera",
+            "count": 2
+          },
+          "1506381956525457549": {
+            "id": "1506381956525457549",
+            "name": "🪖︱baraki",
+            "count": 1
+          }
+        },
+        "byHour": {
+          "10": 2,
+          "07": 1
+        }
+      },
+      "voice": {
+        "byUser": {},
+        "byChannel": {},
+        "byHour": {}
       }
     }
   },
-  "activeVoiceSessions": {
-    "1506270819620491344:500756257351663631": {
-      "guildId": "1506270819620491344",
-      "userId": "500756257351663631",
-      "username": "ezio867",
-      "displayName": "Ezio867",
-      "avatarUrl": "https://cdn.discordapp.com/embed/avatars/2.png",
-      "channelId": "1521555706489208882",
-      "channelName": "[1] Ranked SQUAD",
-      "startedAt": "2026-06-30T18:23:32.790Z"
-    },
-    "1506270819620491344:1289285671181222012": {
-      "guildId": "1506270819620491344",
-      "userId": "1289285671181222012",
-      "username": "kozik9012.",
-      "displayName": "Kozik9012",
-      "avatarUrl": "https://cdn.discordapp.com/embed/avatars/5.png",
-      "channelId": "1521555706489208882",
-      "channelName": "[1] Ranked SQUAD",
-      "startedAt": "2026-06-30T18:23:32.790Z"
-    },
-    "1506270819620491344:1416814483900469429": {
-      "guildId": "1506270819620491344",
-      "userId": "1416814483900469429",
-      "username": "kapitan123e",
-      "displayName": "kapitan123e",
-      "avatarUrl": "https://cdn.discordapp.com/avatars/1416814483900469429/65a4b098b006d19307f95eea3183c8c6.png?size=64",
-      "channelId": "1521555706489208882",
-      "channelName": "[1] Ranked SQUAD",
-      "startedAt": "2026-06-30T18:23:32.790Z"
-    }
-  },
-  "updatedAt": "2026-06-30T18:24:33.139Z",
-  "lastSyncAt": "2026-06-30T18:24:33.139Z",
+  "activeVoiceSessions": {},
+  "updatedAt": "2026-07-01T08:38:09.582Z",
+  "lastSyncAt": "2026-07-01T08:38:09.582Z",
   "users": {
     "500756257351663631": {
       "id": "500756257351663631",
@@ -208,8 +505,8 @@
       "displayName": "Ezio867",
       "avatarUrl": "https://cdn.discordapp.com/embed/avatars/2.png",
       "lastMessageAt": "",
-      "lastVoiceAt": "2026-06-30T18:23:32.790Z",
-      "lastActiveAt": "2026-06-30T18:23:32.790Z"
+      "lastVoiceAt": "2026-06-30T20:32:08.797Z",
+      "lastActiveAt": "2026-06-30T20:32:08.797Z"
     },
     "1289285671181222012": {
       "id": "1289285671181222012",
@@ -217,8 +514,8 @@
       "displayName": "Kozik9012",
       "avatarUrl": "https://cdn.discordapp.com/embed/avatars/5.png",
       "lastMessageAt": "",
-      "lastVoiceAt": "2026-06-30T18:23:32.790Z",
-      "lastActiveAt": "2026-06-30T18:23:32.790Z"
+      "lastVoiceAt": "2026-06-30T20:34:21.806Z",
+      "lastActiveAt": "2026-06-30T20:34:21.806Z"
     },
     "1416814483900469429": {
       "id": "1416814483900469429",
@@ -226,17 +523,89 @@
       "displayName": "kapitan123e",
       "avatarUrl": "https://cdn.discordapp.com/avatars/1416814483900469429/65a4b098b006d19307f95eea3183c8c6.png?size=64",
       "lastMessageAt": "",
-      "lastVoiceAt": "2026-06-30T18:23:32.790Z",
-      "lastActiveAt": "2026-06-30T18:23:32.790Z"
+      "lastVoiceAt": "2026-06-30T20:32:22.666Z",
+      "lastActiveAt": "2026-06-30T20:32:22.666Z"
     },
     "900418449321394237": {
       "id": "900418449321394237",
       "username": "okiemtestera",
       "displayName": "OkiemTestera",
       "avatarUrl": "https://cdn.discordapp.com/avatars/900418449321394237/6d286a7e7512be62d4eb4430f8326280.png?size=64",
+      "lastMessageAt": "2026-07-01T08:32:05.156Z",
+      "lastVoiceAt": "2026-06-30T19:02:30.266Z",
+      "lastActiveAt": "2026-07-01T08:32:05.156Z"
+    },
+    "437339648503709707": {
+      "id": "437339648503709707",
+      "username": "moroslaw",
+      "displayName": "MorosLaw_",
+      "avatarUrl": "https://cdn.discordapp.com/avatars/437339648503709707/32f50c78f1d96f2c75e1deedc6692f8d.png?size=64",
       "lastMessageAt": "",
-      "lastVoiceAt": "2026-06-30T18:24:03.471Z",
-      "lastActiveAt": "2026-06-30T18:24:03.471Z"
+      "lastVoiceAt": "2026-06-30T19:32:53.285Z",
+      "lastActiveAt": "2026-06-30T19:32:53.285Z"
+    },
+    "763851691099291648": {
+      "id": "763851691099291648",
+      "username": "gh05tu",
+      "displayName": "GH05TU",
+      "avatarUrl": "https://cdn.discordapp.com/avatars/763851691099291648/257adeb5f7463276009c9b694a4417e8.png?size=64",
+      "lastMessageAt": "",
+      "lastVoiceAt": "2026-06-30T20:32:06.329Z",
+      "lastActiveAt": "2026-06-30T20:32:06.329Z"
+    },
+    "699350173406462003": {
+      "id": "699350173406462003",
+      "username": "robertkwiatkowski.",
+      "displayName": "Kwiaci",
+      "avatarUrl": "https://cdn.discordapp.com/avatars/699350173406462003/06f02543ef3ad2b19bb1152bfaaea9bc.png?size=64",
+      "lastMessageAt": "2026-07-01T05:29:33.656Z",
+      "lastVoiceAt": "",
+      "lastActiveAt": "2026-07-01T05:29:33.656Z"
+    },
+    "427295786271768606": {
+      "id": "427295786271768606",
+      "username": "samrat06216",
+      "displayName": "Samrat",
+      "avatarUrl": "https://cdn.discordapp.com/embed/avatars/3.png",
+      "lastMessageAt": "2026-06-30T21:08:33.251Z",
+      "lastVoiceAt": "",
+      "lastActiveAt": "2026-06-30T21:08:33.251Z"
+    },
+    "448135497705848832": {
+      "id": "448135497705848832",
+      "username": "bigezz4460",
+      "displayName": "BIGEZZ",
+      "avatarUrl": "https://cdn.discordapp.com/embed/avatars/0.png",
+      "lastMessageAt": "2026-06-30T21:08:38.679Z",
+      "lastVoiceAt": "",
+      "lastActiveAt": "2026-06-30T21:08:38.679Z"
+    },
+    "472660290656272388": {
+      "id": "472660290656272388",
+      "username": "amank06704813",
+      "displayName": "amank0670",
+      "avatarUrl": "https://cdn.discordapp.com/embed/avatars/4.png",
+      "lastMessageAt": "2026-06-30T21:08:46.311Z",
+      "lastVoiceAt": "",
+      "lastActiveAt": "2026-06-30T21:08:46.311Z"
+    },
+    "1175960579928752228": {
+      "id": "1175960579928752228",
+      "username": "blu302",
+      "displayName": "blue",
+      "avatarUrl": "https://cdn.discordapp.com/avatars/1175960579928752228/5445ffd7ffb201a98393cbdf684ea4b1.png?size=64",
+      "lastMessageAt": "2026-06-30T21:10:57.086Z",
+      "lastVoiceAt": "",
+      "lastActiveAt": "2026-06-30T21:10:57.086Z"
+    },
+    "736109669721833472": {
+      "id": "736109669721833472",
+      "username": "satpal8973",
+      "displayName": "satpal",
+      "avatarUrl": "https://cdn.discordapp.com/embed/avatars/0.png",
+      "lastMessageAt": "2026-06-30T21:11:48.669Z",
+      "lastVoiceAt": "",
+      "lastActiveAt": "2026-06-30T21:11:48.669Z"
     }
   }
 }

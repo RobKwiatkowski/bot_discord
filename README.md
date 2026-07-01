@@ -62,6 +62,9 @@ Na Discordzie dostepna jest komenda:
 /aktywnosc user uzytkownik:@nick okres:7d
 ```
 
+Widoki `/aktywnosc serwer` i `/aktywnosc top` sa renderowane jako karta PNG,
+zeby przypominaly zwarte tabelki Statbota.
+
 Nazwy wyswietlane w komendach i na stronie sa nickami serwerowymi Discorda
 (`displayName`), a nie globalnymi nazwami kont.
 
