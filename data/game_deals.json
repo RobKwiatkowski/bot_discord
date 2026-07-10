@@ -39,7 +39,31 @@
       "source": "Epic Games Store",
       "discountPercent": 100,
       "seenAt": "2026-06-26T08:00:19.461Z"
+    },
+    "epic:i-have-no-mouth-and-i-must-scream": {
+      "title": "I Have No Mouth, and I Must Scream",
+      "source": "Epic Games Store",
+      "discountPercent": 100,
+      "seenAt": "2026-07-03T08:00:12.183Z"
+    },
+    "epic:river-city-girls-2": {
+      "title": "River City Girls 2",
+      "source": "Epic Games Store",
+      "discountPercent": 100,
+      "seenAt": "2026-07-03T08:00:12.183Z"
+    },
+    "epic:nova-lands": {
+      "title": "Nova Lands",
+      "source": "Epic Games Store",
+      "discountPercent": 100,
+      "seenAt": "2026-07-10T08:00:19.021Z"
+    },
+    "epic:tattoo-tycoon": {
+      "title": "Tattoo Tycoon",
+      "source": "Epic Games Store",
+      "discountPercent": 100,
+      "seenAt": "2026-07-10T08:00:19.021Z"
     }
   },
-  "lastCheckedAt": "2026-07-01T16:06:01.525Z"
+  "lastCheckedAt": "2026-07-10T08:46:06.086Z"
 }

@@ -28,6 +28,14 @@ function createDiscordClient() {
     );
   }
 
+  if (config.discord.enablePresenceIntent) {
+    intents.push(GatewayIntentBits.GuildPresences);
+  } else {
+    console.warn(
+      '[discord] DISCORD_ENABLE_PRESENCE_INTENT=false: statystyki gier nie beda zliczane.'
+    );
+  }
+
   return new Client({
     intents,
     partials: [

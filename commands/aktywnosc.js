@@ -61,7 +61,7 @@ function displayUser(item) {
 function applyGuildDisplayNames(stats, guild) {
   if (!guild) return stats;
 
-  for (const key of ['top_message_users', 'top_voice_users']) {
+  for (const key of ['top_message_users', 'top_voice_users', 'top_game_users', 'top_game_pairs', 'top_invites']) {
     for (const item of stats[key] || []) {
       const member = guild.members.cache.get(item.id);
       if (member) {
@@ -112,6 +112,16 @@ function displayTopItem(item, isChannel) {
   return isChannel ? displayChannel(item) : displayUser(item);
 }
 
+function displayNamedItem(item) {
+  return item.name || item.id || 'Nieznane';
+}
+
+function displayGamePair(item) {
+  const userName = displayUser(item);
+  const gameName = item.game_name || item.name || 'Nieznana gra';
+  return `${userName} - ${gameName}`;
+}
+
 function compactDuration(seconds) {
   const total = Math.max(0, Math.round(Number(seconds) || 0));
   if (total >= 3600) return `${(total / 3600).toFixed(2)} hr`;
@@ -147,6 +157,40 @@ function topConfig(type, stats) {
       color: 0x00a86b,
       isChannel: false,
       value: item => compactDuration(item.voice_seconds || item.value || 0)
+    },
+    game_users: {
+      title: 'Najdluzej w grach',
+      subtitle: 'Top Game Members',
+      items: stats.top_game_users,
+      color: 0x94a3b8,
+      isChannel: false,
+      value: item => compactDuration(item.game_seconds || item.value || 0)
+    },
+    games: {
+      title: 'Top gry',
+      subtitle: 'Top Games',
+      items: stats.top_games,
+      color: 0x94a3b8,
+      isChannel: false,
+      name: displayNamedItem,
+      value: item => compactDuration(item.game_seconds || item.value || 0)
+    },
+    game_pairs: {
+      title: 'Kto w co gral',
+      subtitle: 'Members by Game',
+      items: stats.top_game_pairs,
+      color: 0x94a3b8,
+      isChannel: false,
+      name: displayGamePair,
+      value: item => compactDuration(item.game_seconds || item.value || 0)
+    },
+    invites: {
+      title: 'Zaproszenia',
+      subtitle: 'Top Invites',
+      items: stats.top_invites,
+      color: 0xef4444,
+      isChannel: false,
+      value: item => `${item.invites || item.value || 0}`
     },
     text_channels: {
       title: 'Kanaly tekstowe',
@@ -270,6 +314,7 @@ function drawRankingRows(ctx, items, options) {
     title,
     valueFormatter,
     isChannel = false,
+    nameFormatter = null,
     forceColumns = null,
     maxItems = 10
   } = options;
@@ -315,7 +360,7 @@ function drawRankingRows(ctx, items, options) {
 
     ctx.fillStyle = COLORS.text;
     const nameMaxWidth = columnWidth - valueWidth - 82;
-    const rowName = isChannel ? displayChannelForCard(item) : displayUser(item);
+    const rowName = nameFormatter ? nameFormatter(item) : isChannel ? displayChannelForCard(item) : displayUser(item);
     ctx.fillText(truncateText(ctx, rowName, nameMaxWidth), rowX + 64, rowY + 33);
   }
 
@@ -391,6 +436,7 @@ async function renderTopStatsCard({ guild, stats, selected }) {
     title: selected.subtitle,
     valueFormatter: selected.value,
     isChannel: selected.isChannel,
+    nameFormatter: selected.name,
     maxItems: 10
   });
   drawFooter(ctx, stats);
@@ -417,10 +463,11 @@ async function renderServerStatsCard({ guild, stats }) {
 
   const metricY = 138;
   const metricGap = 16;
-  const metricWidth = (CARD_WIDTH - CARD_PADDING * 2 - metricGap * 2) / 3;
+  const metricWidth = (CARD_WIDTH - CARD_PADDING * 2 - metricGap * 3) / 4;
   drawMetric(ctx, CARD_PADDING, metricY, metricWidth, 'Wiadomosci', stats.totals.messages);
   drawMetric(ctx, CARD_PADDING + metricWidth + metricGap, metricY, metricWidth, 'Czas glosowy', formatDuration(stats.totals.voice_seconds));
-  drawMetric(ctx, CARD_PADDING + (metricWidth + metricGap) * 2, metricY, metricWidth, 'Aktywni', stats.totals.active_users);
+  drawMetric(ctx, CARD_PADDING + (metricWidth + metricGap) * 2, metricY, metricWidth, 'Czas w grach', formatDuration(stats.totals.game_seconds));
+  drawMetric(ctx, CARD_PADDING + (metricWidth + metricGap) * 3, metricY, metricWidth, 'Aktywni', stats.totals.active_users);
 
   const listY = metricY + 126;
   const listGap = 24;
@@ -452,7 +499,8 @@ async function renderUserStatsCard({ guild, periodStats, userStats, user, displa
   const { createCanvas, loadImage } = require('canvas');
   const textChannels = Array.isArray(userStats.top_text_channels) ? userStats.top_text_channels.slice(0, 5) : [];
   const voiceChannels = Array.isArray(userStats.top_voice_channels) ? userStats.top_voice_channels.slice(0, 5) : [];
-  const rowCount = Math.max(textChannels.length, voiceChannels.length, 1);
+  const games = Array.isArray(userStats.top_games) ? userStats.top_games.slice(0, 5) : [];
+  const rowCount = Math.max(textChannels.length, voiceChannels.length, games.length, 1);
   const listStartY = 394;
   const height = Math.max(680, listStartY + 20 + rowCount * (ROW_HEIGHT + ROW_GAP) + CARD_FOOTER_HEIGHT);
   const canvas = createCanvas(CARD_WIDTH, height);
@@ -482,12 +530,12 @@ async function renderUserStatsCard({ guild, periodStats, userStats, user, displa
   const metricWidth = (CARD_WIDTH - CARD_PADDING * 2 - metricGap * 3) / 4;
   drawMiniMetric(ctx, CARD_PADDING, metricY, metricWidth, 'Wiadomosci', userStats.messages);
   drawMiniMetric(ctx, CARD_PADDING + (metricWidth + metricGap), metricY, metricWidth, 'Czas glosowy', formatDuration(userStats.voice_seconds));
-  drawMiniMetric(ctx, CARD_PADDING + (metricWidth + metricGap) * 2, metricY, metricWidth, 'Sesje glosowe', userStats.sessions);
-  drawMiniMetric(ctx, CARD_PADDING + (metricWidth + metricGap) * 3, metricY, metricWidth, 'Ostatnio', formatDateTime(userStats.last_active_at));
+  drawMiniMetric(ctx, CARD_PADDING + (metricWidth + metricGap) * 2, metricY, metricWidth, 'Czas w grach', formatDuration(userStats.game_seconds));
+  drawMiniMetric(ctx, CARD_PADDING + (metricWidth + metricGap) * 3, metricY, metricWidth, 'Zaproszenia', userStats.invites);
 
   const listY = metricY + 120;
-  const listGap = 24;
-  const listWidth = (CARD_WIDTH - CARD_PADDING * 2 - listGap) / 2;
+  const listGap = 18;
+  const listWidth = (CARD_WIDTH - CARD_PADDING * 2 - listGap * 2) / 3;
   drawRankingRows(ctx, textChannels, {
     x: CARD_PADDING,
     y: listY,
@@ -505,6 +553,16 @@ async function renderUserStatsCard({ guild, periodStats, userStats, user, displa
     title: 'Favorite Voice Channels',
     valueFormatter: item => compactDuration(item.voice_seconds || item.value || 0),
     isChannel: true,
+    maxItems: 5,
+    forceColumns: 1
+  });
+  drawRankingRows(ctx, games, {
+    x: CARD_PADDING + (listWidth + listGap) * 2,
+    y: listY,
+    width: listWidth,
+    title: 'Favorite Games',
+    valueFormatter: item => compactDuration(item.game_seconds || item.value || 0),
+    nameFormatter: displayNamedItem,
     maxItems: 5,
     forceColumns: 1
   });
@@ -534,7 +592,11 @@ module.exports = {
             .setRequired(true)
             .addChoices(
               { name: 'Wiadomosci', value: 'messages' },
-              { name: 'Kanaly glosowe', value: 'voice' },
+              { name: 'Uzytkownicy glosowo', value: 'voice' },
+              { name: 'Uzytkownicy - gry', value: 'game_users' },
+              { name: 'Kto w co gral', value: 'game_pairs' },
+              { name: 'Gry', value: 'games' },
+              { name: 'Zaproszenia', value: 'invites' },
               { name: 'Kanaly tekstowe', value: 'text_channels' },
               { name: 'Kanaly glosowe - ranking kanalow', value: 'voice_channels' }
             )
@@ -582,6 +644,7 @@ module.exports = {
           .addFields(
             { name: 'Wiadomosci', value: String(stats.totals.messages), inline: true },
             { name: 'Czas glosowy', value: formatDuration(stats.totals.voice_seconds), inline: true },
+            { name: 'Czas w grach', value: formatDuration(stats.totals.game_seconds), inline: true },
             { name: 'Aktywni', value: String(stats.totals.active_users), inline: true },
             {
               name: 'Top wiadomosci',
@@ -615,7 +678,7 @@ module.exports = {
         const embed = new EmbedBuilder()
           .setColor(selected.color)
           .setTitle(`${selected.title} - ${stats.label}`)
-          .setDescription(topLines(selected.items, item => `${displayTopItem(item, selected.isChannel)} - ${selected.value(item)}`))
+          .setDescription(topLines(selected.items, item => `${selected.name ? selected.name(item) : displayTopItem(item, selected.isChannel)} - ${selected.value(item)}`))
           .setTimestamp();
 
         await interaction.editReply({ embeds: [embed] });
@@ -650,7 +713,8 @@ module.exports = {
         .addFields(
           { name: 'Wiadomosci', value: String(userStats.messages), inline: true },
           { name: 'Czas glosowy', value: formatDuration(userStats.voice_seconds), inline: true },
-          { name: 'Sesje glosowe', value: String(userStats.sessions), inline: true },
+          { name: 'Czas w grach', value: formatDuration(userStats.game_seconds), inline: true },
+          { name: 'Zaproszenia', value: String(userStats.invites), inline: true },
           { name: 'Ostatnia aktywnosc', value: formatDateTime(userStats.last_active_at), inline: false },
           {
             name: 'Najczestsze kanaly tekstowe',
@@ -666,6 +730,15 @@ module.exports = {
             value: topLines(
               userStats.top_voice_channels,
               item => `${displayChannel(item)} - ${formatDuration(item.voice_seconds)}`,
+              'Brak danych'
+            ),
+            inline: true
+          },
+          {
+            name: 'Ulubione gry',
+            value: topLines(
+              userStats.top_games,
+              item => `${displayNamedItem(item)} - ${formatDuration(item.game_seconds)}`,
               'Brak danych'
             ),
             inline: true

@@ -82,6 +82,7 @@ Najwazniejsze zmienne srodowiskowe:
 - `DISCORD_STATS_SYNC_MS` - co ile wysylac podsumowanie do WP, domyslnie `60000`.
 - `DISCORD_STATS_RETENTION_DAYS` - ile dni agregatow trzymac lokalnie, domyslnie `365`.
 - `DISCORD_STATS_IGNORED_CHANNEL_IDS` - kanaly pominiete w statystykach, np. kanaly dobierania gry i AFK.
+- `DISCORD_ENABLE_PRESENCE_INTENT=true` - wymagane do zliczania czasu w grach; Presence Intent musi byc wlaczony tez w Discord Developer Portal.
 
 ## Kurczaki PUBG LEGION
 

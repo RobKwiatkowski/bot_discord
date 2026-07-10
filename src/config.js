@@ -54,7 +54,8 @@ const config = {
     ]),
     botActivity: env('BOT_ACTIVITY', 'NPC z uprawnieniami admina'),
     enableGuildMembersIntent: !envBool('DISCORD_DISABLE_GUILD_MEMBERS_INTENT', false),
-    enableMessageContentIntent: envBool('DISCORD_ENABLE_MESSAGE_CONTENT_INTENT', false)
+    enableMessageContentIntent: envBool('DISCORD_ENABLE_MESSAGE_CONTENT_INTENT', false),
+    enablePresenceIntent: envBool('DISCORD_ENABLE_PRESENCE_INTENT', false)
   },
   files: {
     lottery: path.join(dataDir, 'loteria.json'),
@@ -172,7 +173,7 @@ const config = {
     timezone: env('DISCORD_STATS_TIMEZONE', 'Europe/Warsaw'),
     retentionDays: envNumber('DISCORD_STATS_RETENTION_DAYS', 365),
     flushIntervalMs: envNumber('DISCORD_STATS_FLUSH_MS', 60 * 1000),
-    syncIntervalMs: envNumber('DISCORD_STATS_SYNC_MS', 10 * 60 * 1000),
+    syncIntervalMs: envNumber('DISCORD_STATS_SYNC_MS', 60 * 1000),
     topLimit: envNumber('DISCORD_STATS_TOP_LIMIT', 25),
     includeBots: envBool('DISCORD_STATS_INCLUDE_BOTS', false),
     ignoredChannelIds: envList('DISCORD_STATS_IGNORED_CHANNEL_IDS'),
