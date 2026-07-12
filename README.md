@@ -91,7 +91,8 @@ Bot sprawdza ostatnie mecze graczy z `listaklanu.json`, powiazan z
 bot wysyla embed z grafika na kanal kurczakow. Pierwsze uruchomienie domyslnie
 tylko zapisuje aktualne ostatnie mecze, zeby nie wyslac starych zwyciestw naraz.
 Tagi klanow przy nickach sa pobierane z PUBG API na podstawie aktualnego
-`clanId` gracza.
+`clanId` gracza. Dla lokalnych klanowiczow fallback tagu ustawia
+`PUBG_CLAN_TAG`, domyslnie `LGN`.
 
 Najwazniejsze zmienne srodowiskowe:
 
