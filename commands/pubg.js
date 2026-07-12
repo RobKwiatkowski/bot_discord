@@ -53,10 +53,9 @@ function findRankImage(tier, subTier) {
   return null;
 }
 
-function buildRankEmbed({ interaction, nickname, rankTier, rankLabel, rankPoints, apiRankLabel, mode, matches, rankImage }) {
+function buildRankEmbed({ interaction, nickname, rankTier, rankLabel, rankPoints, mode, matches, rankImage }) {
   const displayLabel = rankLabel || rankTier || 'Unranked';
   const normalizedTier = String(rankTier || '').toUpperCase();
-  const apiDiffers = apiRankLabel && apiRankLabel.toUpperCase() !== String(displayLabel).toUpperCase();
   const embed = new EmbedBuilder()
     .setColor(rankColors[normalizedTier] || 0x2b2d31)
     .setAuthor({
@@ -72,14 +71,6 @@ function buildRankEmbed({ interaction, nickname, rankTier, rankLabel, rankPoints
     )
     .setFooter({ text: 'Sentinel | oficjalne PUBG API' })
     .setTimestamp();
-
-  if (apiDiffers) {
-    embed.addFields({
-      name: 'Korekta po RP',
-      value: `PUBG API zwrocilo **${apiRankLabel}**, ale **${rankPoints} RP** odpowiada randze **${displayLabel}**.`,
-      inline: false
-    });
-  }
 
   if (rankImage) {
     embed.setThumbnail(`attachment://${rankImage.fileName}`);
@@ -144,7 +135,7 @@ module.exports = {
       }
 
       try {
-        const { tier, rankTier, rankSubTier, rankLabel, rankPoints, apiRankLabel, mode, matches } = await fetchPubgRank(nickname);
+        const { tier, rankTier, rankSubTier, rankLabel, rankPoints, mode, matches } = await fetchPubgRank(nickname);
         const role = await ensureRole(interaction.guild, tier);
 
         for (const rankName of rankRoles) {
@@ -161,7 +152,6 @@ module.exports = {
           rankTier,
           rankLabel,
           rankPoints,
-          apiRankLabel,
           mode,
           matches,
           rankImage

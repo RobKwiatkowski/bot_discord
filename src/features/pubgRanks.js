@@ -142,7 +142,6 @@ async function fetchPubgRank(nickname) {
     rankSubTier: rank.subTier,
     rankLabel: rank.label,
     rankPoints: rank.rankPoint,
-    apiRankLabel: rank.apiLabel,
     mode: bestModeName,
     matches: maxMatches
   };

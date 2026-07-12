@@ -6832,9 +6832,9 @@
       }
     },
     "2026-07-12": {
-      "totalMessages": 1,
-      "totalVoiceSeconds": 0,
-      "totalGameSeconds": 159682,
+      "totalMessages": 2,
+      "totalVoiceSeconds": 7087,
+      "totalGameSeconds": 177143,
       "messages": {
         "byUser": {
           "900418449321394237": {
@@ -6842,7 +6842,7 @@
             "username": "okiemtestera",
             "displayName": "OkiemTestera",
             "avatarUrl": "https://cdn.discordapp.com/avatars/900418449321394237/6d286a7e7512be62d4eb4430f8326280.png?size=64",
-            "count": 1,
+            "count": 2,
             "channels": {
               "1506365761570996365": {
                 "id": "1506365761570996365",
@@ -6850,10 +6850,17 @@
                 "count": 1,
                 "seconds": 0,
                 "sessions": 0
+              },
+              "1507645702854152342": {
+                "id": "1507645702854152342",
+                "name": "🏅︱ranga",
+                "count": 1,
+                "seconds": 0,
+                "sessions": 0
               }
             },
-            "lastMessageAt": "2026-07-12T09:59:39.612Z",
-            "lastActiveAt": "2026-07-12T09:59:39.612Z"
+            "lastMessageAt": "2026-07-12T13:08:25.001Z",
+            "lastActiveAt": "2026-07-12T13:08:25.001Z"
           }
         },
         "byChannel": {
@@ -6861,16 +6868,134 @@
             "id": "1506365761570996365",
             "name": "🎞️︱klipy-i-screeny",
             "count": 1
+          },
+          "1507645702854152342": {
+            "id": "1507645702854152342",
+            "name": "🏅︱ranga",
+            "count": 1
           }
         },
         "byHour": {
-          "11": 1
+          "11": 1,
+          "15": 1
         }
       },
       "voice": {
-        "byUser": {},
-        "byChannel": {},
-        "byHour": {}
+        "byUser": {
+          "1416814483900469429": {
+            "id": "1416814483900469429",
+            "username": "kapitan123e",
+            "displayName": "kapitan123e",
+            "avatarUrl": "https://cdn.discordapp.com/avatars/1416814483900469429/65a4b098b006d19307f95eea3183c8c6.png?size=64",
+            "seconds": 2989,
+            "sessions": 1,
+            "channels": {
+              "1525825856709333042": {
+                "id": "1525825856709333042",
+                "name": "[1] Ranked SQUAD",
+                "count": 0,
+                "seconds": 2989,
+                "sessions": 1
+              }
+            },
+            "lastVoiceAt": "2026-07-12T12:59:59.814Z",
+            "lastActiveAt": "2026-07-12T12:59:59.814Z"
+          },
+          "1289285671181222012": {
+            "id": "1289285671181222012",
+            "username": "kozik9012.",
+            "displayName": "Kozik9012",
+            "avatarUrl": "https://cdn.discordapp.com/embed/avatars/5.png",
+            "seconds": 2992,
+            "sessions": 1,
+            "channels": {
+              "1525825856709333042": {
+                "id": "1525825856709333042",
+                "name": "[1] Ranked SQUAD",
+                "count": 0,
+                "seconds": 2992,
+                "sessions": 1
+              }
+            },
+            "lastVoiceAt": "2026-07-12T13:00:02.898Z",
+            "lastActiveAt": "2026-07-12T13:00:02.898Z"
+          },
+          "679311935359025155": {
+            "id": "679311935359025155",
+            "username": "st4chu5097",
+            "displayName": "St4chu_PL",
+            "avatarUrl": "https://cdn.discordapp.com/avatars/679311935359025155/0740187682b66e33d9b53f93ac798c1e.png?size=64",
+            "seconds": 775,
+            "sessions": 1,
+            "channels": {
+              "1525825856709333042": {
+                "id": "1525825856709333042",
+                "name": "[1] Ranked SQUAD",
+                "count": 0,
+                "seconds": 775,
+                "sessions": 1
+              }
+            },
+            "lastVoiceAt": "2026-07-12T13:04:33.815Z",
+            "lastActiveAt": "2026-07-12T13:04:33.815Z"
+          },
+          "437339648503709707": {
+            "id": "437339648503709707",
+            "username": "moroslaw",
+            "displayName": "MorosLaw_",
+            "avatarUrl": "https://cdn.discordapp.com/avatars/437339648503709707/32f50c78f1d96f2c75e1deedc6692f8d.png?size=64",
+            "seconds": 306,
+            "sessions": 1,
+            "channels": {
+              "1525849207888674896": {
+                "id": "1525849207888674896",
+                "name": "[2] Ranked SQUAD",
+                "count": 0,
+                "seconds": 306,
+                "sessions": 1
+              }
+            },
+            "lastVoiceAt": "2026-07-12T13:28:27.956Z",
+            "lastActiveAt": "2026-07-12T13:28:27.956Z"
+          },
+          "763851691099291648": {
+            "id": "763851691099291648",
+            "username": "gh05tu",
+            "displayName": "GH05TU",
+            "avatarUrl": "https://cdn.discordapp.com/avatars/763851691099291648/257adeb5f7463276009c9b694a4417e8.png?size=64",
+            "seconds": 25,
+            "sessions": 1,
+            "channels": {
+              "1525849207888674896": {
+                "id": "1525849207888674896",
+                "name": "[2] Ranked SQUAD",
+                "count": 0,
+                "seconds": 25,
+                "sessions": 1
+              }
+            },
+            "lastVoiceAt": "2026-07-12T13:42:51.107Z",
+            "lastActiveAt": "2026-07-12T13:42:51.107Z"
+          }
+        },
+        "byChannel": {
+          "1525825856709333042": {
+            "id": "1525825856709333042",
+            "name": "[1] Ranked SQUAD",
+            "seconds": 6756,
+            "sessions": 3
+          },
+          "1525849207888674896": {
+            "id": "1525849207888674896",
+            "name": "[2] Ranked SQUAD",
+            "seconds": 331,
+            "sessions": 2
+          }
+        },
+        "byHour": {
+          "14": 6581,
+          "15": 506
+        }
       },
       "games": {
         "byUser": {
@@ -6897,8 +7022,8 @@
             "username": "bebis1337",
             "displayName": "Bebis",
             "avatarUrl": "https://cdn.discordapp.com/embed/avatars/2.png",
-            "seconds": 7464,
-            "sessions": 4,
+            "seconds": 9375,
+            "sessions": 5,
             "games": {
               "pubg: battlegrounds": {
                 "id": "pubg: battlegrounds",
@@ -6909,12 +7034,12 @@
               "league of legends": {
                 "id": "league of legends",
                 "name": "League of Legends",
-                "seconds": 6718,
-                "sessions": 3
+                "seconds": 8629,
+                "sessions": 4
               }
             },
-            "lastGameAt": "2026-07-12T12:04:52.107Z",
-            "lastActiveAt": "2026-07-12T12:04:52.107Z"
+            "lastGameAt": "2026-07-12T12:42:01.446Z",
+            "lastActiveAt": "2026-07-12T12:42:01.446Z"
           },
           "653165276287729694": {
             "id": "653165276287729694",
@@ -7047,18 +7172,18 @@
             "username": "czkavka",
             "displayName": "Czkavka",
             "avatarUrl": "https://cdn.discordapp.com/avatars/622508569861816331/d5c199ca5953fcbf3b83da2623dfec99.png?size=64",
-            "seconds": 5577,
-            "sessions": 4,
+            "seconds": 8796,
+            "sessions": 7,
             "games": {
               "league of legends": {
                 "id": "league of legends",
                 "name": "League of Legends",
-                "seconds": 5577,
-                "sessions": 4
+                "seconds": 8796,
+                "sessions": 7
               }
             },
-            "lastGameAt": "2026-07-12T12:01:45.183Z",
-            "lastActiveAt": "2026-07-12T12:01:45.183Z"
+            "lastGameAt": "2026-07-12T13:18:51.721Z",
+            "lastActiveAt": "2026-07-12T13:18:51.721Z"
           },
           "806861760132284416": {
             "id": "806861760132284416",
@@ -7089,8 +7214,8 @@
             "username": "brodatykloc",
             "displayName": "BrodatyKloc",
             "avatarUrl": "https://cdn.discordapp.com/avatars/934225008736210944/a16565a3dec13060ba8b765b3c8fe1b5.png?size=64",
-            "seconds": 6570,
-            "sessions": 5,
+            "seconds": 7073,
+            "sessions": 7,
             "games": {
               "rv there yet? with medal": {
                 "id": "rv there yet? with medal",
@@ -7107,18 +7232,18 @@
               "pubg: battlegrounds": {
                 "id": "pubg: battlegrounds",
                 "name": "PUBG: BATTLEGROUNDS",
-                "seconds": 117,
-                "sessions": 3
+                "seconds": 124,
+                "sessions": 4
               },
               "pubg with medal": {
                 "id": "pubg with medal",
                 "name": "PUBG with Medal",
-                "seconds": 4734,
-                "sessions": 1
+                "seconds": 5230,
+                "sessions": 2
               }
             },
-            "lastGameAt": "2026-07-12T11:02:33.750Z",
-            "lastActiveAt": "2026-07-12T11:02:33.750Z"
+            "lastGameAt": "2026-07-12T12:18:33.896Z",
+            "lastActiveAt": "2026-07-12T12:18:33.896Z"
           },
           "1452337561371676848": {
             "id": "1452337561371676848",
@@ -7197,18 +7322,18 @@
             "username": "j_t_c_n_w",
             "displayName": "J_T_C_N_W ♔",
             "avatarUrl": "https://cdn.discordapp.com/avatars/660232070773211186/1326fa338b4905c619c7024da3e06352.png?size=64",
-            "seconds": 9872,
-            "sessions": 2,
+            "seconds": 9880,
+            "sessions": 3,
             "games": {
               "pubg: battlegrounds": {
                 "id": "pubg: battlegrounds",
                 "name": "PUBG: BATTLEGROUNDS",
-                "seconds": 9872,
-                "sessions": 2
+                "seconds": 9880,
+                "sessions": 3
               }
             },
-            "lastGameAt": "2026-07-12T02:16:58.314Z",
-            "lastActiveAt": "2026-07-12T02:16:58.314Z"
+            "lastGameAt": "2026-07-12T12:10:18.286Z",
+            "lastActiveAt": "2026-07-12T12:10:18.286Z"
           },
           "380454048156876800": {
             "id": "380454048156876800",
@@ -7257,8 +7382,8 @@
             "username": "piotrullo1884",
             "displayName": "piotrullo",
             "avatarUrl": "https://cdn.discordapp.com/avatars/360871603585810432/b6d8f5aea748dbbcaf9f57844b2b60bd.png?size=64",
-            "seconds": 5856,
-            "sessions": 3,
+            "seconds": 10482,
+            "sessions": 7,
             "games": {
               "counter-strike 2": {
                 "id": "counter-strike 2",
@@ -7269,30 +7394,42 @@
               "pubg: battlegrounds": {
                 "id": "pubg: battlegrounds",
                 "name": "PUBG: BATTLEGROUNDS",
-                "seconds": 3779,
+                "seconds": 5902,
+                "sessions": 4
+              },
+              "fortnite": {
+                "id": "fortnite",
+                "name": "Fortnite",
+                "seconds": 2503,
                 "sessions": 2
               }
             },
-            "lastGameAt": "2026-07-12T10:17:36.650Z",
-            "lastActiveAt": "2026-07-12T10:17:36.650Z"
+            "lastGameAt": "2026-07-12T13:28:23.174Z",
+            "lastActiveAt": "2026-07-12T13:28:23.174Z"
           },
           "460469294208122890": {
             "id": "460469294208122890",
             "username": "._jacus_.",
             "displayName": "Jacek_PL",
             "avatarUrl": "https://cdn.discordapp.com/avatars/460469294208122890/45a8da73093d57a2824330fb24c022b2.png?size=64",
-            "seconds": 358,
-            "sessions": 2,
+            "seconds": 873,
+            "sessions": 4,
             "games": {
               "pubg: battlegrounds": {
                 "id": "pubg: battlegrounds",
                 "name": "PUBG: BATTLEGROUNDS",
-                "seconds": 358,
-                "sessions": 2
+                "seconds": 371,
+                "sessions": 3
+              },
+              "pubg with medal": {
+                "id": "pubg with medal",
+                "name": "PUBG with Medal",
+                "seconds": 502,
+                "sessions": 1
               }
             },
-            "lastGameAt": "2026-07-12T11:18:38.622Z",
-            "lastActiveAt": "2026-07-12T11:18:38.622Z"
+            "lastGameAt": "2026-07-12T12:18:45.623Z",
+            "lastActiveAt": "2026-07-12T12:18:45.623Z"
           },
           "277138797219676160": {
             "id": "277138797219676160",
@@ -7329,14 +7466,116 @@
             },
             "lastGameAt": "2026-07-12T12:02:04.065Z",
             "lastActiveAt": "2026-07-12T12:02:04.065Z"
+          },
+          "946723312116051998": {
+            "id": "946723312116051998",
+            "username": "ziatek",
+            "displayName": "ziatek_",
+            "avatarUrl": "https://cdn.discordapp.com/avatars/946723312116051998/c72f7edf6154f083fce92f5d8c588b3f.png?size=64",
+            "seconds": 665,
+            "sessions": 1,
+            "games": {
+              "pubg: battlegrounds": {
+                "id": "pubg: battlegrounds",
+                "name": "PUBG: BATTLEGROUNDS",
+                "seconds": 665,
+                "sessions": 1
+              }
+            },
+            "lastGameAt": "2026-07-12T12:21:15.981Z",
+            "lastActiveAt": "2026-07-12T12:21:15.981Z"
+          },
+          "1493463404160094229": {
+            "id": "1493463404160094229",
+            "username": "m4czeta_",
+            "displayName": "M4CZETA",
+            "avatarUrl": "https://cdn.discordapp.com/avatars/1493463404160094229/80df788282538b77a9754a400a596c27.png?size=64",
+            "seconds": 1746,
+            "sessions": 2,
+            "games": {
+              "efootball": {
+                "id": "efootball",
+                "name": "eFootball",
+                "seconds": 1746,
+                "sessions": 2
+              }
+            },
+            "lastGameAt": "2026-07-12T12:39:36.842Z",
+            "lastActiveAt": "2026-07-12T12:39:36.842Z"
+          },
+          "405096331959599105": {
+            "id": "405096331959599105",
+            "username": "szelest_ortalion",
+            "displayName": "Szelest_Ortalion",
+            "avatarUrl": "https://cdn.discordapp.com/avatars/405096331959599105/a_1f1fd4f0330cc23b9a000d216d24117a.gif?size=64",
+            "seconds": 2732,
+            "sessions": 1,
+            "games": {
+              "pubg: battlegrounds": {
+                "id": "pubg: battlegrounds",
+                "name": "PUBG: BATTLEGROUNDS",
+                "seconds": 2732,
+                "sessions": 1
+              }
+            },
+            "lastGameAt": "2026-07-12T12:55:42.744Z",
+            "lastActiveAt": "2026-07-12T12:55:42.744Z"
+          },
+          "305034945892450304": {
+            "id": "305034945892450304",
+            "username": "redbull_danny",
+            "displayName": "RedBull_Danny",
+            "avatarUrl": "https://cdn.discordapp.com/avatars/305034945892450304/0b438cb12d8a6518e869b8eb72c9a12a.png?size=64",
+            "seconds": 114,
+            "sessions": 2,
+            "games": {
+              "pubg: battlegrounds": {
+                "id": "pubg: battlegrounds",
+                "name": "PUBG: BATTLEGROUNDS",
+                "seconds": 114,
+                "sessions": 2
+              }
+            },
+            "lastGameAt": "2026-07-12T13:08:49.041Z",
+            "lastActiveAt": "2026-07-12T13:08:49.041Z"
+          },
+          "679311935359025155": {
+            "id": "679311935359025155",
+            "username": "st4chu5097",
+            "displayName": "St4chu_PL",
+            "avatarUrl": "https://cdn.discordapp.com/avatars/679311935359025155/0740187682b66e33d9b53f93ac798c1e.png?size=64",
+            "seconds": 1422,
+            "sessions": 3,
+            "games": {
+              "pubg: battlegrounds": {
+                "id": "pubg: battlegrounds",
+                "name": "PUBG: BATTLEGROUNDS",
+                "seconds": 1313,
+                "sessions": 1
+              },
+              "battleye launcher": {
+                "id": "battleye launcher",
+                "name": "BattlEye Launcher",
+                "seconds": 10,
+                "sessions": 1
+              },
+              "grand theft auto v": {
+                "id": "grand theft auto v",
+                "name": "Grand Theft Auto V",
+                "seconds": 99,
+                "sessions": 1
+              }
+            },
+            "lastGameAt": "2026-07-12T13:23:50.054Z",
+            "lastActiveAt": "2026-07-12T13:23:50.054Z"
           }
         },
         "byGame": {
           "pubg: battlegrounds": {
             "id": "pubg: battlegrounds",
             "name": "PUBG: BATTLEGROUNDS",
-            "seconds": 85669,
-            "sessions": 19
+            "seconds": 92644,
+            "sessions": 29
           },
           "ready or not with medal": {
             "id": "ready or not with medal",
@@ -7353,8 +7592,8 @@
           "pubg with medal": {
             "id": "pubg with medal",
             "name": "PUBG with Medal",
-            "seconds": 19869,
-            "sessions": 2
+            "seconds": 20867,
+            "sessions": 4
           },
           "roblox with medal": {
             "id": "roblox with medal",
@@ -7365,8 +7604,8 @@
           "league of legends": {
             "id": "league of legends",
             "name": "League of Legends",
-            "seconds": 13683,
-            "sessions": 14
+            "seconds": 18813,
+            "sessions": 18
           },
           "rv there yet? with medal": {
             "id": "rv there yet? with medal",
@@ -7433,6 +7672,30 @@
             "name": "Ghost Recon Breakpoint",
             "seconds": 17,
             "sessions": 1
+          },
+          "efootball": {
+            "id": "efootball",
+            "name": "eFootball",
+            "seconds": 1746,
+            "sessions": 2
+          },
+          "fortnite": {
+            "id": "fortnite",
+            "name": "Fortnite",
+            "seconds": 2503,
+            "sessions": 2
+          },
+          "battleye launcher": {
+            "id": "battleye launcher",
+            "name": "BattlEye Launcher",
+            "seconds": 10,
+            "sessions": 1
+          },
+          "grand theft auto v": {
+            "id": "grand theft auto v",
+            "name": "Grand Theft Auto V",
+            "seconds": 99,
+            "sessions": 1
           }
         },
         "byHour": {
@@ -7440,7 +7703,8 @@
           "11": 14147,
           "12": 8328,
           "13": 8023,
-          "14": 209,
+          "14": 14348,
+          "15": 3322,
           "00": 39288,
           "01": 32727,
           "02": 21149,
@@ -7466,15 +7730,15 @@
     }
   },
   "activeVoiceSessions": {
-    "1506270819620491344:1416814483900469429": {
+    "1506270819620491344:900418449321394237": {
       "guildId": "1506270819620491344",
-      "userId": "1416814483900469429",
-      "username": "kapitan123e",
-      "displayName": "kapitan123e",
-      "avatarUrl": "https://cdn.discordapp.com/avatars/1416814483900469429/65a4b098b006d19307f95eea3183c8c6.png?size=64",
-      "channelId": "1525825856709333042",
-      "channelName": "[1] Ranked SQUAD",
-      "startedAt": "2026-07-12T11:27:13.155Z"
+      "userId": "900418449321394237",
+      "username": "okiemtestera",
+      "displayName": "OkiemTestera",
+      "avatarUrl": "https://cdn.discordapp.com/avatars/900418449321394237/6d286a7e7512be62d4eb4430f8326280.png?size=64",
+      "channelId": "1525849207888674896",
+      "channelName": "[2] Ranked SQUAD",
+      "startedAt": "2026-07-12T13:42:26.272Z"
     },
     "1506270819620491344:1289285671181222012": {
       "guildId": "1506270819620491344",
@@ -7482,13 +7746,33 @@
       "username": "kozik9012.",
       "displayName": "Kozik9012",
       "avatarUrl": "https://cdn.discordapp.com/embed/avatars/5.png",
+      "channelId": "1525849207888674896",
+      "channelName": "[2] Ranked SQUAD",
+      "startedAt": "2026-07-12T13:42:26.272Z"
+    },
+    "1506270819620491344:1416814483900469429": {
+      "guildId": "1506270819620491344",
+      "userId": "1416814483900469429",
+      "username": "kapitan123e",
+      "displayName": "kapitan123e",
+      "avatarUrl": "https://cdn.discordapp.com/avatars/1416814483900469429/65a4b098b006d19307f95eea3183c8c6.png?size=64",
+      "channelId": "1525849207888674896",
+      "channelName": "[2] Ranked SQUAD",
+      "startedAt": "2026-07-12T13:42:26.272Z"
+    },
+    "1506270819620491344:1461349892999086180": {
+      "guildId": "1506270819620491344",
+      "userId": "1461349892999086180",
+      "username": "ozarek08",
+      "displayName": "0zar_7",
+      "avatarUrl": "https://cdn.discordapp.com/avatars/1461349892999086180/d8bd42b4a6824b84d572a9564b2578da.png?size=64",
       "channelId": "1525825856709333042",
       "channelName": "[1] Ranked SQUAD",
-      "startedAt": "2026-07-12T11:27:44.128Z"
+      "startedAt": "2026-07-12T13:42:26.272Z"
     }
   },
-  "updatedAt": "2026-07-12T12:08:17.854Z",
-  "lastSyncAt": "2026-07-12T12:08:17.854Z",
+  "updatedAt": "2026-07-12T13:44:27.023Z",
+  "lastSyncAt": "2026-07-12T13:44:27.023Z",
   "users": {
     "500756257351663631": {
       "id": "500756257351663631",
@@ -7505,9 +7789,9 @@
       "displayName": "Kozik9012",
       "avatarUrl": "https://cdn.discordapp.com/embed/avatars/5.png",
       "lastMessageAt": "2026-07-08T20:50:44.336Z",
-      "lastVoiceAt": "2026-07-12T11:27:44.128Z",
-      "lastActiveAt": "2026-07-12T11:27:44.128Z",
-      "lastGameAt": "2026-07-12T11:05:07.450Z"
+      "lastVoiceAt": "2026-07-12T13:42:26.272Z",
+      "lastActiveAt": "2026-07-12T13:42:26.384Z",
+      "lastGameAt": "2026-07-12T13:42:26.384Z"
     },
     "1416814483900469429": {
       "id": "1416814483900469429",
@@ -7515,19 +7799,19 @@
       "displayName": "kapitan123e",
       "avatarUrl": "https://cdn.discordapp.com/avatars/1416814483900469429/65a4b098b006d19307f95eea3183c8c6.png?size=64",
       "lastMessageAt": "2026-07-11T18:33:23.907Z",
-      "lastVoiceAt": "2026-07-12T11:27:13.155Z",
-      "lastActiveAt": "2026-07-12T11:29:10.341Z",
-      "lastGameAt": "2026-07-12T11:29:10.341Z"
+      "lastVoiceAt": "2026-07-12T13:42:26.272Z",
+      "lastActiveAt": "2026-07-12T13:42:26.384Z",
+      "lastGameAt": "2026-07-12T13:42:26.384Z"
     },
     "900418449321394237": {
       "id": "900418449321394237",
       "username": "okiemtestera",
       "displayName": "OkiemTestera",
       "avatarUrl": "https://cdn.discordapp.com/avatars/900418449321394237/6d286a7e7512be62d4eb4430f8326280.png?size=64",
-      "lastMessageAt": "2026-07-12T09:59:39.612Z",
-      "lastVoiceAt": "2026-07-11T20:01:21.288Z",
-      "lastActiveAt": "2026-07-12T09:59:39.612Z",
-      "lastGameAt": "2026-07-11T20:01:49.196Z"
+      "lastMessageAt": "2026-07-12T13:08:25.001Z",
+      "lastVoiceAt": "2026-07-12T13:42:26.272Z",
+      "lastActiveAt": "2026-07-12T13:42:26.384Z",
+      "lastGameAt": "2026-07-12T13:42:26.384Z"
     },
     "437339648503709707": {
       "id": "437339648503709707",
@@ -7535,8 +7819,8 @@
       "displayName": "MorosLaw_",
       "avatarUrl": "https://cdn.discordapp.com/avatars/437339648503709707/32f50c78f1d96f2c75e1deedc6692f8d.png?size=64",
       "lastMessageAt": "",
-      "lastVoiceAt": "2026-07-10T17:33:13.308Z",
-      "lastActiveAt": "2026-07-10T17:33:13.308Z"
+      "lastVoiceAt": "2026-07-12T13:28:27.956Z",
+      "lastActiveAt": "2026-07-12T13:28:27.956Z"
     },
     "763851691099291648": {
       "id": "763851691099291648",
@@ -7544,8 +7828,8 @@
       "displayName": "GH05TU",
       "avatarUrl": "https://cdn.discordapp.com/avatars/763851691099291648/257adeb5f7463276009c9b694a4417e8.png?size=64",
       "lastMessageAt": "2026-07-06T21:23:20.136Z",
-      "lastVoiceAt": "2026-07-02T09:07:27.454Z",
-      "lastActiveAt": "2026-07-06T21:23:20.136Z"
+      "lastVoiceAt": "2026-07-12T13:42:51.107Z",
+      "lastActiveAt": "2026-07-12T13:42:51.107Z"
     },
     "699350173406462003": {
       "id": "699350173406462003",
@@ -7646,8 +7930,8 @@
       "avatarUrl": "https://cdn.discordapp.com/avatars/1493463404160094229/80df788282538b77a9754a400a596c27.png?size=64",
       "lastMessageAt": "2026-07-03T15:54:22.780Z",
       "lastVoiceAt": "2026-07-11T09:55:43.568Z",
-      "lastActiveAt": "2026-07-12T11:58:54.494Z",
-      "lastGameAt": "2026-07-12T11:58:54.494Z"
+      "lastActiveAt": "2026-07-12T12:39:36.842Z",
+      "lastGameAt": "2026-07-12T12:39:36.842Z"
     },
     "1152233270327660585": {
       "id": "1152233270327660585",
@@ -7675,8 +7959,8 @@
       "avatarUrl": "https://cdn.discordapp.com/avatars/795566927224897558/801134f42783a2adc511ee645606858a.png?size=64",
       "lastMessageAt": "2026-07-03T16:43:49.271Z",
       "lastVoiceAt": "2026-07-03T17:01:44.471Z",
-      "lastActiveAt": "2026-07-12T03:48:50.809Z",
-      "lastGameAt": "2026-07-12T03:48:50.809Z"
+      "lastActiveAt": "2026-07-12T13:42:26.384Z",
+      "lastGameAt": "2026-07-12T13:42:26.384Z"
     },
     "405096331959599105": {
       "id": "405096331959599105",
@@ -7685,8 +7969,8 @@
       "avatarUrl": "https://cdn.discordapp.com/avatars/405096331959599105/a_1f1fd4f0330cc23b9a000d216d24117a.gif?size=64",
       "lastMessageAt": "",
       "lastVoiceAt": "2026-07-05T20:08:10.672Z",
-      "lastActiveAt": "2026-07-12T11:37:01.845Z",
-      "lastGameAt": "2026-07-12T11:37:01.845Z"
+      "lastActiveAt": "2026-07-12T12:55:42.744Z",
+      "lastGameAt": "2026-07-12T12:55:42.744Z"
     },
     "727028024616288287": {
       "id": "727028024616288287",
@@ -7714,8 +7998,8 @@
       "avatarUrl": "https://cdn.discordapp.com/avatars/946723312116051998/c72f7edf6154f083fce92f5d8c588b3f.png?size=64",
       "lastMessageAt": "",
       "lastVoiceAt": "2026-07-04T12:03:11.350Z",
-      "lastActiveAt": "2026-07-12T10:46:43.898Z",
-      "lastGameAt": "2026-07-12T10:46:43.898Z"
+      "lastActiveAt": "2026-07-12T12:21:15.981Z",
+      "lastGameAt": "2026-07-12T12:21:15.981Z"
     },
     "954084517054910476": {
       "id": "954084517054910476",
@@ -7770,9 +8054,9 @@
       "displayName": "0zar_7",
       "avatarUrl": "https://cdn.discordapp.com/avatars/1461349892999086180/d8bd42b4a6824b84d572a9564b2578da.png?size=64",
       "lastMessageAt": "",
-      "lastVoiceAt": "2026-07-11T14:52:56.398Z",
-      "lastActiveAt": "2026-07-11T14:52:56.398Z",
-      "lastGameAt": "2026-07-11T14:52:56.397Z"
+      "lastVoiceAt": "2026-07-12T13:42:26.272Z",
+      "lastActiveAt": "2026-07-12T13:42:26.384Z",
+      "lastGameAt": "2026-07-12T13:42:26.384Z"
     },
     "1452337561371676848": {
       "id": "1452337561371676848",
@@ -7811,8 +8095,8 @@
       "avatarUrl": "https://cdn.discordapp.com/avatars/407223226503135232/4b6ad2ba7c0d7a0f0c5e5ba4ddec5629.png?size=64",
       "lastMessageAt": "",
       "lastVoiceAt": "2026-07-11T19:32:22.677Z",
-      "lastActiveAt": "2026-07-12T09:56:24.252Z",
-      "lastGameAt": "2026-07-12T09:56:24.252Z"
+      "lastActiveAt": "2026-07-12T13:42:26.384Z",
+      "lastGameAt": "2026-07-12T13:42:26.384Z"
     },
     "954097756987875328": {
       "id": "954097756987875328",
@@ -7887,9 +8171,9 @@
       "avatarUrl": "https://cdn.discordapp.com/avatars/934225008736210944/a16565a3dec13060ba8b765b3c8fe1b5.png?size=64",
       "lastMessageAt": "",
       "lastVoiceAt": "",
-      "lastGameAt": "2026-07-12T11:02:33.750Z",
+      "lastGameAt": "2026-07-12T12:18:33.896Z",
       "lastInviteAt": "",
-      "lastActiveAt": "2026-07-12T11:02:33.750Z"
+      "lastActiveAt": "2026-07-12T12:18:33.896Z"
     },
     "546052751805775924": {
       "id": "546052751805775924",
@@ -7909,9 +8193,9 @@
       "avatarUrl": "https://cdn.discordapp.com/avatars/660232070773211186/1326fa338b4905c619c7024da3e06352.png?size=64",
       "lastMessageAt": "",
       "lastVoiceAt": "",
-      "lastGameAt": "2026-07-12T10:54:13.860Z",
+      "lastGameAt": "2026-07-12T13:42:26.384Z",
       "lastInviteAt": "",
-      "lastActiveAt": "2026-07-12T10:54:13.860Z"
+      "lastActiveAt": "2026-07-12T13:42:26.384Z"
     },
     "524756099115515916": {
       "id": "524756099115515916",
@@ -7953,9 +8237,9 @@
       "avatarUrl": "https://cdn.discordapp.com/embed/avatars/2.png",
       "lastMessageAt": "",
       "lastVoiceAt": "2026-07-10T12:46:11.045Z",
-      "lastGameAt": "2026-07-12T12:04:52.107Z",
+      "lastGameAt": "2026-07-12T12:42:01.446Z",
       "lastInviteAt": "",
-      "lastActiveAt": "2026-07-12T12:04:52.107Z"
+      "lastActiveAt": "2026-07-12T12:42:01.446Z"
     },
     "568517637362024517": {
       "id": "568517637362024517",
@@ -7975,9 +8259,9 @@
       "avatarUrl": "https://cdn.discordapp.com/avatars/653165276287729694/2e06c4dad86eb7f3dbc1ab9920f891dd.png?size=64",
       "lastMessageAt": "",
       "lastVoiceAt": "",
-      "lastGameAt": "2026-07-12T09:59:14.564Z",
+      "lastGameAt": "2026-07-12T13:42:26.384Z",
       "lastInviteAt": "",
-      "lastActiveAt": "2026-07-12T09:59:14.564Z"
+      "lastActiveAt": "2026-07-12T13:42:26.384Z"
     },
     "1071541793348386986": {
       "id": "1071541793348386986",
@@ -7997,9 +8281,9 @@
       "avatarUrl": "https://cdn.discordapp.com/avatars/305034945892450304/0b438cb12d8a6518e869b8eb72c9a12a.png?size=64",
       "lastMessageAt": "",
       "lastVoiceAt": "",
-      "lastGameAt": "2026-07-11T21:54:00.548Z",
+      "lastGameAt": "2026-07-12T13:42:26.384Z",
       "lastInviteAt": "",
-      "lastActiveAt": "2026-07-11T21:54:00.548Z"
+      "lastActiveAt": "2026-07-12T13:42:26.384Z"
     },
     "779804165831786497": {
       "id": "779804165831786497",
@@ -8019,9 +8303,9 @@
       "avatarUrl": "https://cdn.discordapp.com/avatars/1308303565252591691/11c80b14d1b2616ebf1f741b40a9f894.png?size=64",
       "lastMessageAt": "",
       "lastVoiceAt": "",
-      "lastGameAt": "2026-07-12T09:16:51.682Z",
+      "lastGameAt": "2026-07-12T13:42:26.384Z",
       "lastInviteAt": "",
-      "lastActiveAt": "2026-07-12T09:16:51.682Z"
+      "lastActiveAt": "2026-07-12T13:42:26.384Z"
     },
     "1094670431769853976": {
       "id": "1094670431769853976",
@@ -8063,9 +8347,9 @@
       "avatarUrl": "https://cdn.discordapp.com/avatars/460469294208122890/45a8da73093d57a2824330fb24c022b2.png?size=64",
       "lastMessageAt": "",
       "lastVoiceAt": "",
-      "lastGameAt": "2026-07-12T11:18:38.622Z",
+      "lastGameAt": "2026-07-12T12:18:45.623Z",
       "lastInviteAt": "",
-      "lastActiveAt": "2026-07-12T11:18:38.622Z"
+      "lastActiveAt": "2026-07-12T12:18:45.623Z"
     },
     "363785001730310154": {
       "id": "363785001730310154",
@@ -8107,9 +8391,9 @@
       "avatarUrl": "https://cdn.discordapp.com/avatars/622508569861816331/d5c199ca5953fcbf3b83da2623dfec99.png?size=64",
       "lastMessageAt": "",
       "lastVoiceAt": "",
-      "lastGameAt": "2026-07-12T12:04:35.712Z",
+      "lastGameAt": "2026-07-12T13:43:30.131Z",
       "lastInviteAt": "",
-      "lastActiveAt": "2026-07-12T12:04:35.712Z"
+      "lastActiveAt": "2026-07-12T13:43:30.131Z"
     },
     "806861760132284416": {
       "id": "806861760132284416",
@@ -8151,9 +8435,9 @@
       "avatarUrl": "https://cdn.discordapp.com/avatars/360871603585810432/b6d8f5aea748dbbcaf9f57844b2b60bd.png?size=64",
       "lastMessageAt": "",
       "lastVoiceAt": "",
-      "lastGameAt": "2026-07-12T10:18:41.847Z",
+      "lastGameAt": "2026-07-12T13:42:26.384Z",
       "lastInviteAt": "",
-      "lastActiveAt": "2026-07-12T10:18:41.847Z"
+      "lastActiveAt": "2026-07-12T13:42:26.384Z"
     },
     "679311935359025155": {
       "id": "679311935359025155",
@@ -8161,10 +8445,10 @@
       "displayName": "St4chu_PL",
       "avatarUrl": "https://cdn.discordapp.com/avatars/679311935359025155/0740187682b66e33d9b53f93ac798c1e.png?size=64",
       "lastMessageAt": "",
-      "lastVoiceAt": "",
-      "lastGameAt": "2026-07-11T18:06:27.082Z",
+      "lastVoiceAt": "2026-07-12T13:04:33.815Z",
+      "lastGameAt": "2026-07-12T13:42:26.384Z",
       "lastInviteAt": "",
-      "lastActiveAt": "2026-07-11T18:06:27.082Z"
+      "lastActiveAt": "2026-07-12T13:42:26.384Z"
     },
     "361250198615490560": {
       "id": "361250198615490560",
@@ -8209,69 +8493,31 @@
       "lastGameAt": "2026-07-12T01:23:53.898Z",
       "lastInviteAt": "",
       "lastActiveAt": "2026-07-12T01:23:53.898Z"
+    },
+    "323024156557967362": {
+      "id": "323024156557967362",
+      "username": "chieftroll.",
+      "displayName": "Chieftroll",
+      "avatarUrl": "https://cdn.discordapp.com/avatars/323024156557967362/69028e1aa8a3974d717a330566c302ee.png?size=64",
+      "lastMessageAt": "",
+      "lastVoiceAt": "",
+      "lastGameAt": "2026-07-12T13:42:26.384Z",
+      "lastInviteAt": "",
+      "lastActiveAt": "2026-07-12T13:42:26.384Z"
+    },
+    "492783082529620060": {
+      "id": "492783082529620060",
+      "username": "qba5252",
+      "displayName": "Qba",
+      "avatarUrl": "https://cdn.discordapp.com/embed/avatars/2.png",
+      "lastMessageAt": "",
+      "lastVoiceAt": "",
+      "lastGameAt": "2026-07-12T13:42:26.384Z",
+      "lastInviteAt": "",
+      "lastActiveAt": "2026-07-12T13:42:26.384Z"
     }
   },
   "activeGameSessions": {
-    "1506270819620491344:795566927224897558:roblox": {
-      "guildId": "1506270819620491344",
-      "userId": "795566927224897558",
-      "username": "dominiiczek554",
-      "displayName": "Drode",
-      "avatarUrl": "https://cdn.discordapp.com/avatars/795566927224897558/801134f42783a2adc511ee645606858a.png?size=64",
-      "gameKey": "roblox",
-      "gameName": "ROBLOX",
-      "startedAt": "2026-07-12T03:48:50.809Z"
-    },
-    "1506270819620491344:1308303565252591691:pubg: battlegrounds": {
-      "guildId": "1506270819620491344",
-      "userId": "1308303565252591691",
-      "username": "adiipl",
-      "displayName": "Adrian",
-      "avatarUrl": "https://cdn.discordapp.com/avatars/1308303565252591691/11c80b14d1b2616ebf1f741b40a9f894.png?size=64",
-      "gameKey": "pubg: battlegrounds",
-      "gameName": "PUBG: BATTLEGROUNDS",
-      "startedAt": "2026-07-12T09:16:51.682Z"
-    },
-    "1506270819620491344:407223226503135232:glevia2.pl": {
-      "guildId": "1506270819620491344",
-      "userId": "407223226503135232",
-      "username": "hampniehambartm.",
-      "displayName": "Vengarde",
-      "avatarUrl": "https://cdn.discordapp.com/avatars/407223226503135232/4b6ad2ba7c0d7a0f0c5e5ba4ddec5629.png?size=64",
-      "gameKey": "glevia2.pl",
-      "gameName": "Glevia2.pl",
-      "startedAt": "2026-07-12T09:56:24.252Z"
-    },
-    "1506270819620491344:653165276287729694:gr breakpoint with medal": {
-      "guildId": "1506270819620491344",
-      "userId": "653165276287729694",
-      "username": "kubiiiiiii",
-      "displayName": "Kuba",
-      "avatarUrl": "https://cdn.discordapp.com/avatars/653165276287729694/2e06c4dad86eb7f3dbc1ab9920f891dd.png?size=64",
-      "gameKey": "gr breakpoint with medal",
-      "gameName": "GR Breakpoint with Medal",
-      "startedAt": "2026-07-12T09:59:14.564Z"
-    },
-    "1506270819620491344:360871603585810432:fortnite": {
-      "guildId": "1506270819620491344",
-      "userId": "360871603585810432",
-      "username": "piotrullo1884",
-      "displayName": "piotrullo",
-      "avatarUrl": "https://cdn.discordapp.com/avatars/360871603585810432/b6d8f5aea748dbbcaf9f57844b2b60bd.png?size=64",
-      "gameKey": "fortnite",
-      "gameName": "Fortnite",
-      "startedAt": "2026-07-12T10:18:41.847Z"
-    },
-    "1506270819620491344:946723312116051998:pubg: battlegrounds": {
-      "guildId": "1506270819620491344",
-      "userId": "946723312116051998",
-      "username": "ziatek",
-      "displayName": "ziatek_",
-      "avatarUrl": "https://cdn.discordapp.com/avatars/946723312116051998/c72f7edf6154f083fce92f5d8c588b3f.png?size=64",
-      "gameKey": "pubg: battlegrounds",
-      "gameName": "PUBG: BATTLEGROUNDS",
-      "startedAt": "2026-07-12T10:46:43.898Z"
-    },
     "1506270819620491344:660232070773211186:pubg: battlegrounds": {
       "guildId": "1506270819620491344",
       "userId": "660232070773211186",
@@ -8280,17 +8526,7 @@
       "avatarUrl": "https://cdn.discordapp.com/avatars/660232070773211186/1326fa338b4905c619c7024da3e06352.png?size=64",
       "gameKey": "pubg: battlegrounds",
       "gameName": "PUBG: BATTLEGROUNDS",
-      "startedAt": "2026-07-12T10:54:13.860Z"
-    },
-    "1506270819620491344:934225008736210944:pubg with medal": {
-      "guildId": "1506270819620491344",
-      "userId": "934225008736210944",
-      "username": "brodatykloc",
-      "displayName": "BrodatyKloc",
-      "avatarUrl": "https://cdn.discordapp.com/avatars/934225008736210944/a16565a3dec13060ba8b765b3c8fe1b5.png?size=64",
-      "gameKey": "pubg with medal",
-      "gameName": "PUBG with Medal",
-      "startedAt": "2026-07-12T11:02:33.750Z"
+      "startedAt": "2026-07-12T13:42:26.384Z"
     },
     "1506270819620491344:1289285671181222012:pubg: battlegrounds": {
       "guildId": "1506270819620491344",
@@ -8300,17 +8536,47 @@
       "avatarUrl": "https://cdn.discordapp.com/embed/avatars/5.png",
       "gameKey": "pubg: battlegrounds",
       "gameName": "PUBG: BATTLEGROUNDS",
-      "startedAt": "2026-07-12T11:05:07.450Z"
+      "startedAt": "2026-07-12T13:42:26.384Z"
     },
-    "1506270819620491344:460469294208122890:pubg with medal": {
+    "1506270819620491344:679311935359025155:grand theft auto v legacy": {
       "guildId": "1506270819620491344",
-      "userId": "460469294208122890",
-      "username": "._jacus_.",
-      "displayName": "Jacek_PL",
-      "avatarUrl": "https://cdn.discordapp.com/avatars/460469294208122890/45a8da73093d57a2824330fb24c022b2.png?size=64",
-      "gameKey": "pubg with medal",
-      "gameName": "PUBG with Medal",
-      "startedAt": "2026-07-12T11:18:38.622Z"
+      "userId": "679311935359025155",
+      "username": "st4chu5097",
+      "displayName": "St4chu_PL",
+      "avatarUrl": "https://cdn.discordapp.com/avatars/679311935359025155/0740187682b66e33d9b53f93ac798c1e.png?size=64",
+      "gameKey": "grand theft auto v legacy",
+      "gameName": "Grand Theft Auto V Legacy",
+      "startedAt": "2026-07-12T13:42:26.384Z"
+    },
+    "1506270819620491344:653165276287729694:ready or not with medal": {
+      "guildId": "1506270819620491344",
+      "userId": "653165276287729694",
+      "username": "kubiiiiiii",
+      "displayName": "Kuba",
+      "avatarUrl": "https://cdn.discordapp.com/avatars/653165276287729694/2e06c4dad86eb7f3dbc1ab9920f891dd.png?size=64",
+      "gameKey": "ready or not with medal",
+      "gameName": "Ready Or Not with Medal",
+      "startedAt": "2026-07-12T13:42:26.384Z"
+    },
+    "1506270819620491344:407223226503135232:glevia2.pl": {
+      "guildId": "1506270819620491344",
+      "userId": "407223226503135232",
+      "username": "hampniehambartm.",
+      "displayName": "Vengarde",
+      "avatarUrl": "https://cdn.discordapp.com/avatars/407223226503135232/4b6ad2ba7c0d7a0f0c5e5ba4ddec5629.png?size=64",
+      "gameKey": "glevia2.pl",
+      "gameName": "Glevia2.pl",
+      "startedAt": "2026-07-12T13:42:26.384Z"
+    },
+    "1506270819620491344:1461349892999086180:pubg: battlegrounds": {
+      "guildId": "1506270819620491344",
+      "userId": "1461349892999086180",
+      "username": "ozarek08",
+      "displayName": "0zar_7",
+      "avatarUrl": "https://cdn.discordapp.com/avatars/1461349892999086180/d8bd42b4a6824b84d572a9564b2578da.png?size=64",
+      "gameKey": "pubg: battlegrounds",
+      "gameName": "PUBG: BATTLEGROUNDS",
+      "startedAt": "2026-07-12T13:42:26.384Z"
     },
     "1506270819620491344:1416814483900469429:pubg: battlegrounds": {
       "guildId": "1506270819620491344",
@@ -8320,27 +8586,77 @@
       "avatarUrl": "https://cdn.discordapp.com/avatars/1416814483900469429/65a4b098b006d19307f95eea3183c8c6.png?size=64",
       "gameKey": "pubg: battlegrounds",
       "gameName": "PUBG: BATTLEGROUNDS",
-      "startedAt": "2026-07-12T11:29:10.341Z"
+      "startedAt": "2026-07-12T13:42:26.384Z"
     },
-    "1506270819620491344:405096331959599105:pubg: battlegrounds": {
+    "1506270819620491344:492783082529620060:pubg with medal": {
       "guildId": "1506270819620491344",
-      "userId": "405096331959599105",
-      "username": "szelest_ortalion",
-      "displayName": "Szelest_Ortalion",
-      "avatarUrl": "https://cdn.discordapp.com/avatars/405096331959599105/a_1f1fd4f0330cc23b9a000d216d24117a.gif?size=64",
+      "userId": "492783082529620060",
+      "username": "qba5252",
+      "displayName": "Qba",
+      "avatarUrl": "https://cdn.discordapp.com/embed/avatars/2.png",
+      "gameKey": "pubg with medal",
+      "gameName": "PUBG with Medal",
+      "startedAt": "2026-07-12T13:42:26.384Z"
+    },
+    "1506270819620491344:323024156557967362:pubg: battlegrounds": {
+      "guildId": "1506270819620491344",
+      "userId": "323024156557967362",
+      "username": "chieftroll.",
+      "displayName": "Chieftroll",
+      "avatarUrl": "https://cdn.discordapp.com/avatars/323024156557967362/69028e1aa8a3974d717a330566c302ee.png?size=64",
       "gameKey": "pubg: battlegrounds",
       "gameName": "PUBG: BATTLEGROUNDS",
-      "startedAt": "2026-07-12T11:37:01.845Z"
+      "startedAt": "2026-07-12T13:42:26.384Z"
     },
-    "1506270819620491344:1493463404160094229:efootball": {
+    "1506270819620491344:305034945892450304:pubg with medal": {
       "guildId": "1506270819620491344",
-      "userId": "1493463404160094229",
-      "username": "m4czeta_",
-      "displayName": "M4CZETA",
-      "avatarUrl": "https://cdn.discordapp.com/avatars/1493463404160094229/80df788282538b77a9754a400a596c27.png?size=64",
-      "gameKey": "efootball",
-      "gameName": "eFootball",
-      "startedAt": "2026-07-12T11:58:54.494Z"
+      "userId": "305034945892450304",
+      "username": "redbull_danny",
+      "displayName": "RedBull_Danny",
+      "avatarUrl": "https://cdn.discordapp.com/avatars/305034945892450304/0b438cb12d8a6518e869b8eb72c9a12a.png?size=64",
+      "gameKey": "pubg with medal",
+      "gameName": "PUBG with Medal",
+      "startedAt": "2026-07-12T13:42:26.384Z"
+    },
+    "1506270819620491344:360871603585810432:pubg: battlegrounds": {
+      "guildId": "1506270819620491344",
+      "userId": "360871603585810432",
+      "username": "piotrullo1884",
+      "displayName": "piotrullo",
+      "avatarUrl": "https://cdn.discordapp.com/avatars/360871603585810432/b6d8f5aea748dbbcaf9f57844b2b60bd.png?size=64",
+      "gameKey": "pubg: battlegrounds",
+      "gameName": "PUBG: BATTLEGROUNDS",
+      "startedAt": "2026-07-12T13:42:26.384Z"
+    },
+    "1506270819620491344:900418449321394237:pubg: battlegrounds": {
+      "guildId": "1506270819620491344",
+      "userId": "900418449321394237",
+      "username": "okiemtestera",
+      "displayName": "OkiemTestera",
+      "avatarUrl": "https://cdn.discordapp.com/avatars/900418449321394237/6d286a7e7512be62d4eb4430f8326280.png?size=64",
+      "gameKey": "pubg: battlegrounds",
+      "gameName": "PUBG: BATTLEGROUNDS",
+      "startedAt": "2026-07-12T13:42:26.384Z"
+    },
+    "1506270819620491344:1308303565252591691:pubg: battlegrounds": {
+      "guildId": "1506270819620491344",
+      "userId": "1308303565252591691",
+      "username": "adiipl",
+      "displayName": "Adrian",
+      "avatarUrl": "https://cdn.discordapp.com/avatars/1308303565252591691/11c80b14d1b2616ebf1f741b40a9f894.png?size=64",
+      "gameKey": "pubg: battlegrounds",
+      "gameName": "PUBG: BATTLEGROUNDS",
+      "startedAt": "2026-07-12T13:42:26.384Z"
+    },
+    "1506270819620491344:795566927224897558:roblox": {
+      "guildId": "1506270819620491344",
+      "userId": "795566927224897558",
+      "username": "dominiiczek554",
+      "displayName": "Drode",
+      "avatarUrl": "https://cdn.discordapp.com/avatars/795566927224897558/801134f42783a2adc511ee645606858a.png?size=64",
+      "gameKey": "roblox",
+      "gameName": "ROBLOX",
+      "startedAt": "2026-07-12T13:42:26.384Z"
     },
     "1506270819620491344:622508569861816331:league of legends": {
       "guildId": "1506270819620491344",
@@ -8350,7 +8666,7 @@
       "avatarUrl": "https://cdn.discordapp.com/avatars/622508569861816331/d5c199ca5953fcbf3b83da2623dfec99.png?size=64",
       "gameKey": "league of legends",
       "gameName": "League of Legends",
-      "startedAt": "2026-07-12T12:04:35.712Z"
+      "startedAt": "2026-07-12T13:43:30.131Z"
     }
   }
 }
