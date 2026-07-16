@@ -37,16 +37,18 @@
       "tag": "okiemtestera",
       "avatarUrl": "https://cdn.discordapp.com/avatars/900418449321394237/6d286a7e7512be62d4eb4430f8326280.png?size=64",
       "roles": [
-        "administrator"
+        "administrator",
+        "moderator"
       ],
       "roleLabels": [
-        "Administrator"
+        "Administrator",
+        "Moderator"
       ],
       "primaryRole": "administrator",
       "primaryRoleLabel": "Administrator",
       "isBot": false,
       "addedAt": "2026-06-14T12:41:04.072Z",
-      "updatedAt": "2026-06-14T13:04:58.854Z"
+      "updatedAt": "2026-07-16T20:26:43.196Z"
     },
     {
       "id": "1506532864378929162",

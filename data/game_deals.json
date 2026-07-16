@@ -63,7 +63,19 @@
       "source": "Epic Games Store",
       "discountPercent": 100,
       "seenAt": "2026-07-10T08:00:19.021Z"
+    },
+    "epic:echo-generation-midnight-edition": {
+      "title": "Echo Generation: Midnight Edition",
+      "source": "Epic Games Store",
+      "discountPercent": 100,
+      "seenAt": "2026-07-16T20:48:18.319Z"
+    },
+    "epic:luto": {
+      "title": "Luto",
+      "source": "Epic Games Store",
+      "discountPercent": 100,
+      "seenAt": "2026-07-16T20:48:18.319Z"
     }
   },
-  "lastCheckedAt": "2026-07-12T13:42:27.394Z"
+  "lastCheckedAt": "2026-07-16T22:51:23.899Z"
 }
