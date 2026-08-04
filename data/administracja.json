@@ -20,16 +20,18 @@
       "tag": "robertkwiatkowski.",
       "avatarUrl": "https://cdn.discordapp.com/avatars/699350173406462003/06f02543ef3ad2b19bb1152bfaaea9bc.png?size=64",
       "roles": [
-        "administrator"
+        "administrator",
+        "moderator"
       ],
       "roleLabels": [
-        "Administrator"
+        "Administrator",
+        "Moderator"
       ],
       "primaryRole": "administrator",
       "primaryRoleLabel": "Administrator",
       "isBot": false,
       "addedAt": "2026-06-14T12:41:04.071Z",
-      "updatedAt": "2026-06-14T13:05:06.226Z"
+      "updatedAt": "2026-07-17T07:19:02.787Z"
     },
     {
       "id": "900418449321394237",

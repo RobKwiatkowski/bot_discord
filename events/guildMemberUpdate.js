@@ -60,6 +60,7 @@ module.exports = {
           member.username = newMember.displayName;
           member.tag = newMember.user.username;
           member.avatarUrl = avatarUrl;
+          member.source = 'discord';
           saveClanData(data);
           shouldSyncClan = true;
         }
