@@ -1,12 +1,67 @@
-// Komenda /statystyki korzysta z oficjalnego PUBG API i pokazuje podstawowe
-// statystyki solo/duo/squad dla podanego nicku.
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+// Komenda /statystyki korzysta z oficjalnego PUBG API i pokazuje rozbudowana
+// karte statystyk SOLO/DUO/SQUAD z podzialem na TPP oraz FPP.
+const { AttachmentBuilder, EmbedBuilder, SlashCommandBuilder } = require('discord.js');
 const { config } = require('../src/config');
 const { getCurrentSeason, getPlayerByName, pubgRequest } = require('../src/pubgApi');
+const {
+  MODES,
+  formatDecimal,
+  formatInteger,
+  formatPercent,
+  formatSeasonLabel,
+  platformLabel,
+  renderPubgStatsCard,
+  summarizeMode
+} = require('../src/pubgStatsCard');
 
-function formatKD(kills, deaths) {
-  if (!deaths) return Number(kills || 0).toFixed(2);
-  return (kills / deaths).toFixed(2);
+const MODE_LABELS = {
+  solo: 'SOLO • TPP',
+  duo: 'DUO • TPP',
+  squad: 'SQUAD • TPP',
+  'solo-fpp': 'SOLO • FPP',
+  'duo-fpp': 'DUO • FPP',
+  'squad-fpp': 'SQUAD • FPP'
+};
+
+function formatModeForEmbed(rawStats) {
+  const stats = summarizeMode(rawStats);
+  return [
+    `Mecze: **${formatInteger(stats.matches)}**`,
+    `Wygrane: **${formatInteger(stats.wins)}** (${formatPercent(stats.winRate)})`,
+    `Top 10: **${formatInteger(stats.top10)}** (${formatPercent(stats.top10Rate)})`,
+    `Kille: **${formatInteger(stats.kills)}**`,
+    `K/D: **${formatDecimal(stats.kd)}**`,
+    `KDA: **${formatDecimal(stats.kda)}**`,
+    `Śr. DMG: **${formatInteger(stats.avgDamage)}**`,
+    `Headshoty: **${formatPercent(stats.headshotRate)}**`
+  ].join('\n');
+}
+
+function buildFallbackEmbed({ nickname, seasonId, range, gameModeStats }) {
+  return new EmbedBuilder()
+    .setTitle(`PUBG • ${nickname}`)
+    .setColor(0xF2A900)
+    .setDescription(`${platformLabel(config.pubg.platform)} • ${formatSeasonLabel(seasonId, range)}`)
+    .addFields(...MODES.map(mode => ({
+      name: MODE_LABELS[mode.key],
+      value: formatModeForEmbed(gameModeStats[mode.key]),
+      inline: true
+    })))
+    .setFooter({ text: 'National Devils • Oficjalne PUBG API' })
+    .setTimestamp();
+}
+
+function errorMessage(error) {
+  if (error?.status === 401 || error?.status === 403) {
+    return 'PUBG API odrzuciło klucz dostępu. Administrator musi sprawdzić PUBG_API_KEY.';
+  }
+  if (error?.status === 429) {
+    const wait = Number(error.retryAfter);
+    return Number.isFinite(wait) && wait > 0
+      ? `Limit zapytań PUBG API został wyczerpany. Spróbuj ponownie za ${Math.ceil(wait)} s.`
+      : 'Limit zapytań PUBG API został wyczerpany. Spróbuj ponownie za chwilę.';
+  }
+  return 'Nie udało się pobrać statystyk z PUBG API. Spróbuj ponownie za chwilę.';
 }
 
 module.exports = {
@@ -18,10 +73,21 @@ module.exports = {
         .setName('nick')
         .setDescription('Nick gracza PUBG')
         .setRequired(true)
+    )
+    .addStringOption(option =>
+      option
+        .setName('zakres')
+        .setDescription('Aktualny sezon albo statystyki całej kariery')
+        .setRequired(false)
+        .addChoices(
+          { name: 'Aktualny sezon', value: 'season' },
+          { name: 'Cała kariera', value: 'lifetime' }
+        )
     ),
 
   async execute(interaction) {
-    const nick = interaction.options.getString('nick');
+    const nick = interaction.options.getString('nick').trim();
+    const range = interaction.options.getString('zakres') || 'season';
     await interaction.deferReply();
 
     try {
@@ -31,7 +97,7 @@ module.exports = {
         return;
       }
 
-      const seasonId = await getCurrentSeason();
+      const seasonId = range === 'lifetime' ? 'lifetime' : await getCurrentSeason();
       if (!seasonId) {
         await interaction.editReply('Nie znaleziono aktualnego sezonu PUBG.');
         return;
@@ -41,57 +107,28 @@ module.exports = {
         `https://api.pubg.com/shards/${config.pubg.platform}/players/${player.id}/seasons/${seasonId}`
       );
 
-      const gameModeStats = statsData.data.attributes.gameModeStats;
-      const solo = gameModeStats.solo;
-      const duo = gameModeStats.duo;
-      const squad = gameModeStats.squad;
+      const gameModeStats = statsData?.data?.attributes?.gameModeStats || {};
+      const nickname = player.attributes?.name || nick;
 
-      const embed = new EmbedBuilder()
-        .setTitle(`PUBG - ${nick}`)
-        .setColor(0xF2A900)
-        .setDescription(`Platforma: **${config.pubg.platform.toUpperCase()}**\nSezon: **${seasonId}**`)
-        .addFields(
-          {
-            name: 'SOLO',
-            value:
-              `Mecze: **${solo.roundsPlayed}**\n` +
-              `Wygrane: **${solo.wins}**\n` +
-              `Top 10: **${solo.top10s}**\n` +
-              `Kille: **${solo.kills}**\n` +
-              `KD: **${formatKD(solo.kills, solo.losses)}**\n` +
-              `DMG: **${Math.round(solo.damageDealt)}**`,
-            inline: true
-          },
-          {
-            name: 'DUO',
-            value:
-              `Mecze: **${duo.roundsPlayed}**\n` +
-              `Wygrane: **${duo.wins}**\n` +
-              `Top 10: **${duo.top10s}**\n` +
-              `Kille: **${duo.kills}**\n` +
-              `KD: **${formatKD(duo.kills, duo.losses)}**\n` +
-              `DMG: **${Math.round(duo.damageDealt)}**`,
-            inline: true
-          },
-          {
-            name: 'SQUAD',
-            value:
-              `Mecze: **${squad.roundsPlayed}**\n` +
-              `Wygrane: **${squad.wins}**\n` +
-              `Top 10: **${squad.top10s}**\n` +
-              `Kille: **${squad.kills}**\n` +
-              `KD: **${formatKD(squad.kills, squad.losses)}**\n` +
-              `DMG: **${Math.round(squad.damageDealt)}**`,
-            inline: true
-          }
-        )
-        .setFooter({ text: 'National Devils - oficjalne PUBG API' })
-        .setTimestamp();
-
-      await interaction.editReply({ embeds: [embed] });
+      try {
+        const buffer = await renderPubgStatsCard({
+          guild: interaction.guild,
+          nickname,
+          platform: config.pubg.platform,
+          seasonId,
+          range,
+          gameModeStats
+        });
+        const attachment = new AttachmentBuilder(buffer, { name: 'pubg-statystyki.png' });
+        await interaction.editReply({ files: [attachment] });
+      } catch (renderError) {
+        console.error('[statystyki] Błąd renderowania karty:', renderError);
+        const embed = buildFallbackEmbed({ nickname, seasonId, range, gameModeStats });
+        await interaction.editReply({ embeds: [embed] });
+      }
     } catch (error) {
-      console.error('[statystyki] Blad:', error);
-      await interaction.editReply('Blad pobierania danych PUBG.');
+      console.error('[statystyki] Błąd:', error);
+      await interaction.editReply(errorMessage(error));
     }
   }
 };
