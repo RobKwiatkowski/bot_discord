@@ -105,7 +105,19 @@
       "source": "Epic Games Store",
       "discountPercent": 100,
       "seenAt": "2026-08-07T08:00:01.532Z"
+    },
+    "epic:caravan-sandwitch": {
+      "title": "Caravan SandWitch",
+      "source": "Epic Games Store",
+      "discountPercent": 100,
+      "seenAt": "2026-08-13T22:43:09.661Z"
+    },
+    "epic:cardpocalypse-standard-edition": {
+      "title": "Cardpocalypse Standard Edition",
+      "source": "Epic Games Store",
+      "discountPercent": 100,
+      "seenAt": "2026-08-21T08:00:04.071Z"
     }
   },
-  "lastCheckedAt": "2026-08-13T12:08:36.719Z"
+  "lastCheckedAt": "2026-08-27T07:38:59.882Z"
 }

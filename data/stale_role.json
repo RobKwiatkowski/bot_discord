@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "guilds": {
+    "1506270819620491344": {
+      "trackedRoles": {
+        "1517250807886647367": {
+          "name": "Troll",
+          "addedAt": "2026-08-13T22:47:27.335Z",
+          "addedBy": "900418449321394237"
+        }
+      },
+      "members": {
+        "704632596050477178": {
+          "username": "kogutexe",
+          "displayName": "KogutExE",
+          "roles": {
+            "1517250807886647367": {
+              "name": "Troll",
+              "recordedAt": "2026-08-13T22:47:27.335Z"
+            }
+          },
+          "updatedAt": "2026-08-13T22:47:27.335Z"
+        },
+        "460469294208122890": {
+          "username": "._jacus_.",
+          "displayName": "Jacek_PL",
+          "roles": {
+            "1517250807886647367": {
+              "name": "Troll",
+              "recordedAt": "2026-08-13T22:47:27.335Z"
+            }
+          },
+          "updatedAt": "2026-08-13T22:47:27.335Z"
+        },
+        "934225008736210944": {
+          "username": "brodatykloc",
+          "displayName": "BrodatyKloc",
+          "roles": {
+            "1517250807886647367": {
+              "name": "Troll",
+              "recordedAt": "2026-08-13T22:47:27.335Z"
+            }
+          },
+          "updatedAt": "2026-08-13T22:47:27.335Z"
+        },
+        "694231713748090920": {
+          "username": "elhanwarrior",
+          "displayName": "Mocarny_Mocarz",
+          "roles": {
+            "1517250807886647367": {
+              "name": "Troll",
+              "recordedAt": "2026-08-13T22:47:27.335Z"
+            }
+          },
+          "updatedAt": "2026-08-16T14:52:34.344Z"
+        }
+      }
+    }
+  }
+}

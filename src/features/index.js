@@ -23,6 +23,7 @@ const { setupTipply } = require('./tipply');
 const { setupGameDeals } = require('./gameDeals');
 const { setupMusic } = require('./music');
 const { setupDiscordStats } = require('./discordStats');
+const { setupPersistentRoles } = require('./persistentRoles');
 const { config } = require('../config');
 
 const features = [
@@ -49,7 +50,8 @@ const guildMembersFeatures = [
   ['autoRole', setupAutoRole],
   ['newAccountAlerts', setupNewAccountAlerts],
   ['memberLeaveLogs', setupMemberLeaveLogs],
-  ['anniversaries', setupAnniversaries]
+  ['anniversaries', setupAnniversaries],
+  ['persistentRoles', setupPersistentRoles]
 ];
 
 const messageContentFeatures = [

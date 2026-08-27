@@ -53,6 +53,23 @@
       "updatedAt": "2026-07-16T20:26:43.196Z"
     },
     {
+      "id": "302050872383242240",
+      "username": "DISBOARD",
+      "tag": "DISBOARD",
+      "avatarUrl": "https://cdn.discordapp.com/avatars/302050872383242240/67342a774a9f2d20d62bfc8553bb98e0.png?size=64",
+      "roles": [
+        "bot"
+      ],
+      "roleLabels": [
+        "Bot"
+      ],
+      "primaryRole": "bot",
+      "primaryRoleLabel": "Bot",
+      "isBot": true,
+      "addedAt": "2026-08-18T20:33:57.713Z",
+      "updatedAt": "2026-08-18T20:33:57.713Z"
+    },
+    {
       "id": "1506532864378929162",
       "username": "Sentinel",
       "tag": "Sentinel",
